@@ -18,7 +18,7 @@ import { doctors } from "@/data/doctors";
 */
 
 /* ── Typewriter hook ─────────────────────────── */
-function useTypewriter(text, speed = 34, start = false) {
+function useTypewriter(text:string , speed = 34, start = false) {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
     if (!start) { setDisplayed(""); return; }
@@ -50,19 +50,34 @@ function useInView(threshold = 0.13) {
 }
 
 /* ── Count-up hook ───────────────────────────── */
-function useCountUp(target, duration = 1800, start = false) {
-  const [count, setCount] = useState(0);
+function useCountUp(
+  target: number,
+  duration: number = 1800,
+  start: boolean = false
+) {
+  const [count, setCount] = useState<number>(0);
+
   useEffect(() => {
     if (!start) return;
-    let startTime;
-    const step = (timestamp) => {
+
+    let startTime: number | undefined;
+
+    const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
+
+      const progress = Math.min(
+        (timestamp - startTime) / duration,
+        1
+      );
+
       setCount(Math.floor(progress * target));
+
       if (progress < 1) requestAnimationFrame(step);
     };
+
     requestAnimationFrame(step);
   }, [start, target, duration]);
+
   return count;
 }
 
@@ -215,7 +230,13 @@ const TESTIMONIALS = [
 ];
 
 /* ── Stat counter item ───────────────────────── */
-function StatItem({ num, suffix, label, icon, start }) {
+function StatItem({ num, suffix, label, icon, start }:{
+  num: number;
+  suffix: string;
+  label: string;
+  icon: string;
+  start: boolean;
+}) {
   const count = useCountUp(num, 1800, start);
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 72 }}>
@@ -248,7 +269,11 @@ function StatItem({ num, suffix, label, icon, start }) {
 }
 
 /* ── Doctor card with hover bg image (right-side only) ── */
-function DoctorCard({ doc, bgImage, index }) {
+function DoctorCard({ doc, bgImage, index }:{
+  doc: { name: string; specialty: string; hospital: string; initials: string; color: string };
+  bgImage: string;
+  index: number;
+}) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -340,7 +365,6 @@ function DoctorCard({ doc, bgImage, index }) {
 
         <h3
           style={{
-            fontSize: 14,
             fontWeight: 700,
             color: hovered ? "#fff" : "#0B1F3A",
             marginBottom: 4,
@@ -427,7 +451,7 @@ export default function HomePage() {
   const { ref: testRef,  inView: testVis  } = useInView();
   const { ref: newsRef,  inView: newsVis  } = useInView();
 
-  const goTo = useCallback((idx) => {
+  const goTo = useCallback((idx: number) => {
     setFade(false);
     setTyped(false);
     setTimeout(() => {
@@ -1322,7 +1346,7 @@ export default function HomePage() {
                      gap: 20,
                    }}
                  >
-                   {deptList.map((dept, i) => {
+                   {deptList.map((dept:any, i:number) => {
                      const name  = dept.shortName || dept.name;
                      const tag   = dept.tagline;
                      const count = dept.procedures?.length ?? dept.count ?? 0;
@@ -1563,7 +1587,7 @@ export default function HomePage() {
                      gap: 24,
                    }}
                  >
-                   {hospList.map((hosp, i) => {
+                   {hospList.map((hosp:any, i:number) => {
                      const img  = hosp.img || HOSP_FALLBACK[i % HOSP_FALLBACK.length]?.img;
                      const tag  = hosp.tags?.[0] ?? "Hospital";
                      const loc  = hosp.location ?? hosp.loc;
@@ -1972,7 +1996,7 @@ export default function HomePage() {
                        key={f.key}
                        type={f.type}
                        placeholder={f.ph}
-                       value={apptForm[f.key]}
+                       value={(apptForm as any)[f.key]}
                        onChange={(e) =>
                          setApptForm((prev) => ({ ...prev, [f.key]: e.target.value }))
                        }
@@ -2005,7 +2029,7 @@ export default function HomePage() {
                      <option value="" disabled>
                        Select Department
                      </option>
-                     {deptList.map((d) => (
+                     {deptList.map((d:any) => (
                        <option
                          key={d.name || d.shortName}
                          value={d.name || d.shortName}
@@ -2069,7 +2093,6 @@ export default function HomePage() {
                        </div>
                        <p
                          style={{
-                           fontSize: 14,
                            color: "#374151",
                            lineHeight: 1.85,
                            marginBottom: 24,
