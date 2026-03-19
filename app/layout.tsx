@@ -1,9 +1,10 @@
+
+
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import EmergencyBanner from "@/components/layout/EmergencyBanner";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 const playfair = Playfair_Display({
@@ -30,28 +31,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // Added scroll-smooth for premium navigation feel
     <html lang="en" className="scroll-smooth">
+      
+      {/* ✅ MOBILE VIEWPORT FIX */}
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+
       <body
-        className={`${playfair.variable} ${dmSans.variable} font-sans bg-white text-srikara-navy antialiased selection:bg-srikara-plum/10 selection:text-srikara-plum`}
+        className={`${playfair.variable} ${dmSans.variable} font-sans bg-white text-srikara-navy antialiased`}
       >
-        {/* The Emergency Banner should stay at the very top */}
-        
-        
-        {/* The Navbar handles its own "fixed" positioning */}
+        {/* NAVBAR */}
         <Navbar />
-        
-        {/* Added flex-col and min-h-screen. 
-            The Navbar is 'fixed', so the first section of your 
-            pages should have pt-24 or pt-32 to avoid overlap.
-        */}
+
+        {/* ✅ MAIN WRAPPER */}
         <div className="flex flex-col min-h-screen">
-          <main className="flex-grow">
+
+          {/* ✅ IMPORTANT: FIX NAVBAR OVERLAP (RESPONSIVE) */}
+          <main className="flex-grow pt-[60px] md:pt-[72px]">
             {children}
           </main>
+
         </div>
 
+        {/* FOOTER */}
         <Footer />
+
+        {/* FLOATING BUTTON */}
         <WhatsAppButton />
       </body>
     </html>

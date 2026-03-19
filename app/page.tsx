@@ -93,7 +93,7 @@ const SLIDES = [
     sub: "South India's No. 1 robotic surgery centre — minimally invasive procedures, dramatically faster recovery times.",
   },
   {
-    img: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=1800&q=88&auto=format&fit=crop",
+    img: "/herosection.jpg",
     tag: "Compassionate Care",
     h1: "Every Patient,",
     h2: "Every Heartbeat Matters",
@@ -107,7 +107,7 @@ const SLIDES = [
     sub: "7 Cardiac Cath Labs. Neuro critical care. Trauma centres ready every minute of every day.",
   },
   {
-    img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1800&q=88&auto=format&fit=crop",
+    img: "/herosection.jpg",
     tag: "Happy Recoveries",
     h1: "Thousands Healed,",
     h2: "Millions of Smiles",
@@ -164,21 +164,21 @@ const DEPT_FALLBACK = [
 ];
 
 const HOSP_FALLBACK = [
-  { name: "Srikara Secunderabad", location: "Secunderabad",    beds: 350, tags: ["Flagship","NABH"], slug: "secunderabad", img: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=700&q=80&auto=format&fit=crop", color: "#B8103F", accentColor: "#0B1F3A" },
-  { name: "Srikara Kukatpally",   location: "Kukatpally, Hyd", beds: 250, tags: ["NABH"],            slug: "kukatpally",   img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=700&q=80&auto=format&fit=crop", color: "#0B1F3A", accentColor: "#0D7A6B" },
-  { name: "Srikara Miyapur",      location: "Miyapur, Hyd",    beds: 200, tags: ["ISO 9001"],         slug: "miyapur",      img: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=700&q=80&auto=format&fit=crop", color: "#0D7A6B", accentColor: "#0B1F3A" },
-  { name: "Srikara Vizag",        location: "Visakhapatnam",   beds: 300, tags: ["NABH"],            slug: "vizag",        img: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=700&q=80&auto=format&fit=crop", color: "#C9933A", accentColor: "#0B1F3A" },
-  { name: "Srikara Vijayawada",   location: "Vijayawada, AP",  beds: 275, tags: ["Cardiac","NABH"],  slug: "vijayawada",   img: "https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=700&q=80&auto=format&fit=crop", color: "#B8103F", accentColor: "#C9933A" },
-  { name: "Srikara Karimnagar",   location: "Karimnagar, TS",  beds: 180, tags: ["Multi-spec"],      slug: "karimnagar",   img: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=700&q=80&auto=format&fit=crop", color: "#0B1F3A", accentColor: "#B8103F" },
+  { name: "Srikara Secunderabad", location: "Secunderabad",    beds: 350, tags: ["Flagship","NABH"], slug: "secunderabad", img: "/rtc-x-roads.jpeg", color: "#B8103F", accentColor: "#0B1F3A" },
+  { name: "Srikara Kukatpally",   location: "Kukatpally, Hyd", beds: 250, tags: ["NABH"],            slug: "kukatpally",   img: "/Miyapur.jpeg", color: "#0B1F3A", accentColor: "#0D7A6B" },
+  { name: "Srikara Miyapur",      location: "Miyapur, Hyd",    beds: 200, tags: ["ISO 9001"],         slug: "miyapur",      img: "Lbnagar.jpeg", color: "#0D7A6B", accentColor: "#0B1F3A" },
+  { name: "Srikara Vizag",        location: "Visakhapatnam",   beds: 300, tags: ["NABH"],            slug: "vizag",        img: "Vijayavada.jpeg", color: "#C9933A", accentColor: "#0B1F3A" },
+  { name: "Srikara Vijayawada",   location: "Vijayawada, AP",  beds: 275, tags: ["Cardiac","NABH"],  slug: "vijayawada",   img: "/kompally.jpeg", color: "#B8103F", accentColor: "#C9933A" },
+  { name: "Srikara Karimnagar",   location: "Karimnagar, TS",  beds: 180, tags: ["Multi-spec"],      slug: "karimnagar",   img: "/ecil.jpeg", color: "#0B1F3A", accentColor: "#B8103F" },
 ];
 
 /* Real doctor images for the Healing Hands section background hover */
 const DOCTOR_BG_IMAGES = [
-  "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=600&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=600&q=85&auto=format&fit=crop",
+  "/Akhildadi.jpg",
+  "/doctors/DR.SREEDHAR.png",
+  "/doctors/DR.SHARATHCHANDRA.png",
+  "/doctors/DR.SUMANBABU.png",
+  "/doctors/DR.TVSURESH.png",
   "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&q=85&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=85&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=85&auto=format&fit=crop",
@@ -591,6 +591,13 @@ export default function HomePage() {
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-thumb { background: #B8103F; border-radius: 3px; }
+    .tile-img:hover {
+  transform: scale(1.1);
+}
+
+.tile-overlay:hover {
+  opacity: 1;
+}
   `;
 
   return (
@@ -605,7 +612,7 @@ export default function HomePage() {
           position: "relative",
           width: "100%",
           height: "100svh",
-          minHeight: 640,
+          minHeight: "auto",
           overflow: "hidden",
         }}
       >
@@ -714,7 +721,7 @@ export default function HomePage() {
             position: "absolute",
             bottom: 155,
             left: 0,
-            padding: "0 8vw",
+            padding: "0 16px",
             maxWidth: 780,
             zIndex: 10,
           }}
@@ -1118,7 +1125,7 @@ export default function HomePage() {
                      style={{ borderRadius: 26, overflow: "hidden", position: "relative" }}
                    >
                      <img
-                       src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=500&q=88&auto=format&fit=crop"
+                       src="/Akhildadi.jpg"
                        alt="Doctor with patient"
                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                      />
@@ -1223,70 +1230,119 @@ export default function HomePage() {
              {/* ═══════════════════════════════════════════════════
                  §4  QUICK SERVICE TILES  (like reference site)
              ═══════════════════════════════════════════════════ */}
-             <section ref={tilesRef} style={{ background: "#0B1F3A" }}>
-               <div
-                 className={`sk-fade ${tilesVis ? "visible" : "hidden"}`}
-                 style={{ maxWidth: 1300, margin: "0 auto", padding: "0 8vw" }}
-               >
-                 <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 3 }}>
-                   {QUICK_TILES.map((tile, i) => (
-                     <div
-                       key={tile.label}
-                       className="sk-img-wrap"
-                       style={{
-                         position: "relative",
-                         overflow: "hidden",
-                         cursor: "pointer",
-                         borderRadius:
-                           i === 0
-                             ? "20px 0 0 0"
-                             : i === 4
-                             ? "0 20px 0 0"
-                             : 0,
-                       }}
-                     >
-                       <img
-                         src={tile.img}
-                         alt={tile.label}
-                         style={{ width: "100%", height: 210, objectFit: "cover", display: "block" }}
-                       />
-                       <div
-                         style={{
-                           position: "absolute",
-                           inset: 0,
-                           background:
-                             "linear-gradient(to top, rgba(11,31,58,0.88) 0%, rgba(11,31,58,0.15) 65%)",
-                         }}
-                       />
-                       <div style={{ position: "absolute", bottom: 18, left: 18, right: 10 }}>
-                         <div
-                           style={{
-                             fontSize: 12,
-                             fontWeight: 700,
-                             color: "#fff",
-                             marginBottom: 4,
-                             fontFamily: "'Outfit', sans-serif",
-                           }}
-                         >
-                           {tile.label}
-                         </div>
-                         <div
-                           style={{
-                             fontSize: 9,
-                             color: "rgba(255,255,255,0.52)",
-                             fontWeight: 700,
-                             letterSpacing: "0.1em",
-                             textTransform: "uppercase",
-                           }}
-                         >
-                           {tile.sub}
-                         </div>
-                       </div>
-                     </div>
-                   ))}
-                 </div>
-               </div>
-             </section>
+             <section ref={tilesRef} style={{ background: "#0B1F3A", padding: "40px 0" }}>
+  <div
+    className={`sk-fade ${tilesVis ? "visible" : "hidden"}`}
+    style={{ maxWidth: 1300, margin: "0 auto", padding: "0 6vw" }}
+  >
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(5, 1fr)",
+        gap: 12
+      }}
+    >
+      {QUICK_TILES.map((tile, i) => (
+        <div
+          key={tile.label}
+          style={{
+            position: "relative",
+            overflow: "hidden",
+            cursor: "pointer",
+            borderRadius: 16,
+            height: 220,
+            transition: "all 0.35s ease",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.25)"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+            e.currentTarget.style.boxShadow = "0 25px 60px rgba(0,0,0,0.35)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "translateY(0) scale(1)";
+            e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.25)";
+          }}
+        >
+          {/* IMAGE */}
+          <img
+            src={tile.img}
+            alt={tile.label}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.6s ease"
+            }}
+            className="tile-img"
+          />
+
+          {/* DARK GRADIENT */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to top, rgba(11,31,58,0.95) 0%, rgba(11,31,58,0.4) 60%, transparent 100%)"
+            }}
+          />
+
+          {/* HOVER OVERLAY */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(120deg, rgba(236,72,153,0.25), rgba(59,130,246,0.25))",
+              opacity: 0,
+              transition: "opacity 0.4s ease"
+            }}
+            className="tile-overlay"
+          />
+
+          {/* TEXT */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 18,
+              left: 18,
+              right: 18,
+              zIndex: 2,
+              backdropFilter: "blur(6px)",
+              background: "rgba(255,255,255,0.06)",
+              padding: "10px 12px",
+              borderRadius: 10,
+              border: "1px solid rgba(255,255,255,0.1)"
+            }}
+          >
+            <div
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: "#fff",
+                marginBottom: 4,
+                fontFamily: "'Outfit', sans-serif"
+              }}
+            >
+              {tile.label}
+            </div>
+
+            <div
+              style={{
+                fontSize: 10,
+                color: "rgba(255,255,255,0.65)",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase"
+              }}
+            >
+              {tile.sub}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
        
              {/* ═══════════════════════════════════════════════════
                  §5  DEPARTMENTS
@@ -1743,7 +1799,7 @@ export default function HomePage() {
              <section ref={docRef} style={{ padding: "100px 0", background: "#fff", overflow: "hidden" }}>
                <div
                  className={`sk-fade ${docVis ? "visible" : "hidden"}`}
-                 style={{ maxWidth: 1300, margin: "0 auto", padding: "0 8vw" }}
+                 style={{ maxWidth: "100%",  padding: "0 16px" }}
                >
                  {/* Header */}
                  <div style={{ textAlign: "center", marginBottom: 52 }}>
@@ -1790,7 +1846,7 @@ export default function HomePage() {
                      }}
                    >
                      <img
-                       src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=700&q=88&auto=format&fit=crop"
+                       src="/Akhildadi.jpg"
                        alt="Expert doctors at Srikara"
                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                      />
@@ -1890,7 +1946,7 @@ export default function HomePage() {
                  style={{ position: "relative", overflow: "hidden" }}
                >
                  <img
-                   src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=900&q=88&auto=format&fit=crop"
+                   src="/callingsection.jpg"
                    alt="Book Appointment"
                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                  />

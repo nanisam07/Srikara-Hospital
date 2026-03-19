@@ -239,6 +239,24 @@ export default function Navbar() {
     @media (min-width: 1025px) {
       .sk-hamburger { display: none !important; }
     }
+      /* ✅ MOBILE OPTIMIZATION */
+@media (max-width:768px){
+
+  header{
+    height:60px !important;
+  }
+
+  .sk-drawer{
+    width:85% !important;
+    max-width:320px;
+  }
+
+  .sk-nav-link{
+    font-size:13px;
+    padding:6px 12px;
+  }
+
+}
   `;
 
   return (
@@ -273,7 +291,7 @@ export default function Navbar() {
             maxWidth:       1380,
             width:          "100%",
             margin:         "0 auto",
-            padding:        "0 28px",
+            padding:        "0 16px",
             display:        "flex",
             alignItems:     "center",
             justifyContent: "space-between",
@@ -301,7 +319,7 @@ export default function Navbar() {
                 alt="Srikara Hospitals"
                 width={148}
                 height={38}
-                style={{ height: 34, width: "auto", objectFit: "contain", display: "block" }}
+                style={{ height: "auto", width: "auto", objectFit: "contain", display: "block",maxHeight:"34px" }}
                 priority
               />
             </div>
@@ -376,7 +394,7 @@ export default function Navbar() {
             style={{
               flexDirection:  "column",
               gap:            5,
-              padding:        "8px 10px",
+              padding:        "10px 12px",
               borderRadius:   10,
               background:     "rgba(255,255,255,0.06)",
               border:         "1px solid rgba(255,255,255,0.1)",

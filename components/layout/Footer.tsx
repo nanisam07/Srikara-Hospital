@@ -682,6 +682,21 @@ export default function Footer() {
             from { transform: translateX(0); }
             to   { transform: translateX(-50%); }
           }
+            @media (max-width:1024px){
+
+          .footer-grid{
+              grid-template-columns:1fr 1fr !important;
+              gap:30px !important;
+            }
+          }
+
+            @media (max-width:768px){
+
+            .footer-grid{
+            grid-template-columns:1fr !important;
+            }
+
+            }
         `}</style>
       
     </>

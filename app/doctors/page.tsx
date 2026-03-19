@@ -1,40 +1,40 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
 
 const BRANCHES = [
-  { id: "all",          label: "All Branches" },
-  { id: "rtc-x-roads",  label: "RTC X Roads" },
-  { id: "miyapur",      label: "Miyapur" },
-  { id: "kompally",     label: "Kompally" },
-  { id: "vijayawada",   label: "Vijayawada" },
-  { id: "lb-nagar",     label: "LB Nagar" },
-  { id: "ecil",         label: "ECIL" },
+  { id: "all",           label: "All Branches" },
   { id: "lakdikapul",   label: "Lakdikapul" },
-  { id: "rajahmundry",  label: "Rajahmundry" },
+  { id: "kompally",     label: "Kompally" },
+  { id: "lb-nagar",     label: "LB Nagar" },
   { id: "peerzadiguda", label: "Peerzadiguda" },
+  { id: "miyapur",      label: "Miyapur" },
 ];
 
 const SPECIALTIES = [
-  "All Specialties",
-  "Cardiology",
-  "Orthopedics",
-  "Dermatology",
-  "Neurology",
-  "Gynecology",
-  "Pediatrics",
-  "General Medicine",
-  "Ophthalmology",
+  "All Specialties","Orthopedics","Cardiology","Nephrology","Neurology",
+  "Neurosurgery","General Surgery","General Medicine","Urology","Gynecology",
+  "Pediatrics","Pulmonology","Plastic Surgery","ENT","Physiotherapy",
+  "Anesthesia","Pathology","Dermatology","Psychiatry","Radiology",
+  "Critical Care","Dental",
 ];
 
 const TIME_SLOTS = [
   "9:00 AM","9:30 AM","10:00 AM","10:30 AM",
   "11:00 AM","11:30 AM","2:00 PM","2:30 PM",
   "3:00 PM","3:30 PM","4:00 PM","4:30 PM",
+];
+
+// ── Replace these with your actual YouTube video IDs ──
+const YOUTUBE_VIDEOS = [
+  { id: "wN7aF3lfcyg", title: "Happy Paitent Testimonial", subtitle: "Advanced Joint Replacement" },
+  { id: "QLoG2-jGjy8", title: "24 Hour Discharge After Knee Replacement", subtitle: "Interventional Cardiology" },
+  { id: "9b-mJJ73Dyk", title: "HIP replacement surgery by the amazing Dr. Akhil Dadi, In just 45 days, back to work and walk again.", subtitle: "Brain & Spine Surgery" },
+  { id: "lWONcnIKAtw", title: "First Robotic Knee Replacement Surgery done By Dr. Akhil Dadi at Srikara Hospitals LB Nagar", subtitle: "Real Transformations" },
 ];
 
 interface Doctor {
@@ -44,6 +44,7 @@ interface Doctor {
   color: string;
   specialty: string;
   qualifications: string;
+  image?: string;
   available: boolean;
   nextSlot: string;
   rating: number;
@@ -64,382 +65,178 @@ interface Doctor {
 
 const DOCTORS: Doctor[] = [
   {
-    id: 1, name: "Dr. Priya Reddy", initials: "PR", color: "#0a6e6e",
-    specialty: "Senior Cardiologist", qualifications: "MBBS, MD, DM (Cardiology), FESC",
-    available: true, nextSlot: "Today, 11:00 AM", rating: 4.9, reviews: 312,
-    experience: "14 yrs", patients: "4,800+", fee: "₹600",
-    branch: "RTC X Roads", branchId: "rtc-x-roads",
+    id: 1, name: "Dr. Akhil Dadi", initials: "AD", color: "#7c3aed",
+    specialty: "Senior Orthopedic Surgeon", qualifications: "MBBS, MS (Ortho), Fellowship in Joint Replacement",
+    available: true, nextSlot: "Today, 11:30 AM", rating: 4.9, reviews: 540,
+    experience: "20+ yrs", patients: "10,000+", fee: "₹800",
+    branch: "Srikara Hospitals", branchId: "srikara-main",
+    image: "/Akhildadi.jpg",
     languages: ["Telugu", "Hindi", "English"],
-    about: "Dr. Priya Reddy is a senior interventional cardiologist with 14 years of experience. She has performed over 2,000 successful cardiac interventions and specialises in preventive cardiology and ECG diagnostics.",
+    about: "Dr. Akhil Dadi is a highly experienced senior orthopedic surgeon at Srikara Hospitals, renowned for his expertise in joint replacement and advanced arthroscopic procedures. With over two decades of experience, he has successfully treated thousands of patients, focusing on restoring mobility, reducing pain, and improving long-term quality of life through modern surgical techniques.",
     specializations: [
-      { label: "Interventional Cardiology", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "heart" },
-      { label: "ECG & Echocardiography",    bg: "#eaf3de", iconColor: "#3B6D11", icon: "wave" },
-      { label: "Preventive Cardiology",     bg: "#e6f1fb", iconColor: "#185FA5", icon: "shield" },
-      { label: "Hypertension Care",         bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
+      { label: "Joint Replacement", bg: "#e6f1fb", iconColor: "#185FA5", icon: "bone" },
+      { label: "Knee Replacement", bg: "#eaf3de", iconColor: "#3B6D11", icon: "activity" },
+      { label: "Arthroscopy", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "wave" },
+      { label: "Sports Injuries", bg: "#faeeda", iconColor: "#854F0B", icon: "run" },
     ],
     education: [
-      { degree: "DM – Cardiology",        institute: "AIIMS Delhi",               year: "2013" },
-      { degree: "MD – Internal Medicine", institute: "Osmania Medical College",    year: "2010" },
-      { degree: "MBBS",                   institute: "Gandhi Medical College, Hyd", year: "2007" },
+      { degree: "MS – Orthopaedics", institute: "Osmania Medical College, Hyderabad", year: "2005" },
+      { degree: "MBBS", institute: "Kakatiya Medical College, Warangal", year: "2000" },
     ],
     workExp: [
-      { role: "Senior Cardiologist",     org: "MedCare Clinics – RTC X Roads", period: "2018 – Present", code: "MC" },
-      { role: "Consultant Cardiologist", org: "Yashoda Hospitals, Hyderabad",   period: "2014 – 2018",   code: "YH" },
+      { role: "Senior Orthopedic Surgeon", org: "Srikara Hospitals", period: "2010 – Present", code: "SH" },
+      { role: "Consultant Orthopedic Surgeon", org: "Apollo Hospitals", period: "2005 – 2010", code: "AH" },
     ],
     patientReviews: [
-      { name: "Ramaiah K.", stars: 5, text: "Excellent doctor. Diagnosed my condition in one visit. Very patient and thorough.", date: "2 days ago" },
-      { name: "Sunitha M.", stars: 5, text: "Very empathetic and knowledgeable. Highly recommended.", date: "1 week ago" },
+      { name: "Suresh R.", stars: 5, text: "Dr. Akhil Dadi performed my knee replacement surgery. Excellent results and very caring doctor.", date: "2 days ago" },
+      { name: "Lakshmi P.", stars: 5, text: "Highly experienced and explains everything clearly. Felt very confident under his treatment.", date: "5 days ago" },
     ],
-    branches: [
-      { name: "RTC X Roads", address: "Road No. 12, Banjara Hills, Hyderabad" },
-      { name: "Miyapur",     address: "Miyapur Main Rd, Near Metro Station" },
-    ],
+    branches: [{ name: "Srikara Hospitals", address: "Hyderabad" }],
   },
   {
-    id: 2, name: "Dr. Arun Kumar", initials: "AK", color: "#1a7a9a",
-    specialty: "Orthopedic Surgeon", qualifications: "MBBS, MS (Ortho), DNB",
-    available: true, nextSlot: "Today, 2:30 PM", rating: 4.8, reviews: 278,
-    experience: "11 yrs", patients: "3,200+", fee: "₹500",
-    branch: "Miyapur", branchId: "miyapur",
-    languages: ["Telugu", "English"],
-    about: "Dr. Arun Kumar is an orthopedic surgeon specialising in joint replacement and sports injuries. He has successfully treated over 1,500 knee and hip replacement surgeries.",
-    specializations: [
-      { label: "Joint Replacement",  bg: "#e6f1fb", iconColor: "#185FA5", icon: "bone" },
-      { label: "Sports Injuries",    bg: "#eaf3de", iconColor: "#3B6D11", icon: "run" },
-      { label: "Spine Care",         bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "spine" },
-      { label: "Arthroscopy",        bg: "#faeeda", iconColor: "#854F0B", icon: "eye" },
-    ],
-    education: [
-      { degree: "MS – Orthopaedics", institute: "Nizam's Institute of Medical Sciences", year: "2014" },
-      { degree: "MBBS",              institute: "Kakatiya Medical College",              year: "2011" },
-    ],
-    workExp: [
-      { role: "Orthopedic Surgeon",   org: "MedCare Clinics – Miyapur",   period: "2017 – Present", code: "MC" },
-      { role: "Senior Registrar",     org: "Apollo Hospitals, Hyderabad", period: "2014 – 2017",   code: "AH" },
-    ],
-    patientReviews: [
-      { name: "Raju P.", stars: 5, text: "Dr. Arun fixed my knee problem. Back to playing cricket!", date: "3 days ago" },
-      { name: "Lalitha S.", stars: 4, text: "Good doctor, clear explanation of the surgery plan.", date: "2 weeks ago" },
-    ],
-    branches: [
-      { name: "Miyapur",  address: "Miyapur Main Rd, Near Metro Station" },
-      { name: "Kompally", address: "NH-44, Kompally, Hyderabad" },
-    ],
-  },
-  {
-    id: 3, name: "Dr. Sunita Sharma", initials: "SS", color: "#6b4ea8",
-    specialty: "Dermatologist", qualifications: "MBBS, MD (Dermatology)",
-    available: false, nextSlot: "Tomorrow, 10:00 AM", rating: 4.7, reviews: 195,
-    experience: "9 yrs", patients: "2,900+", fee: "₹450",
-    branch: "Kompally", branchId: "kompally",
-    languages: ["Telugu", "Hindi", "English"],
-    about: "Dr. Sunita Sharma is an expert dermatologist known for treating complex skin conditions and cosmetic dermatology. She specialises in acne, psoriasis, and laser treatments.",
-    specializations: [
-      { label: "Acne Treatment",        bg: "#eeedfe", iconColor: "#534AB7", icon: "skin" },
-      { label: "Laser Therapy",         bg: "#faeeda", iconColor: "#854F0B", icon: "laser" },
-      { label: "Cosmetic Dermatology",  bg: "#fbeaf0", iconColor: "#993556", icon: "star" },
-      { label: "Psoriasis Care",        bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "shield" },
-    ],
-    education: [
-      { degree: "MD – Dermatology", institute: "JIPMER, Puducherry",    year: "2016" },
-      { degree: "MBBS",             institute: "Osmania Medical College", year: "2013" },
-    ],
-    workExp: [
-      { role: "Dermatologist",       org: "MedCare Clinics – Kompally", period: "2019 – Present", code: "MC" },
-      { role: "Junior Consultant",   org: "KIMS Hospitals, Hyderabad",  period: "2016 – 2019",   code: "KI" },
-    ],
-    patientReviews: [
-      { name: "Padma R.", stars: 5, text: "My skin improved drastically after 3 sessions. Highly recommend!", date: "1 week ago" },
-      { name: "Vikram N.", stars: 4, text: "Professional and knowledgeable. Waiting time was a bit long.", date: "3 weeks ago" },
-    ],
-    branches: [
-      { name: "Kompally",    address: "NH-44, Kompally, Hyderabad" },
-      { name: "ECIL",        address: "ECIL X Roads, Hyderabad" },
-    ],
-  },
-  {
-    id: 4, name: "Dr. Venkat Rao", initials: "VR", color: "#2e7d52",
-    specialty: "Neurologist", qualifications: "MBBS, MD, DM (Neurology)",
-    available: true, nextSlot: "Today, 4:00 PM", rating: 4.9, reviews: 421,
-    experience: "16 yrs", patients: "5,100+", fee: "₹700",
-    branch: "Vijayawada", branchId: "vijayawada",
-    languages: ["Telugu", "English"],
-    about: "Dr. Venkat Rao is a highly respected neurologist with 16 years of clinical experience. He specialises in stroke management, epilepsy, and neurodegenerative disorders.",
-    specializations: [
-      { label: "Stroke Management",     bg: "#eaf3de", iconColor: "#3B6D11", icon: "brain" },
-      { label: "Epilepsy Care",         bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "wave" },
-      { label: "Parkinson's Disease",   bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
-      { label: "Migraine Treatment",    bg: "#e6f1fb", iconColor: "#185FA5", icon: "heart" },
-    ],
-    education: [
-      { degree: "DM – Neurology",       institute: "NIMHANS, Bengaluru",     year: "2011" },
-      { degree: "MD – General Medicine",institute: "Andhra Medical College",  year: "2008" },
-      { degree: "MBBS",                 institute: "Guntur Medical College",  year: "2005" },
-    ],
-    workExp: [
-      { role: "Senior Neurologist",  org: "MedCare Clinics – Vijayawada", period: "2016 – Present", code: "MC" },
-      { role: "Consultant",          org: "Ramesh Hospitals, Vijayawada", period: "2011 – 2016",   code: "RH" },
-    ],
-    patientReviews: [
-      { name: "Chandra M.", stars: 5, text: "Best neurologist in Vijayawada. Helped my father recover from stroke.", date: "4 days ago" },
-      { name: "Anand T.",   stars: 5, text: "Very detailed examination and treatment plan.", date: "1 week ago" },
-    ],
-    branches: [
-      { name: "Vijayawada",  address: "MG Road, Labbipet, Vijayawada" },
-      { name: "Rajahmundry", address: "Main Road, Rajahmundry" },
-    ],
-  },
-  {
-    id: 5, name: "Dr. Kavitha Nair", initials: "KN", color: "#c0574d",
-    specialty: "Gynecologist & Obstetrician", qualifications: "MBBS, MS (OBG)",
-    available: true, nextSlot: "Today, 3:00 PM", rating: 4.8, reviews: 356,
-    experience: "13 yrs", patients: "4,200+", fee: "₹550",
-    branch: "LB Nagar", branchId: "lb-nagar",
-    languages: ["Telugu", "Malayalam", "English"],
-    about: "Dr. Kavitha Nair is a leading gynecologist and obstetrician with 13 years of experience in high-risk pregnancies, laparoscopic surgeries, and women's health care.",
-    specializations: [
-      { label: "High-Risk Pregnancy",   bg: "#fbeaf0", iconColor: "#993556", icon: "heart" },
-      { label: "Laparoscopy",           bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "shield" },
-      { label: "PCOS Management",       bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
-      { label: "Infertility Care",      bg: "#e6f1fb", iconColor: "#185FA5", icon: "star" },
-    ],
-    education: [
-      { degree: "MS – OBG",  institute: "Sri Ramachandra University, Chennai", year: "2014" },
-      { degree: "MBBS",      institute: "Government Medical College, Calicut",  year: "2011" },
-    ],
-    workExp: [
-      { role: "Senior Gynecologist",   org: "MedCare Clinics – LB Nagar",   period: "2018 – Present", code: "MC" },
-      { role: "Consultant",            org: "Fernandez Hospital, Hyderabad", period: "2014 – 2018",   code: "FH" },
-    ],
-    patientReviews: [
-      { name: "Meena K.", stars: 5, text: "Dr. Kavitha delivered my baby safely. Forever grateful!", date: "1 week ago" },
-      { name: "Preethi R.", stars: 5, text: "Very calm and reassuring throughout my pregnancy.", date: "2 weeks ago" },
-    ],
-    branches: [
-      { name: "LB Nagar",    address: "LB Nagar Circle, Hyderabad" },
-      { name: "Lakdikapul",  address: "Lakdikapul, Hyderabad" },
-    ],
-  },
-  {
-    id: 6, name: "Dr. Ravi Chandra", initials: "RC", color: "#b07d2e",
-    specialty: "General Physician", qualifications: "MBBS, MD (General Medicine)",
-    available: true, nextSlot: "Today, 12:30 PM", rating: 4.6, reviews: 143,
-    experience: "8 yrs", patients: "2,100+", fee: "₹400",
-    branch: "ECIL", branchId: "ecil",
-    languages: ["Telugu", "Hindi"],
-    about: "Dr. Ravi Chandra is a trusted general physician providing comprehensive primary care. He specialises in diabetes management, preventive health and chronic disease care.",
-    specializations: [
-      { label: "Diabetes Management",  bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
-      { label: "Preventive Health",    bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
-      { label: "Fever & Infections",   bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "wave" },
-      { label: "Chronic Disease Care", bg: "#e6f1fb", iconColor: "#185FA5", icon: "heart" },
-    ],
-    education: [
-      { degree: "MD – General Medicine", institute: "MNR Medical College, Sangareddy", year: "2017" },
-      { degree: "MBBS",                  institute: "Chalmeda Anand Rao Medical College", year: "2014" },
-    ],
-    workExp: [
-      { role: "General Physician",  org: "MedCare Clinics – ECIL",       period: "2019 – Present", code: "MC" },
-      { role: "Medical Officer",    org: "Government Hospital, Warangal", period: "2017 – 2019",   code: "GH" },
-    ],
-    patientReviews: [
-      { name: "Suresh B.", stars: 5, text: "Very approachable doctor. My whole family visits him.", date: "5 days ago" },
-      { name: "Geeta V.",  stars: 4, text: "Good treatment for my diabetes. Explains things clearly.", date: "2 weeks ago" },
-    ],
-    branches: [
-      { name: "ECIL",     address: "ECIL X Roads, Hyderabad" },
-      { name: "Kompally", address: "NH-44, Kompally, Hyderabad" },
-    ],
-  },
-  {
-    id: 7, name: "Dr. Anitha Srinivas", initials: "AS", color: "#1d6b9e",
-    specialty: "Paediatrician", qualifications: "MBBS, MD (Paediatrics)",
-    available: false, nextSlot: "Tomorrow, 9:00 AM", rating: 4.9, reviews: 289,
-    experience: "10 yrs", patients: "3,600+", fee: "₹480",
+    id: 2, name: "Dr. Shashank", initials: "SS", color: "#2e7d52",
+    specialty: "Orthopedic Surgeon", qualifications: "Ortho",
+    available: false, nextSlot: "Tomorrow, 9:30 AM", rating: 4.7, reviews: 145,
+    experience: "8+ yrs", patients: "2,200+", fee: "₹500",
     branch: "Lakdikapul", branchId: "lakdikapul",
     languages: ["Telugu", "English"],
-    about: "Dr. Anitha Srinivas is a compassionate paediatrician dedicated to child health. She specialises in neonatal care, childhood vaccinations, and developmental disorders.",
+    about: "Dr. Shashank is a skilled orthopedic specialist at Srikara Hospitals, Lakdikapul. He focuses on conservative and surgical management of musculoskeletal conditions including fractures, ligament injuries, and degenerative joint disease.",
     specializations: [
-      { label: "Neonatal Care",         bg: "#e6f1fb", iconColor: "#185FA5", icon: "heart" },
-      { label: "Vaccination",           bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
-      { label: "Child Nutrition",       bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
-      { label: "Developmental Disorders", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "brain" },
+      { label: "Fracture Management", bg: "#e6f1fb", iconColor: "#185FA5", icon: "bone" },
+      { label: "Ligament Repair", bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
+      { label: "Joint Disorders", bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
+      { label: "Spine Care", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "spine" },
     ],
     education: [
-      { degree: "MD – Paediatrics", institute: "Osmania Medical College",      year: "2016" },
-      { degree: "MBBS",             institute: "Gandhi Medical College, Hyd",  year: "2013" },
+      { degree: "Ortho Specialisation", institute: "Kakatiya Medical College, Warangal", year: "2015" },
+      { degree: "MBBS", institute: "Osmania Medical College", year: "2012" },
     ],
     workExp: [
-      { role: "Paediatrician",        org: "MedCare Clinics – Lakdikapul", period: "2018 – Present", code: "MC" },
-      { role: "Resident Paediatrician", org: "Rainbow Children's Hospital",  period: "2016 – 2018",   code: "RC" },
+      { role: "Orthopedic Consultant", org: "Srikara Hospitals – Lakdikapul", period: "2019 – Present", code: "SH" },
+      { role: "Junior Consultant", org: "Apollo Hospitals, Hyderabad", period: "2015 – 2019", code: "AH" },
     ],
     patientReviews: [
-      { name: "Deepa M.", stars: 5, text: "My kids love Dr. Anitha. She is so gentle and caring.", date: "3 days ago" },
-      { name: "Kiran R.", stars: 5, text: "Best paediatrician in Hyderabad. Very thorough.", date: "1 week ago" },
+      { name: "Naresh B.", stars: 5, text: "Clear explanation and effective treatment. Very satisfied.", date: "5 days ago" },
+      { name: "Deepa R.", stars: 4, text: "Good doctor. Recovery was faster than expected.", date: "2 weeks ago" },
     ],
-    branches: [
-      { name: "Lakdikapul", address: "Lakdikapul, Hyderabad" },
-      { name: "LB Nagar",   address: "LB Nagar Circle, Hyderabad" },
-    ],
+    branches: [{ name: "Lakdikapul", address: "Lakdikapul, Hyderabad" }],
   },
   {
-    id: 8, name: "Dr. Suresh Babu", initials: "SB", color: "#3d7a6e",
-    specialty: "Ophthalmologist", qualifications: "MBBS, MS (Ophthalmology)",
-    available: true, nextSlot: "Today, 5:30 PM", rating: 4.7, reviews: 201,
-    experience: "12 yrs", patients: "3,000+", fee: "₹520",
-    branch: "Rajahmundry", branchId: "rajahmundry",
-    languages: ["Telugu", "English"],
-    about: "Dr. Suresh Babu is an experienced ophthalmologist specialising in cataract surgery, LASIK, and retinal disorders. He has performed over 3,000 eye surgeries.",
-    specializations: [
-      { label: "Cataract Surgery", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "eye" },
-      { label: "LASIK Treatment",  bg: "#e6f1fb", iconColor: "#185FA5", icon: "laser" },
-      { label: "Retinal Disorders",bg: "#faeeda", iconColor: "#854F0B", icon: "wave" },
-      { label: "Glaucoma Care",    bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
-    ],
-    education: [
-      { degree: "MS – Ophthalmology", institute: "LV Prasad Eye Institute, Hyd", year: "2014" },
-      { degree: "MBBS",               institute: "Andhra Medical College",        year: "2011" },
-    ],
-    workExp: [
-      { role: "Ophthalmologist",   org: "MedCare Clinics – Rajahmundry", period: "2017 – Present", code: "MC" },
-      { role: "Fellow – Retina",   org: "LV Prasad Eye Institute",       period: "2014 – 2017",   code: "LV" },
-    ],
-    patientReviews: [
-      { name: "Nageswara R.", stars: 5, text: "Perfect cataract surgery. Crystal clear vision now!", date: "1 week ago" },
-      { name: "Sridevi K.",   stars: 4, text: "Very professional, good post-op care.", date: "3 weeks ago" },
-    ],
-    branches: [
-      { name: "Rajahmundry",  address: "Main Road, Rajahmundry" },
-      { name: "Vijayawada",   address: "MG Road, Labbipet, Vijayawada" },
-    ],
-  },
-  {
-    id: 9, name: "Dr. Madhavi Latha", initials: "ML", color: "#7a4e6e",
-    specialty: "Dermatologist & Cosmetologist", qualifications: "MBBS, DVD, Fellowship Cosmetology",
-    available: true, nextSlot: "Today, 1:00 PM", rating: 4.6, reviews: 118,
-    experience: "7 yrs", patients: "1,800+", fee: "₹430",
-    branch: "Peerzadiguda", branchId: "peerzadiguda",
+    id: 3, name: "Dr. Rameshwari", initials: "RW", color: "#0a6e6e",
+    specialty: "Cardiologist", qualifications: "MBBS, MD, DM",
+    available: true, nextSlot: "Today, 11:00 AM", rating: 4.9, reviews: 278,
+    experience: "12+ yrs", patients: "3,800+", fee: "₹600",
+    branch: "Lakdikapul", branchId: "lakdikapul",
     languages: ["Telugu", "Hindi", "English"],
-    about: "Dr. Madhavi Latha combines clinical dermatology with advanced cosmetology, helping patients achieve healthy skin. She specialises in hair loss treatment, anti-ageing, and skin brightening.",
+    about: "Dr. Rameshwari is a highly experienced cardiologist at Srikara Hospitals, Lakdikapul. With a DM in Cardiology, she specialises in interventional cardiology, preventive heart care, and management of complex cardiac conditions.",
     specializations: [
-      { label: "Hair Loss Treatment", bg: "#fbeaf0", iconColor: "#993556", icon: "hair" },
-      { label: "Anti-Ageing",         bg: "#faeeda", iconColor: "#854F0B", icon: "star" },
-      { label: "Skin Brightening",    bg: "#eeedfe", iconColor: "#534AB7", icon: "skin" },
-      { label: "Chemical Peels",      bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "drop" },
+      { label: "Interventional Cardiology", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "heart" },
+      { label: "Preventive Cardiology", bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
+      { label: "ECG & Echo", bg: "#e6f1fb", iconColor: "#185FA5", icon: "wave" },
+      { label: "Heart Failure Management", bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
     ],
     education: [
-      { degree: "Fellowship – Cosmetology", institute: "Kaya Skin Clinic Institute",    year: "2019" },
-      { degree: "DVD",                       institute: "Osmania Medical College",       year: "2018" },
-      { degree: "MBBS",                      institute: "MNR Medical College, Sangareddy", year: "2017" },
+      { degree: "DM – Cardiology", institute: "AIIMS, New Delhi", year: "2012" },
+      { degree: "MD – Internal Medicine", institute: "Osmania Medical College", year: "2009" },
+      { degree: "MBBS", institute: "Gandhi Medical College, Hyd", year: "2006" },
     ],
     workExp: [
-      { role: "Dermatologist & Cosmetologist", org: "MedCare Clinics – Peerzadiguda", period: "2020 – Present", code: "MC" },
-      { role: "Resident Doctor",                org: "Kaya Skin Clinic, Hyderabad",    period: "2018 – 2020",   code: "KS" },
+      { role: "Senior Cardiologist", org: "Srikara Hospitals – Lakdikapul", period: "2017 – Present", code: "SH" },
+      { role: "Consultant Cardiologist", org: "Yashoda Hospitals, Hyderabad", period: "2012 – 2017", code: "YH" },
     ],
     patientReviews: [
-      { name: "Swetha N.", stars: 5, text: "My hair fall reduced significantly. Great doctor!", date: "2 days ago" },
-      { name: "Arjun K.",  stars: 4, text: "Good skin treatments. Very hygienic clinic.", date: "2 weeks ago" },
+      { name: "Prakash T.", stars: 5, text: "Best cardiologist I have consulted. Very detailed and caring.", date: "2 days ago" },
+      { name: "Usha Rani", stars: 5, text: "Diagnosed my condition accurately and guided perfectly.", date: "1 week ago" },
     ],
-    branches: [
-      { name: "Peerzadiguda", address: "Peerzadiguda X Roads, Hyderabad" },
-      { name: "ECIL",         address: "ECIL X Roads, Hyderabad" },
-    ],
+    branches: [{ name: "Lakdikapul", address: "Lakdikapul, Hyderabad" }],
   },
   {
-    id: 10, name: "Dr. Kiran Prasad", initials: "KP", color: "#0a6e6e",
-    specialty: "Interventional Cardiologist", qualifications: "MBBS, MD, DM, FESC",
-    available: true, nextSlot: "Today, 10:00 AM", rating: 5.0, reviews: 512,
-    experience: "18 yrs", patients: "6,000+", fee: "₹750",
-    branch: "Miyapur", branchId: "miyapur",
+    id: 4, name: "Dr. Vaishnavi P", initials: "VP", color: "#6b4ea8",
+    specialty: "Nephrologist", qualifications: "MBBS, MD, FACP, FASN (USA)",
+    available: true, nextSlot: "Today, 2:00 PM", rating: 4.9, reviews: 310,
+    experience: "13+ yrs", patients: "4,100+", fee: "₹650",
+    branch: "Lakdikapul", branchId: "lakdikapul",
     languages: ["Telugu", "Hindi", "English"],
-    about: "Dr. Kiran Prasad is one of Hyderabad's leading interventional cardiologists with 18 years of experience. He is known for complex angioplasties and structural heart disease interventions.",
+    about: "Dr. Vaishnavi P is a distinguished nephrologist with internationally recognised fellowships (FACP & FASN, USA). She specialises in chronic kidney disease, dialysis management, kidney transplant care, and glomerular disorders.",
     specializations: [
-      { label: "Angioplasty",           bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "heart" },
-      { label: "Structural Heart Care", bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
-      { label: "Heart Failure Mgmt",    bg: "#e6f1fb", iconColor: "#185FA5", icon: "wave" },
-      { label: "Arrhythmia",            bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
+      { label: "Chronic Kidney Disease", bg: "#eeedfe", iconColor: "#534AB7", icon: "drop" },
+      { label: "Dialysis Management", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "wave" },
+      { label: "Kidney Transplant Care", bg: "#faeeda", iconColor: "#854F0B", icon: "heart" },
+      { label: "Glomerular Disorders", bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
     ],
     education: [
-      { degree: "DM – Cardiology",     institute: "AIIMS New Delhi",          year: "2009" },
-      { degree: "MD – Medicine",       institute: "Osmania Medical College",   year: "2006" },
-      { degree: "MBBS",                institute: "Gandhi Medical College",    year: "2003" },
+      { degree: "FASN Fellowship (USA)", institute: "American Society of Nephrology", year: "2013" },
+      { degree: "FACP Fellowship (USA)", institute: "American College of Physicians", year: "2011" },
+      { degree: "MD – Medicine", institute: "Osmania Medical College", year: "2009" },
+      { degree: "MBBS", institute: "Gandhi Medical College, Hyd", year: "2006" },
     ],
     workExp: [
-      { role: "Chief Cardiologist",    org: "MedCare Clinics – Miyapur & RTC", period: "2015 – Present", code: "MC" },
-      { role: "Senior Cardiologist",   org: "Apollo Hospitals, Hyderabad",     period: "2009 – 2015",   code: "AH" },
+      { role: "Senior Nephrologist", org: "Srikara Hospitals – Lakdikapul", period: "2016 – Present", code: "SH" },
+      { role: "Consultant", org: "Apollo Hospitals, Hyderabad", period: "2013 – 2016", code: "AH" },
     ],
     patientReviews: [
-      { name: "Narasimha R.", stars: 5, text: "Dr. Kiran saved my life. Outstanding doctor.", date: "1 day ago" },
-      { name: "Padmaja V.",   stars: 5, text: "The best heart specialist I have ever met.", date: "5 days ago" },
+      { name: "Ramaiah G.", stars: 5, text: "Dr. Vaishnavi saved my father's kidneys. Exceptional doctor.", date: "1 week ago" },
+      { name: "Lalitha K.", stars: 5, text: "International expertise, local care. Truly outstanding.", date: "2 weeks ago" },
     ],
-    branches: [
-      { name: "Miyapur",     address: "Miyapur Main Rd, Near Metro Station" },
-      { name: "RTC X Roads", address: "Road No. 12, Banjara Hills, Hyderabad" },
-    ],
+    branches: [{ name: "Lakdikapul", address: "Lakdikapul, Hyderabad" }],
   },
   {
-    id: 11, name: "Dr. Padma Kumari", initials: "PK", color: "#c0574d",
-    specialty: "Senior Gynecologist", qualifications: "MBBS, MS (OBG), FRCOG",
-    available: false, nextSlot: "Tomorrow, 11:00 AM", rating: 4.8, reviews: 374,
-    experience: "15 yrs", patients: "4,500+", fee: "₹600",
-    branch: "RTC X Roads", branchId: "rtc-x-roads",
+    id: 5, name: "Dr. Praveen Kumar", initials: "PK", color: "#c0574d",
+    specialty: "Nephrologist", qualifications: "MBBS, MD, DM (SGPGI)",
+    available: false, nextSlot: "Tomorrow, 10:00 AM", rating: 4.8, reviews: 197,
+    experience: "10+ yrs", patients: "2,900+", fee: "₹600",
+    branch: "Lakdikapul", branchId: "lakdikapul",
+    languages: ["Telugu", "Hindi", "English"],
+    about: "Dr. Praveen Kumar is a nephrologist with DM from SGPGI (Sanjay Gandhi Post Graduate Institute), one of India's premier medical institutions. He specialises in renal replacement therapy, hypertensive nephropathy, and acute kidney injury management.",
+    specializations: [
+      { label: "Renal Replacement Therapy", bg: "#fbeaf0", iconColor: "#993556", icon: "drop" },
+      { label: "Hypertensive Nephropathy", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "heart" },
+      { label: "Acute Kidney Injury", bg: "#faeeda", iconColor: "#854F0B", icon: "wave" },
+      { label: "Peritoneal Dialysis", bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
+    ],
+    education: [
+      { degree: "DM – Nephrology", institute: "SGPGI, Lucknow", year: "2015" },
+      { degree: "MD – Medicine", institute: "Osmania Medical College", year: "2012" },
+      { degree: "MBBS", institute: "Kakatiya Medical College", year: "2009" },
+    ],
+    workExp: [
+      { role: "Nephrologist", org: "Srikara Hospitals – Lakdikapul", period: "2018 – Present", code: "SH" },
+      { role: "Senior Resident", org: "SGPGI, Lucknow", period: "2012 – 2015", code: "SG" },
+    ],
+    patientReviews: [
+      { name: "Suresh D.", stars: 5, text: "Very knowledgeable. Explained my condition clearly.", date: "4 days ago" },
+      { name: "Kavitha N.", stars: 4, text: "Good doctor, careful with treatment. Recommend.", date: "3 weeks ago" },
+    ],
+    branches: [{ name: "Lakdikapul", address: "Lakdikapul, Hyderabad" }],
+  },
+  {
+    id: 6, name: "Dr. Nikhil Veludandi", initials: "NV", color: "#2e7d52",
+    specialty: "Neuro Surgeon", qualifications: "MBBS, MS (GS), MCh",
+    available: true, nextSlot: "Today, 3:00 PM", rating: 4.8, reviews: 234,
+    experience: "11+ yrs", patients: "2,700+", fee: "₹700",
+    branch: "Lakdikapul", branchId: "lakdikapul",
     languages: ["Telugu", "English"],
-    about: "Dr. Padma Kumari is a senior gynecologist with 15 years of expertise in reproductive medicine, menopause management, and minimally invasive surgery.",
+    about: "Dr. Nikhil Veludandi is a skilled neurosurgeon with an MCh in Neurosurgery. He specialises in brain tumour surgery, spinal surgeries, minimally invasive neurosurgery, and cerebrovascular procedures.",
     specializations: [
-      { label: "Reproductive Medicine", bg: "#fbeaf0", iconColor: "#993556", icon: "heart" },
-      { label: "Menopause Management",  bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
-      { label: "Minimally Invasive",    bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "shield" },
-      { label: "Antenatal Care",        bg: "#eaf3de", iconColor: "#3B6D11", icon: "star" },
+      { label: "Brain Tumour Surgery", bg: "#eaf3de", iconColor: "#3B6D11", icon: "brain" },
+      { label: "Spinal Surgery", bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "spine" },
+      { label: "Minimally Invasive", bg: "#e6f1fb", iconColor: "#185FA5", icon: "shield" },
+      { label: "Cerebrovascular", bg: "#faeeda", iconColor: "#854F0B", icon: "wave" },
     ],
     education: [
-      { degree: "FRCOG",       institute: "Royal College of Obstetricians, UK", year: "2015" },
-      { degree: "MS – OBG",    institute: "NIMS, Hyderabad",                    year: "2012" },
-      { degree: "MBBS",        institute: "Osmania Medical College",             year: "2009" },
+      { degree: "MCh – Neurosurgery", institute: "NIMHANS, Bengaluru", year: "2014" },
+      { degree: "MS – General Surgery", institute: "Osmania Medical College", year: "2011" },
+      { degree: "MBBS", institute: "Gandhi Medical College", year: "2008" },
     ],
     workExp: [
-      { role: "Senior Gynecologist", org: "MedCare Clinics – RTC X Roads", period: "2017 – Present", code: "MC" },
-      { role: "Consultant",          org: "Care Hospitals, Hyderabad",      period: "2012 – 2017",   code: "CH" },
+      { role: "Neurosurgeon", org: "Srikara Hospitals – Lakdikapul", period: "2018 – Present", code: "SH" },
+      { role: "Consultant Surgeon", org: "Apollo Hospitals, Hyderabad", period: "2014 – 2018", code: "AH" },
     ],
     patientReviews: [
-      { name: "Anuradha M.", stars: 5, text: "Dr. Padma is wonderful. Excellent care throughout my pregnancy.", date: "1 week ago" },
-      { name: "Sravanthi K.", stars: 5, text: "Very experienced and caring doctor.", date: "3 weeks ago" },
+      { name: "Anand P.", stars: 5, text: "Dr. Nikhil performed my father's brain surgery flawlessly.", date: "1 week ago" },
+      { name: "Sreelatha K.", stars: 5, text: "Outstanding neurosurgeon. Very calm and reassuring.", date: "2 weeks ago" },
     ],
-    branches: [
-      { name: "RTC X Roads", address: "Road No. 12, Banjara Hills, Hyderabad" },
-      { name: "LB Nagar",    address: "LB Nagar Circle, Hyderabad" },
-    ],
-  },
-  {
-    id: 12, name: "Dr. Naresh Goud", initials: "NG", color: "#1a7a9a",
-    specialty: "Orthopedic & Joint Specialist", qualifications: "MBBS, MS (Ortho), DNB",
-    available: true, nextSlot: "Today, 3:30 PM", rating: 4.7, reviews: 162,
-    experience: "10 yrs", patients: "2,500+", fee: "₹480",
-    branch: "Kompally", branchId: "kompally",
-    languages: ["Telugu", "Hindi"],
-    about: "Dr. Naresh Goud is an orthopedic specialist focusing on minimally invasive joint procedures, trauma surgery, and complex fracture management.",
-    specializations: [
-      { label: "Trauma Surgery",     bg: "#e6f1fb", iconColor: "#185FA5", icon: "bone" },
-      { label: "Fracture Mgmt",      bg: "#eaf3de", iconColor: "#3B6D11", icon: "shield" },
-      { label: "Knee Arthroscopy",   bg: "#e6f4f4", iconColor: "#0a6e6e", icon: "wave" },
-      { label: "Hip Replacement",    bg: "#faeeda", iconColor: "#854F0B", icon: "drop" },
-    ],
-    education: [
-      { degree: "DNB – Orthopaedics", institute: "Nims, Hyderabad",                year: "2016" },
-      { degree: "MS – Orthopaedics",  institute: "SVS Medical College, Mahbubnagar", year: "2014" },
-      { degree: "MBBS",               institute: "Kamineni Medical College",         year: "2011" },
-    ],
-    workExp: [
-      { role: "Orthopedic Specialist", org: "MedCare Clinics – Kompally", period: "2018 – Present", code: "MC" },
-      { role: "Senior Resident",       org: "NIMS, Hyderabad",            period: "2014 – 2018",   code: "NI" },
-    ],
-    patientReviews: [
-      { name: "Rajesh V.", stars: 5, text: "Dr. Naresh fixed my hip fracture perfectly.", date: "4 days ago" },
-      { name: "Kavya R.",  stars: 4, text: "Good surgeon. Recovery was smooth.", date: "2 weeks ago" },
-    ],
-    branches: [
-      { name: "Kompally", address: "NH-44, Kompally, Hyderabad" },
-      { name: "Miyapur",  address: "Miyapur Main Rd, Near Metro Station" },
-    ],
+    branches: [{ name: "Lakdikapul", address: "Lakdikapul, Hyderabad" }],
   },
 ];
 
@@ -450,25 +247,29 @@ const DOCTORS: Doctor[] = [
 function Icon({ name, size = 16, color = "currentColor" }: { name: string; size?: number; color?: string }) {
   const s = { width: size, height: size, stroke: color, fill: "none", strokeWidth: 1.8, flexShrink: 0 } as React.CSSProperties;
   const p: Record<string, React.ReactNode> = {
-    heart:    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>,
-    wave:     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>,
-    shield:   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>,
-    drop:     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>,
-    eye:      <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>,
-    star:     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill={color} stroke="none"/>,
-    clock:    <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,
-    pin:      <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>,
-    phone:    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.94-1.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>,
-    back:     <polyline points="15 18 9 12 15 6"/>,
+    heart: <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>,
+    wave: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>,
+    shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>,
+    drop: <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>,
+    eye: <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>,
+    star: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill={color} stroke="none"/>,
+    clock: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,
+    pin: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>,
+    phone: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.94-1.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>,
+    back: <polyline points="15 18 9 12 15 6"/>,
     calendar: <><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>,
-    search:   <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
-    brain:    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.14zm5 0A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.14z"/>,
-    bone:     <path d="M17 10c.7-.7 1-1.5 1-2.5a3.5 3.5 0 0 0-7 0c0 1 .3 1.8 1 2.5L7 15c-.7.7-1 1.5-1 2.5a3.5 3.5 0 0 0 7 0c0-1-.3-1.8-1-2.5l5-5z"/>,
-    run:      <><circle cx="13" cy="4" r="1"/><path d="m7 21 2-7H5l4-7h8l-2 4h2l-3 6H9"/></>,
-    skin:     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>,
-    laser:    <><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><circle cx="12" cy="12" r="4"/></>,
-    hair:     <path d="M12 2a5 5 0 0 1 5 5c0 3-2 5-5 5S7 10 7 7a5 5 0 0 1 5-5zM4 22v-2a8 8 0 0 1 16 0v2"/>,
-    spine:    <><line x1="12" y1="2" x2="12" y2="22"/><path d="M9 6h6M9 10h6M9 14h6M9 18h6"/></>,
+    search: <><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
+    brain: <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.14zm5 0A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.14z"/>,
+    bone: <path d="M17 10c.7-.7 1-1.5 1-2.5a3.5 3.5 0 0 0-7 0c0 1 .3 1.8 1 2.5L7 15c-.7.7-1 1.5-1 2.5a3.5 3.5 0 0 0 7 0c0-1-.3-1.8-1-2.5l5-5z"/>,
+    run: <><circle cx="13" cy="4" r="1"/><path d="m7 21 2-7H5l4-7h8l-2 4h2l-3 6H9"/></>,
+    skin: <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>,
+    spine: <><line x1="12" y1="2" x2="12" y2="22"/><path d="M9 6h6M9 10h6M9 14h6M9 18h6"/></>,
+    play: <><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill={color} stroke="none"/></>,
+    chevron_right: <polyline points="9 18 15 12 9 6"/>,
+    award: <><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></>,
+    users: <><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>,
+    check: <polyline points="20 6 9 17 4 12"/>,
+    x: <><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>,
   };
   return <svg viewBox="0 0 24 24" style={s} xmlns="http://www.w3.org/2000/svg">{p[name] || p["heart"]}</svg>;
 }
@@ -478,46 +279,154 @@ function Icon({ name, size = 16, color = "currentColor" }: { name: string; size?
 // ─────────────────────────────────────────────
 
 function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <div onClick={onClick} style={cs.card}>
-      <div style={{ ...cs.availBadge, ...(doctor.available ? cs.availYes : cs.availNo) }}>
-        <span style={{ ...cs.availDot, background: doctor.available ? "#1a7a45" : "#b06000" }} />
-        {doctor.available ? "Available Today" : "Next Available"}
-      </div>
-      <div style={cs.cardTop}>
-        <div style={{ ...cs.cardAvatar, background: doctor.color }}>{doctor.initials}</div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={cs.cardName}>{doctor.name}</div>
-          <div style={cs.cardSpec}>{doctor.specialty}</div>
-          <div style={cs.cardQual}>{doctor.qualifications}</div>
+    <div
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: "#fff",
+        borderRadius: 20,
+        overflow: "hidden",
+        border: hovered ? "1.5px solid #C0145C" : "1.5px solid #f0f0f0",
+        cursor: "pointer",
+        transition: "all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
+        transform: hovered ? "translateY(-8px) scale(1.01)" : "translateY(0) scale(1)",
+        boxShadow: hovered ? "0 24px 60px rgba(192,20,92,0.18)" : "0 4px 18px rgba(0,0,0,0.06)",
+        position: "relative",
+      }}
+    >
+      {/* Top color accent strip */}
+      <div style={{
+        height: 4,
+        background: `linear-gradient(90deg, ${doctor.color}, #C0145C)`,
+        transition: "opacity 0.3s",
+        opacity: hovered ? 1 : 0.4,
+      }} />
+
+      <div style={{ padding: "18px 18px 16px" }}>
+        {/* Availability badge */}
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 5,
+          fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20,
+          marginBottom: 14, letterSpacing: "0.04em",
+          background: doctor.available ? "rgba(22,163,74,0.08)" : "rgba(234,179,8,0.1)",
+          color: doctor.available ? "#15803d" : "#b45309",
+          border: `1px solid ${doctor.available ? "rgba(22,163,74,0.2)" : "rgba(234,179,8,0.3)"}`,
+        }}>
+          <span style={{
+            width: 5, height: 5, borderRadius: "50%", flexShrink: 0,
+            background: doctor.available ? "#16a34a" : "#d97706",
+            boxShadow: doctor.available ? "0 0 0 2px rgba(22,163,74,0.25)" : "none",
+          }} />
+          {doctor.available ? "Available Today" : "Next Available"}
         </div>
-      </div>
-      <div style={cs.statsRow}>
-        <div style={cs.st}><strong style={cs.stv}>⭐ {doctor.rating}</strong><small style={cs.stl}>{doctor.reviews} reviews</small></div>
-        <div style={cs.stDiv} />
-        <div style={cs.st}><strong style={cs.stv}>{doctor.experience}</strong><small style={cs.stl}>Experience</small></div>
-        <div style={cs.stDiv} />
-        <div style={cs.st}><strong style={cs.stv}>{doctor.fee}</strong><small style={cs.stl}>Fee</small></div>
-      </div>
-      <div style={cs.langRow}>
-        {doctor.languages.map(l => <span key={l} style={cs.langTag}>{l}</span>)}
-        <span style={{ ...cs.langTag, background: "#e6f4f4", color: "#085041" }}>{doctor.branch}</span>
-      </div>
-      <div style={cs.cardFoot}>
-        <div style={cs.slotTxt}><Icon name="clock" size={13} color="#7a9090" />&nbsp;{doctor.nextSlot}</div>
-        <button style={cs.bookBtn} onClick={e => { e.stopPropagation(); onClick(); }}>Book Appointment</button>
+
+        {/* Doctor info */}
+        <div style={{ display: "flex", gap: 13, alignItems: "flex-start", marginBottom: 14 }}>
+          <div style={{
+            width: 58, height: 58, borderRadius: 14, overflow: "hidden",
+            flexShrink: 0, border: "2px solid #f8f8f8",
+            background: doctor.color,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 17, fontWeight: 800, color: "#fff",
+            fontFamily: "'Cormorant Garamond', serif",
+            boxShadow: `0 4px 12px ${doctor.color}40`,
+          }}>
+            {doctor.image
+              ? <img src={doctor.image} alt={doctor.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              : doctor.initials}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, fontWeight: 700, color: "#0f1a1a", marginBottom: 2, lineHeight: 1.2 }}>
+              {doctor.name}
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#C0145C", marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              {doctor.specialty}
+            </div>
+            <div style={{ fontSize: 10, color: "#94a3a3" }}>{doctor.qualifications}</div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div style={{
+          display: "flex", alignItems: "center",
+          background: "linear-gradient(135deg, #f8fafa, #f0f8f8)",
+          borderRadius: 11, padding: "10px 12px", marginBottom: 12,
+          border: "1px solid #e8f4f4",
+        }}>
+          {[
+            { v: `⭐ ${doctor.rating}`, l: `${doctor.reviews} reviews` },
+            { v: doctor.experience, l: "Experience" },
+            { v: doctor.fee, l: "per visit" },
+          ].map((s, i, a) => (
+            <div key={s.l} style={{ flex: 1, textAlign: "center", display: "flex", flexDirection: "column", gap: 2 }}>
+              <strong style={{ fontSize: 12, fontWeight: 700, color: "#0f1a1a" }}>{s.v}</strong>
+              <small style={{ fontSize: 9, color: "#7a9090" }}>{s.l}</small>
+              {i < a.length - 1 && (
+                <div style={{ position: "absolute", width: 1, height: 24, background: "#d0e8e8" }} />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Languages */}
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 14 }}>
+          {doctor.languages.map(l => (
+            <span key={l} style={{
+              fontSize: 9, fontWeight: 600, color: "#0a6e6e",
+              background: "#e6f4f4", padding: "2px 8px", borderRadius: 20,
+            }}>{l}</span>
+          ))}
+          <span style={{
+            fontSize: 9, fontWeight: 600, color: "#C0145C",
+            background: "rgba(192,20,92,0.07)", padding: "2px 8px", borderRadius: 20,
+          }}>{doctor.branch}</span>
+        </div>
+
+        {/* Footer */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#5a7070" }}>
+            <Icon name="clock" size={12} color="#7a9090" />
+            {doctor.nextSlot}
+          </div>
+          <button
+            onClick={e => { e.stopPropagation(); onClick(); }}
+            style={{
+              background: hovered ? "linear-gradient(135deg, #C0145C, #880E4F)" : "#0a6e6e",
+              color: "#fff", border: "none", borderRadius: 9,
+              padding: "8px 14px", fontSize: 11, fontWeight: 700,
+              transition: "all 0.3s ease", whiteSpace: "nowrap",
+              boxShadow: hovered ? "0 4px 16px rgba(192,20,92,0.4)" : "none",
+            }}
+          >
+            Book Now
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
 // ─────────────────────────────────────────────
-// DOCTOR DETAIL PAGE
+// DOCTOR DETAIL PAGE — PREMIUM REDESIGN
 // ─────────────────────────────────────────────
 
 function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }) {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [booked, setBooked] = useState(false);
+  const [activeTab, setActiveTab] = useState<"overview" | "education" | "reviews">("overview");
+  const [scrollY, setScrollY] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = document.getElementById("detail-scroll-container");
+    if (!el) return;
+    const handler = () => setScrollY(el.scrollTop);
+    el.addEventListener("scroll", handler);
+    return () => el.removeEventListener("scroll", handler);
+  }, []);
 
   const handleBook = () => {
     if (!selectedSlot) return;
@@ -525,225 +434,751 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
     setTimeout(() => setBooked(false), 3500);
   };
 
+  const parallaxOffset = Math.min(scrollY * 0.4, 80);
+  const heroOpacity = Math.max(1 - scrollY / 350, 0);
+
   return (
-    <div style={cs.detailPage}>
-      {/* Top bar */}
-      <div style={cs.topbar}>
-        <button style={cs.backBtn} onClick={onBack}>
-          <Icon name="back" size={16} color="rgba(255,255,255,0.85)" />
-          <span style={{ marginLeft: 5 }}>All Doctors</span>
+    <div id="detail-scroll-container" style={{ minHeight: "100vh", overflowY: "auto", background: "#0a0f0f", fontFamily: "'DM Sans', sans-serif" }}>
+
+      {/* ── FLOATING NAV ── */}
+      <div style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        padding: "14px 28px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        background: scrollY > 120 ? "rgba(10,15,15,0.95)" : "transparent",
+        backdropFilter: scrollY > 120 ? "blur(20px)" : "none",
+        borderBottom: scrollY > 120 ? "1px solid rgba(255,255,255,0.06)" : "none",
+        transition: "all 0.4s ease",
+      }}>
+        <button
+          onClick={onBack}
+          style={{
+            display: "flex", alignItems: "center", gap: 8,
+            background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)",
+            color: "#fff", padding: "8px 16px", borderRadius: 30,
+            fontSize: 12, fontWeight: 600, cursor: "pointer",
+            backdropFilter: "blur(10px)", transition: "all 0.2s",
+          }}
+        >
+          <Icon name="back" size={14} color="#fff" />
+          All Doctors
         </button>
-        <span style={cs.topbarTitle}>Doctor Profile</span>
+        <div style={{ color: "#fff", fontSize: 13, fontWeight: 600, opacity: scrollY > 120 ? 1 : 0, transition: "opacity 0.3s" }}>
+          {doctor.name}
+        </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <button style={cs.tbBtn}>Share</button>
-          <button style={cs.tbBtn}>Save</button>
+          <button style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", padding: "8px 16px", borderRadius: 30, fontSize: 12, cursor: "pointer" }}>Share</button>
+          <button style={{ background: "rgba(192,20,92,0.8)", border: "none", color: "#fff", padding: "8px 16px", borderRadius: 30, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Save</button>
         </div>
       </div>
 
-      {/* Hero */}
-      <div style={cs.detailHero}>
-        <div style={cs.detailHeroInner}>
-          <div style={{ ...cs.detailAvatar, background: doctor.color }}>{doctor.initials}</div>
-          <div style={cs.heroInfo}>
-            <div style={cs.availPill}>
-              <span style={cs.availPillDot} />
-              {doctor.available ? "Available Today" : "Next Available Tomorrow"}
-            </div>
-            <h1 style={cs.detailName}>{doctor.name}</h1>
-            <p style={cs.detailSpec}>{doctor.specialty}</p>
-            <p style={cs.detailQual}>{doctor.qualifications}</p>
-            <div style={cs.heroTags}>
-              {doctor.languages.map(l => <span key={l} style={cs.htag}>{l}</span>)}
-              <span style={cs.htag}>{doctor.branch}</span>
-            </div>
+      {/* ── CINEMATIC HERO ── */}
+      <div ref={heroRef} style={{
+        position: "relative", height: "100vh", minHeight: 600,
+        overflow: "hidden", display: "flex", alignItems: "flex-end",
+      }}>
+        {/* Background gradient */}
+        <div style={{
+          position: "absolute", inset: 0,
+          background: `linear-gradient(135deg, #0a0f0f 0%, ${doctor.color}22 50%, #C0145C15 100%)`,
+        }} />
+
+        {/* Animated grid pattern */}
+        <div style={{
+          position: "absolute", inset: 0, opacity: 0.04,
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          transform: `translateY(${parallaxOffset}px)`,
+        }} />
+
+        {/* Glow orbs */}
+        <div style={{
+          position: "absolute", top: "20%", right: "10%",
+          width: 400, height: 400, borderRadius: "50%",
+          background: `radial-gradient(circle, ${doctor.color}30, transparent 70%)`,
+          filter: "blur(40px)",
+          transform: `translateY(${parallaxOffset * 0.5}px)`,
+        }} />
+        <div style={{
+          position: "absolute", bottom: "20%", left: "5%",
+          width: 300, height: 300, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(192,20,92,0.2), transparent 70%)",
+          filter: "blur(30px)",
+        }} />
+
+        {/* Doctor portrait (large, right-aligned) */}
+        <div style={{
+          position: "absolute", right: "5%", bottom: 0,
+          width: "min(45%, 420px)", height: "85%",
+          transform: `translateY(${parallaxOffset * 0.2}px)`,
+          opacity: heroOpacity,
+        }}>
+                      <div
+  style={{
+    width: "100%",
+    height: "100%",
+    borderRadius: 24,
+    overflow: "hidden",
+    position: "relative",
+    background: "#000"
+  }}
+>
+  {doctor.image ? (
+    <img
+      src={doctor.image}
+      alt={doctor.name}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "contain",        // ✅ FULL IMAGE visible
+        objectPosition: "center",
+        borderRadius: 24,            // ✅ rounded corners
+        background: "#000"           // ✅ fills empty space nicely
+      }}
+    />
+  ) : (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: `linear-gradient(180deg, ${doctor.color}40 0%, transparent 100%)`,
+        borderRadius: 24
+      }}
+    >
+      <span
+        style={{
+          fontSize: 140,
+          fontWeight: 900,
+          color: "rgba(255,255,255,0.08)",
+          fontFamily: "'Cormorant Garamond', serif"
+        }}
+      >
+        {doctor.initials}
+      </span>
+    </div>
+  )}
+</div>
+          
+             </div>   
+
+        {/* Hero content */}
+        <div style={{
+          position: "relative", zIndex: 10,
+          padding: "0 40px 60px",
+          maxWidth: 600,
+          opacity: heroOpacity,
+          transform: `translateY(${-parallaxOffset * 0.3}px)`,
+        }}>
+          {/* Available pill */}
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            background: doctor.available ? "rgba(22,163,74,0.12)" : "rgba(234,179,8,0.12)",
+            border: `1px solid ${doctor.available ? "rgba(22,163,74,0.3)" : "rgba(234,179,8,0.3)"}`,
+            color: doctor.available ? "#4ade80" : "#fbbf24",
+            padding: "6px 14px", borderRadius: 30, fontSize: 11, fontWeight: 700,
+            marginBottom: 20, letterSpacing: "0.05em",
+            backdropFilter: "blur(10px)",
+          }}>
+            <span style={{
+              width: 6, height: 6, borderRadius: "50%",
+              background: doctor.available ? "#4ade80" : "#fbbf24",
+              boxShadow: doctor.available ? "0 0 8px #4ade80" : "0 0 8px #fbbf24",
+              animation: doctor.available ? "pulse 2s infinite" : "none",
+            }} />
+            {doctor.available ? "AVAILABLE TODAY" : `NEXT: ${doctor.nextSlot}`}
           </div>
+
+          <h1 style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "clamp(36px, 5vw, 62px)",
+            fontWeight: 700, color: "#fff",
+            lineHeight: 1.1, marginBottom: 10,
+            letterSpacing: "-0.02em",
+          }}>{doctor.name}</h1>
+
+          <div style={{
+            fontSize: 14, fontWeight: 700, color: "#C0145C",
+            textTransform: "uppercase", letterSpacing: "0.12em",
+            marginBottom: 6,
+          }}>{doctor.specialty}</div>
+
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginBottom: 28 }}>
+            {doctor.qualifications}
+          </div>
+
+          {/* Hero stats */}
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 32 }}>
+            {[
+              { icon: "star", val: doctor.rating.toString(), lbl: "Rating", color: "#fbbf24" },
+              { icon: "award", val: doctor.experience, lbl: "Experience", color: "#60a5fa" },
+              { icon: "users", val: doctor.patients, lbl: "Patients", color: "#34d399" },
+            ].map(s => (
+              <div key={s.lbl} style={{
+                display: "flex", alignItems: "center", gap: 10,
+                background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: 12, padding: "10px 16px",
+              }}>
+                <Icon name={s.icon} size={16} color={s.color} />
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#fff" }}>{s.val}</div>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.lbl}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Language tags */}
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {doctor.languages.map(l => (
+              <span key={l} style={{
+                background: "rgba(255,255,255,0.07)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                color: "rgba(255,255,255,0.6)",
+                fontSize: 10, fontWeight: 600, padding: "4px 12px", borderRadius: 20,
+              }}>{l}</span>
+            ))}
+            <span style={{
+              background: "rgba(192,20,92,0.2)", border: "1px solid rgba(192,20,92,0.4)",
+              color: "#f472b6", fontSize: 10, fontWeight: 700, padding: "4px 12px", borderRadius: 20,
+            }}>{doctor.branch}</span>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{
+          position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+          opacity: Math.max(1 - scrollY / 100, 0), transition: "opacity 0.3s",
+        }}>
+          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Scroll</div>
+          <div style={{ width: 1, height: 30, background: "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)" }} />
         </div>
       </div>
 
-      {/* Stats */}
-      <div style={cs.detailStats}>
-        {[
-          { v: `⭐ ${doctor.rating}`, l: "Rating" },
-          { v: doctor.reviews,       l: "Reviews" },
-          { v: doctor.experience,    l: "Experience" },
-          { v: doctor.patients,      l: "Patients" },
-        ].map((s, i, a) => (
-          <div key={s.l} style={{ display: "flex", alignItems: "center" }}>
-            <div style={cs.statItem}>
-              <strong style={cs.detailStatVal}>{s.v}</strong>
-              <small style={cs.detailStatLbl}>{s.l}</small>
-            </div>
-            {i < a.length - 1 && <div style={cs.detailStatDiv} />}
-          </div>
-        ))}
-      </div>
+      {/* ── MAIN CONTENT AREA ── */}
+      <div style={{ background: "#f5f7f7" }}>
 
-      {/* Body */}
-      <div style={cs.detailBody}>
-        {/* Main */}
-        <div style={cs.detailMain}>
-          <SecTitle>About</SecTitle>
-          <p style={cs.aboutTxt}>{doctor.about}</p>
-
-          <SecTitle>Specializations</SecTitle>
-          <div style={cs.specGrid}>
-            {doctor.specializations.map(sp => (
-              <div key={sp.label} style={cs.specCard}>
-                <div style={{ ...cs.specIcon, background: sp.bg }}>
-                  <Icon name={sp.icon} size={15} color={sp.iconColor} />
-                </div>
-                <span style={cs.specName}>{sp.label}</span>
-              </div>
+        {/* STICKY ACTION BAR */}
+        <div style={{
+          background: "#fff",
+          borderBottom: "1px solid #e8f0f0",
+          padding: "16px 40px",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          flexWrap: "wrap", gap: 12,
+          position: "sticky", top: 0, zIndex: 50,
+        }}>
+          <div style={{ display: "flex", gap: 4 }}>
+            {(["overview", "education", "reviews"] as const).map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                style={{
+                  padding: "8px 18px", borderRadius: 9,
+                  border: "none", cursor: "pointer",
+                  fontSize: 12, fontWeight: 600,
+                  textTransform: "capitalize",
+                  background: activeTab === tab ? "#0a0f0f" : "transparent",
+                  color: activeTab === tab ? "#fff" : "#5a7070",
+                  transition: "all 0.2s",
+                }}
+              >{tab}</button>
             ))}
           </div>
-
-          <SecTitle>Education</SecTitle>
-          <div style={{ marginBottom: 22 }}>
-            {doctor.education.map(e => (
-              <div key={e.degree} style={cs.eduItem}>
-                <div style={cs.eduDot} />
-                <div>
-                  <div style={cs.eduDeg}>{e.degree}</div>
-                  <div style={cs.eduInst}>{e.institute} · {e.year}</div>
-                </div>
-              </div>
-            ))}
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 13, color: "#5a7070" }}>Consultation:</span>
+            <span style={{ fontSize: 20, fontWeight: 800, color: "#0a6e6e" }}>{doctor.fee}</span>
+            <button
+              onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
+              style={{
+                background: "linear-gradient(135deg, #C0145C, #880E4F)",
+                color: "#fff", border: "none", borderRadius: 10,
+                padding: "10px 22px", fontSize: 12, fontWeight: 700, cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(192,20,92,0.35)",
+                transition: "all 0.2s",
+              }}
+            >Book Appointment</button>
           </div>
+        </div>
 
-          <SecTitle>Work Experience</SecTitle>
-          <div style={{ marginBottom: 22 }}>
-            {doctor.workExp.map((e, i) => (
-              <div key={e.role} style={{ ...cs.expItem, borderBottom: i < doctor.workExp.length - 1 ? "0.5px solid #e0eeee" : "none" }}>
-                <div style={cs.expLogo}>{e.code}</div>
-                <div>
-                  <div style={cs.expRole}>{e.role}</div>
-                  <div style={cs.expOrg}>{e.org}</div>
-                  <div style={cs.expYr}>{e.period}</div>
+        {/* CONTENT + SIDEBAR */}
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px 80px", display: "flex", gap: 28, alignItems: "flex-start" }}>
+
+          {/* ── LEFT MAIN ── */}
+          <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 24 }}>
+
+            {/* About */}
+            {activeTab === "overview" && (
+              <>
+                <div style={cardStyle}>
+                  <SectionHeading>About</SectionHeading>
+                  <p style={{ fontSize: 14, color: "#4a6060", lineHeight: 1.85 }}>{doctor.about}</p>
                 </div>
-              </div>
-            ))}
-          </div>
 
-          <SecTitle>Patient Reviews</SecTitle>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {doctor.patientReviews.map(r => (
-              <div key={r.name} style={cs.revCard}>
-                <div style={cs.revHeader}>
-                  <div>
-                    <div style={cs.revName}>{r.name}</div>
-                    <div style={cs.revDate}>{r.date}</div>
-                  </div>
-                  <div style={{ display: "flex", gap: 2 }}>
-                    {Array.from({ length: r.stars }).map((_, i) => (
-                      <Icon key={i} name="star" size={12} color="#c8972a" />
+                {/* Specializations */}
+                <div style={cardStyle}>
+                  <SectionHeading>Areas of Expertise</SectionHeading>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
+                    {doctor.specializations.map(sp => (
+                      <div key={sp.label} style={{
+                        display: "flex", alignItems: "center", gap: 12,
+                        padding: "14px 16px", borderRadius: 12,
+                        border: "1px solid #e8f0f0",
+                        background: "linear-gradient(135deg, #fff, #f8fdfd)",
+                        transition: "all 0.2s",
+                      }}>
+                        <div style={{
+                          width: 38, height: 38, borderRadius: 10,
+                          background: sp.bg,
+                          display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                        }}>
+                          <Icon name={sp.icon} size={16} color={sp.iconColor} />
+                        </div>
+                        <span style={{ fontSize: 12, fontWeight: 600, color: "#1a2f2f" }}>{sp.label}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
-                <p style={cs.revTxt}>{r.text}</p>
+
+                {/* Work Experience */}
+                <div style={cardStyle}>
+                  <SectionHeading>Work Experience</SectionHeading>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                    {doctor.workExp.map((e, i) => (
+                      <div key={e.role} style={{
+                        display: "flex", gap: 16, padding: "16px 0",
+                        borderBottom: i < doctor.workExp.length - 1 ? "1px solid #f0f8f8" : "none",
+                      }}>
+                        <div style={{
+                          width: 44, height: 44, borderRadius: 10,
+                          background: "linear-gradient(135deg, #e6f4f4, #d0ebeb)",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: 11, fontWeight: 800, color: "#0a6e6e", flexShrink: 0,
+                        }}>{e.code}</div>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: "#1a2f2f" }}>{e.role}</div>
+                          <div style={{ fontSize: 12, color: "#4a6060", marginTop: 2 }}>{e.org}</div>
+                          <div style={{
+                            fontSize: 10, color: "#9aafaf", marginTop: 4,
+                            background: "#f4fafa", padding: "2px 8px", borderRadius: 20, display: "inline-block",
+                          }}>{e.period}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Education Tab */}
+            {activeTab === "education" && (
+              <div style={cardStyle}>
+                <SectionHeading>Education & Qualifications</SectionHeading>
+                <div style={{ position: "relative", paddingLeft: 28 }}>
+                  <div style={{
+                    position: "absolute", left: 8, top: 8, bottom: 8,
+                    width: 2, background: "linear-gradient(to bottom, #C0145C, #0a6e6e)",
+                    borderRadius: 1,
+                  }} />
+                  {doctor.education.map((e, i) => (
+                    <div key={e.degree} style={{
+                      position: "relative", marginBottom: 24,
+                      background: "#fff", borderRadius: 12, padding: "16px 18px",
+                      border: "1px solid #e8f0f0",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                    }}>
+                      <div style={{
+                        position: "absolute", left: -38, top: 18,
+                        width: 12, height: 12, borderRadius: "50%",
+                        background: i === 0 ? "#C0145C" : "#0a6e6e",
+                        border: "2px solid #fff",
+                        boxShadow: `0 0 0 3px ${i === 0 ? "rgba(192,20,92,0.2)" : "rgba(10,110,110,0.2)"}`,
+                      }} />
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "#1a2f2f" }}>{e.degree}</div>
+                      <div style={{ fontSize: 12, color: "#4a6060", marginTop: 4 }}>{e.institute}</div>
+                      <div style={{
+                        fontSize: 10, color: "#C0145C", fontWeight: 700,
+                        marginTop: 6, display: "inline-block",
+                        background: "rgba(192,20,92,0.07)", padding: "2px 8px", borderRadius: 20,
+                      }}>Class of {e.year}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
+
+            {/* Reviews Tab */}
+            {activeTab === "reviews" && (
+              <div style={cardStyle}>
+                <SectionHeading>Patient Reviews</SectionHeading>
+                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  {doctor.patientReviews.map(r => (
+                    <div key={r.name} style={{
+                      background: "linear-gradient(135deg, #f8fdfd, #fff)",
+                      border: "1px solid #e0eeee", borderRadius: 14, padding: "16px 18px",
+                    }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                        <div>
+                          <div style={{ fontSize: 13, fontWeight: 700, color: "#1a2f2f" }}>{r.name}</div>
+                          <div style={{ fontSize: 10, color: "#9aafaf", marginTop: 2 }}>{r.date}</div>
+                        </div>
+                        <div style={{ display: "flex", gap: 2, alignItems: "center" }}>
+                          {Array.from({ length: r.stars }).map((_, i) => (
+                            <Icon key={i} name="star" size={13} color="#f59e0b" />
+                          ))}
+                        </div>
+                      </div>
+                      <p style={{ fontSize: 13, color: "#4a6060", lineHeight: 1.7 }}>{r.text}</p>
+                      <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                        <button style={{ fontSize: 10, color: "#0a6e6e", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>👍 Helpful</button>
+                        <button style={{ fontSize: 10, color: "#9aafaf", background: "none", border: "none", cursor: "pointer" }}>Reply</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
 
-        {/* Sidebar */}
-        <div style={cs.detailSidebar}>
-          {/* Booking */}
-          <div style={cs.bookCard}>
-            <div style={cs.feeRow}>
-              <div>
-                <div style={cs.feeLabel}>Consultation fee</div>
-                <div style={cs.feeAmt}>{doctor.fee}</div>
-                <div style={cs.feeSub}>per visit</div>
+          {/* ── RIGHT SIDEBAR ── */}
+          <div id="booking-widget" style={{ width: 300, flexShrink: 0, display: "flex", flexDirection: "column", gap: 16 }}>
+
+            {/* Booking Card */}
+            <div style={{
+              background: "#0a0f0f",
+              borderRadius: 20, overflow: "hidden",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+              border: "1px solid rgba(255,255,255,0.06)",
+            }}>
+              <div style={{
+                padding: "20px 18px 0",
+                background: `linear-gradient(135deg, ${doctor.color}20, rgba(192,20,92,0.15))`,
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                marginBottom: 0,
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+                  <div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.06em" }}>Consultation Fee</div>
+                    <div style={{ fontSize: 28, fontWeight: 800, color: "#fff" }}>{doctor.fee}</div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>per visit · Includes follow-up</div>
+                  </div>
+                  <div style={{
+                    background: doctor.available ? "rgba(74,222,128,0.12)" : "rgba(251,191,36,0.12)",
+                    border: `1px solid ${doctor.available ? "rgba(74,222,128,0.25)" : "rgba(251,191,36,0.25)"}`,
+                    borderRadius: 8, padding: "6px 10px", textAlign: "center",
+                  }}>
+                    <div style={{ fontSize: 9, color: doctor.available ? "#4ade80" : "#fbbf24", fontWeight: 700 }}>
+                      {doctor.available ? "TODAY" : "TOMORROW"}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div style={cs.nextSlotPill}>
-                <Icon name="clock" size={12} color="#0a6e6e" />
-                <span style={{ fontSize: 10, color: "#0a6e6e", marginLeft: 4 }}>Next: {doctor.nextSlot}</span>
+
+              <div style={{ padding: "16px 18px" }}>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
+                  <Icon name="calendar" size={11} color="rgba(255,255,255,0.4)" /> &nbsp;Select Time Slot
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6, marginBottom: 16 }}>
+                  {TIME_SLOTS.map(s => (
+                    <button
+                      key={s}
+                      onClick={() => setSelectedSlot(s)}
+                      style={{
+                        padding: "7px 2px", borderRadius: 8,
+                        border: `1px solid ${selectedSlot === s ? "#C0145C" : "rgba(255,255,255,0.1)"}`,
+                        background: selectedSlot === s ? "rgba(192,20,92,0.25)" : "rgba(255,255,255,0.04)",
+                        color: selectedSlot === s ? "#f472b6" : "rgba(255,255,255,0.5)",
+                        fontSize: 10, fontWeight: selectedSlot === s ? 700 : 500,
+                        cursor: "pointer", transition: "all 0.2s", textAlign: "center",
+                      }}
+                    >{s}</button>
+                  ))}
+                </div>
+
+                {booked ? (
+                  <div style={{
+                    background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.25)",
+                    borderRadius: 10, padding: "12px 16px", display: "flex", alignItems: "center", gap: 8,
+                    color: "#4ade80", fontSize: 13, fontWeight: 700,
+                  }}>
+                    <Icon name="check" size={16} color="#4ade80" />
+                    Booked for {selectedSlot}!
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleBook}
+                    disabled={!selectedSlot}
+                    style={{
+                      width: "100%", padding: "13px",
+                      borderRadius: 10, border: "none",
+                      background: selectedSlot
+                        ? "linear-gradient(135deg, #C0145C, #880E4F)"
+                        : "rgba(255,255,255,0.06)",
+                      color: selectedSlot ? "#fff" : "rgba(255,255,255,0.25)",
+                      fontSize: 13, fontWeight: 700, cursor: selectedSlot ? "pointer" : "not-allowed",
+                      boxShadow: selectedSlot ? "0 8px 24px rgba(192,20,92,0.4)" : "none",
+                      transition: "all 0.3s",
+                    }}
+                  >
+                    {selectedSlot ? `Confirm ${selectedSlot}` : "Select a time slot"}
+                  </button>
+                )}
+                <p style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", textAlign: "center", marginTop: 8 }}>
+                  Free cancellation up to 2 hrs before
+                </p>
               </div>
             </div>
 
-            <div style={cs.slotHeading}>
-              <Icon name="calendar" size={13} color="#5a7070" />
-              <span style={{ marginLeft: 5, fontSize: 11, color: "#5a7070", fontWeight: 600 }}>Choose a time slot — Today</span>
-            </div>
-            <div style={cs.slotsGrid}>
-              {TIME_SLOTS.map(s => (
-                <button
-                  key={s}
-                  style={{ ...cs.slotBtn, ...(selectedSlot === s ? cs.slotBtnSel : {}) }}
-                  onClick={() => setSelectedSlot(s)}
-                >
-                  {s}
-                </button>
+            {/* Info Card */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: "16px", border: "1px solid #e8f0f0" }}>
+              {[
+                { icon: "pin", label: "Branch", val: doctor.branch },
+                { icon: "clock", label: "Timings", val: "9:00 AM – 6:00 PM" },
+                { icon: "phone", label: "Helpline", val: "1800-XXX-XXXX" },
+              ].map((r, i, a) => (
+                <div key={r.label} style={{
+                  display: "flex", alignItems: "center", gap: 12,
+                  padding: "10px 0",
+                  borderBottom: i < a.length - 1 ? "1px solid #f0f8f8" : "none",
+                }}>
+                  <div style={{
+                    width: 32, height: 32, borderRadius: 8,
+                    background: "#e6f4f4", display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    <Icon name={r.icon} size={14} color="#0a6e6e" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 10, color: "#9aafaf" }}>{r.label}</div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#1a2f2f", marginTop: 1 }}>{r.val}</div>
+                  </div>
+                </div>
               ))}
             </div>
 
-            {booked
-              ? <div style={cs.successMsg}>✓ Booked for {selectedSlot}!</div>
-              : <button
-                  style={{ ...cs.bookBtnMain, ...(selectedSlot ? {} : cs.bookBtnDis) }}
-                  onClick={handleBook}
-                  disabled={!selectedSlot}
-                >
-                  {selectedSlot ? `Confirm ${selectedSlot}` : "Select a slot to book"}
-                </button>
-            }
-            <p style={cs.bookNote}>Free cancellation up to 2 hrs before appointment</p>
-          </div>
-
-          {/* Info */}
-          <div style={cs.infoCard}>
-            {[
-              { icon: "pin",   label: "Branch",   val: doctor.branch },
-              { icon: "clock", label: "Timings",  val: "9:00 AM – 6:00 PM" },
-              { icon: "phone", label: "Helpline", val: "1800-XXX-XXXX" },
-            ].map((r, i, a) => (
-              <div key={r.label} style={{ ...cs.infoRow, borderBottom: i < a.length - 1 ? "0.5px solid #e8f4f4" : "none" }}>
-                <div style={cs.infoIcon}><Icon name={r.icon} size={13} color="#0a6e6e" /></div>
-                <div>
-                  <div style={cs.infoLabel}>{r.label}</div>
-                  <div style={cs.infoVal}>{r.val}</div>
+            {/* Available at */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: "16px", border: "1px solid #e8f0f0" }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#5a7070", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Available At</div>
+              {doctor.branches.map(b => (
+                <div key={b.name} style={{
+                  display: "flex", alignItems: "flex-start", gap: 10,
+                  background: "linear-gradient(135deg, #e6f4f4, #d8eded)",
+                  borderRadius: 10, padding: "10px 12px",
+                }}>
+                  <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#0a6e6e", marginTop: 4, flexShrink: 0 }} />
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#085041" }}>{b.name}</div>
+                    <div style={{ fontSize: 10, color: "#0F6E56", marginTop: 2 }}>{b.address}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Branches */}
-          <div style={cs.sideHeading}>Available at</div>
-          {doctor.branches.map(b => (
-            <div key={b.name} style={cs.branchBadge}>
-              <div style={cs.branchDot} />
-              <div>
-                <div style={cs.branchName}>{b.name}</div>
-                <div style={cs.branchAddr}>{b.address}</div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
+
+        {/* ── YOUTUBE VIDEO SECTION ── */}
+        <div style={{
+          background: "#0a0f0f",
+          padding: "70px 24px 80px",
+          borderTop: "1px solid rgba(255,255,255,0.04)",
+        }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            {/* Section header */}
+            <div style={{ marginBottom: 40, textAlign: "center" }}>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "rgba(192,20,92,0.1)", border: "1px solid rgba(192,20,92,0.25)",
+                borderRadius: 30, padding: "6px 16px", marginBottom: 16,
+              }}>
+                <Icon name="play" size={12} color="#C0145C" />
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#C0145C", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  Watch & Learn
+                </span>
+              </div>
+              <h2 style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(28px, 4vw, 44px)",
+                fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 12,
+              }}>
+                Srikara <em style={{ color: "#C0145C", fontStyle: "normal" }}>Excellence</em> on Screen
+              </h2>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", maxWidth: 480, margin: "0 auto" }}>
+                Watch our specialists explain procedures, share patient stories, and demonstrate our world-class care.
+              </p>
+            </div>
+
+            {/* Video Grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+              gap: 20,
+            }}>
+              {YOUTUBE_VIDEOS.map((video, idx) => (
+                <VideoCard key={video.id} video={video} index={idx} />
+              ))}
+            </div>
+
+            {/* View all button */}
+            <div style={{ textAlign: "center", marginTop: 36 }}>
+              <a
+                href="https://www.youtube.com/@SrikaraHospitals"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 8,
+                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.7)", padding: "12px 28px", borderRadius: 30,
+                  fontSize: 13, fontWeight: 600, textDecoration: "none",
+                  transition: "all 0.2s",
+                }}
+              >
+                View All Videos on YouTube
+                <Icon name="chevron_right" size={14} color="rgba(255,255,255,0.5)" />
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { box-shadow: 0 0 8px #4ade80; }
+          50% { box-shadow: 0 0 16px #4ade80, 0 0 24px rgba(74,222,128,0.3); }
+        }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
 
-function SecTitle({ children }: { children: React.ReactNode }) {
+function VideoCard({ video, index }: { video: typeof YOUTUBE_VIDEOS[0]; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const thumbnailUrl = `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`;
+
   return (
-    <div style={{
-      fontSize: 11, fontWeight: 700, color: "#3a5050",
-      textTransform: "uppercase" as const, letterSpacing: "0.07em",
-      marginBottom: 12, paddingBottom: 8,
-      borderBottom: "0.5px solid #e0eeee",
-    }}>{children}</div>
+    <a
+      href={`https://www.youtube.com/watch?v=${video.id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "block", textDecoration: "none",
+        borderRadius: 16, overflow: "hidden",
+        border: `1px solid ${hovered ? "rgba(192,20,92,0.4)" : "rgba(255,255,255,0.08)"}`,
+        transform: hovered ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)",
+        transition: "all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
+        boxShadow: hovered ? "0 20px 50px rgba(192,20,92,0.2)" : "0 4px 20px rgba(0,0,0,0.3)",
+        background: "#111819",
+        animation: `fadeUp 0.5s ease ${index * 0.1}s both`,
+      }}
+    >
+      {/* Thumbnail */}
+      <div style={{ position: "relative", paddingTop: "56.25%", background: "#1a2020", overflow: "hidden" }}>
+        <img
+          src={thumbnailUrl}
+          alt={video.title}
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover",
+            filter: hovered ? "brightness(0.7) saturate(1.2)" : "brightness(0.5) saturate(0.8)",
+            transform: hovered ? "scale(1.06)" : "scale(1)",
+            transition: "all 0.5s ease",
+          }}
+          onError={e => { (e.target as HTMLImageElement).src = "https://img.youtube.com/vi/" + video.id + "/hqdefault.jpg"; }}
+        />
+
+        {/* Play button */}
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <div style={{
+            width: 52, height: 52, borderRadius: "50%",
+            background: hovered ? "#C0145C" : "rgba(255,255,255,0.9)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            transition: "all 0.3s ease",
+            boxShadow: hovered ? "0 0 30px rgba(192,20,92,0.5)" : "0 4px 20px rgba(0,0,0,0.4)",
+            transform: hovered ? "scale(1.1)" : "scale(1)",
+          }}>
+            <svg viewBox="0 0 24 24" style={{ width: 20, height: 20 }}>
+              <polygon points="5 3 19 12 5 21 5 3" fill={hovered ? "#fff" : "#C0145C"} />
+            </svg>
+          </div>
+        </div>
+
+        {/* Duration badge */}
+        <div style={{
+          position: "absolute", bottom: 8, right: 8,
+          background: "rgba(0,0,0,0.8)", color: "#fff",
+          fontSize: 10, fontWeight: 600, padding: "2px 6px", borderRadius: 4,
+        }}>Srikara TV</div>
+      </div>
+
+      {/* Info */}
+      <div style={{ padding: "14px 16px 16px" }}>
+        <div style={{
+          fontSize: 9, fontWeight: 700, color: "#C0145C",
+          textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6,
+        }}>{video.subtitle}</div>
+        <div style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: 16, fontWeight: 700,
+          color: hovered ? "#fff" : "rgba(255,255,255,0.85)",
+          lineHeight: 1.3, transition: "color 0.2s",
+        }}>{video.title}</div>
+        <div style={{
+          display: "flex", alignItems: "center", gap: 6,
+          marginTop: 10, color: "rgba(255,255,255,0.3)", fontSize: 11,
+        }}>
+          <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, fill: "rgba(255,0,0,0.6)" }}>
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.28 8.28 0 0 0 4.83 1.54V6.77a4.85 4.85 0 0 1-1.06-.08z"/>
+          </svg>
+          Srikara Hospitals · Watch on YouTube
+        </div>
+      </div>
+    </a>
   );
 }
+
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: 20, fontWeight: 700, color: "#0f1a1a",
+      marginBottom: 16, paddingBottom: 12,
+      borderBottom: "2px solid #f0f8f8",
+      display: "flex", alignItems: "center", gap: 10,
+    }}>
+      <span style={{ width: 3, height: 18, background: "linear-gradient(to bottom, #C0145C, #0a6e6e)", borderRadius: 2, display: "inline-block" }} />
+      {children}
+    </div>
+  );
+}
+
+const cardStyle: React.CSSProperties = {
+  background: "#fff",
+  borderRadius: 18,
+  padding: "24px",
+  border: "1px solid #e8f0f0",
+  boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+};
 
 // ─────────────────────────────────────────────
 // MAIN PAGE
 // ─────────────────────────────────────────────
 
 export default function DoctorsPage() {
-  const [activeBranch, setActiveBranch]   = useState("all");
-  const [activeSpec, setActiveSpec]       = useState("All Specialties");
-  const [search, setSearch]               = useState("");
-  const [selectedDoc, setSelectedDoc]     = useState<Doctor | null>(null);
+  const [activeBranch, setActiveBranch] = useState("all");
+  const [activeSpec, setActiveSpec] = useState("All Specialties");
+  const [search, setSearch] = useState("");
+  const [selectedDoc, setSelectedDoc] = useState<Doctor | null>(null);
 
   const filtered = useMemo(() => DOCTORS.filter(d => {
     const mb = activeBranch === "all" || d.branchId === activeBranch;
@@ -752,7 +1187,10 @@ export default function DoctorsPage() {
     return mb && ms && mq;
   }), [activeBranch, activeSpec, search]);
 
-  // ── Detail view ──
+  useEffect(() => {
+    if (selectedDoc) window.scrollTo(0, 0);
+  }, [selectedDoc]);
+
   if (selectedDoc) {
     return (
       <>
@@ -762,84 +1200,168 @@ export default function DoctorsPage() {
     );
   }
 
-  // ── List view ──
   return (
     <>
       <GlobalStyle />
-      <div style={cs.page}>
+      <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", background: "#f5f7f7" }}>
 
-        {/* HERO */}
-        <section style={cs.hero}>
-          <div style={cs.heroBadge}>9 Branches · Telangana &amp; AP</div>
-          <h1 style={cs.heroTitle}>Find the Right <em style={{ color: "#7bd4c8", fontStyle: "normal" }}>Doctor for You</em></h1>
-          <p style={cs.heroSub}>Expert doctors across all specialties, available at a branch near you.</p>
+        {/* ── HERO ── */}
+        <section style={{
+          background: "linear-gradient(135deg, #0a0f0f 0%, #1a0a14 60%, #0f1a1a 100%)",
+          padding: "80px 24px 70px",
+          textAlign: "center", position: "relative", overflow: "hidden",
+        }}>
+          {/* Background effects */}
+          <div style={{
+            position: "absolute", inset: 0, opacity: 0.03,
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
+          }} />
+          <div style={{
+            position: "absolute", top: -100, left: "20%",
+            width: 500, height: 500, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(192,20,92,0.15), transparent 70%)",
+            filter: "blur(40px)",
+          }} />
+          <div style={{
+            position: "absolute", bottom: -100, right: "15%",
+            width: 400, height: 400, borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(10,110,110,0.15), transparent 70%)",
+            filter: "blur(40px)",
+          }} />
 
-          <div style={cs.searchBar}>
-            <Icon name="search" size={16} color="#9aafaf" />
-            <input
-              style={cs.searchInput}
-              type="text"
-              placeholder="Search doctor name or specialty..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
-            {search && <button style={cs.clearBtn} onClick={() => setSearch("")}>✕</button>}
-          </div>
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              background: "rgba(192,20,92,0.1)", border: "1px solid rgba(192,20,92,0.25)",
+              borderRadius: 30, padding: "6px 16px", marginBottom: 24,
+              color: "#f472b6", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em",
+            }}>
+              ✦ Srikara Hospitals · Multiple Branches
+            </div>
 
-          <div style={cs.heroPills}>
-            {[
-              { v: `${DOCTORS.length}+`, l: "Doctors" },
-              { v: `${DOCTORS.filter(d => d.available).length}+`, l: "Available Now" },
-              { v: "9", l: "Branches" },
-              { v: "8", l: "Specialties" },
-            ].map(s => (
-              <div key={s.l} style={cs.heroPill}>
-                <strong style={cs.pillVal}>{s.v}</strong>
-                <small style={cs.pillLbl}>{s.l}</small>
-              </div>
-            ))}
+            <h1 style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(36px, 6vw, 68px)",
+              fontWeight: 700, color: "#fff",
+              lineHeight: 1.1, marginBottom: 16, letterSpacing: "-0.02em",
+            }}>
+              Find the Right{" "}
+              <span style={{ color: "#C0145C" }}>Doctor</span>
+              {" "}for You
+            </h1>
+
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
+              Expert specialists across every domain, available at a Srikara branch near you.
+            </p>
+
+            {/* Search */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: 12,
+              background: "rgba(255,255,255,0.05)", backdropFilter: "blur(20px)",
+              border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16,
+              padding: "14px 20px", maxWidth: 560, margin: "0 auto 32px",
+            }}>
+              <Icon name="search" size={16} color="rgba(255,255,255,0.3)" />
+              <input
+                style={{
+                  flex: 1, border: "none", outline: "none",
+                  fontSize: 14, color: "#fff", background: "transparent",
+                }}
+                placeholder="Search doctor or specialty..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  style={{
+                    background: "rgba(255,255,255,0.08)", border: "none",
+                    borderRadius: 6, width: 24, height: 24,
+                    color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: 11,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}
+                >✕</button>
+              )}
+            </div>
+
+            {/* Pill stats */}
+            <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+              {[
+                { v: `${DOCTORS.length}+`, l: "Doctors" },
+                { v: `${DOCTORS.filter(d => d.available).length}+`, l: "Available Now" },
+                { v: "5", l: "Branches" },
+                { v: `${SPECIALTIES.length - 1}`, l: "Specialties" },
+              ].map(s => (
+                <div key={s.l} style={{
+                  background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 12, padding: "12px 20px", textAlign: "center",
+                }}>
+                  <strong style={{ display: "block", color: "#fff", fontSize: 22, fontWeight: 800, fontFamily: "'Cormorant Garamond', serif" }}>{s.v}</strong>
+                  <small style={{ color: "rgba(255,255,255,0.35)", fontSize: 10 }}>{s.l}</small>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* BRANCH TABS */}
-        <div style={cs.branchSection}>
-          <div style={cs.sectionLabel}>Our Branches</div>
-          <div style={cs.branchTabs}>
-            {BRANCHES.map(b => (
-              <button
-                key={b.id}
-                style={{ ...cs.branchTab, ...(activeBranch === b.id ? cs.branchTabActive : {}) }}
-                onClick={() => setActiveBranch(b.id)}
-              >
-                {b.label}
-              </button>
-            ))}
+        {/* Branch tabs */}
+        <div style={{ background: "#fff", padding: "20px 24px", borderBottom: "1px solid #e8f0f0" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <div style={{ fontSize: 10, fontWeight: 800, color: "#9aafaf", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12 }}>Our Branches</div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {BRANCHES.map(b => (
+                <button
+                  key={b.id}
+                  onClick={() => setActiveBranch(b.id)}
+                  style={{
+                    padding: "9px 18px", borderRadius: 10,
+                    border: `1.5px solid ${activeBranch === b.id ? "#C0145C" : "#e0eeee"}`,
+                    background: activeBranch === b.id ? "rgba(192,20,92,0.06)" : "#fff",
+                    fontSize: 12, fontWeight: activeBranch === b.id ? 700 : 500,
+                    color: activeBranch === b.id ? "#C0145C" : "#3a5050",
+                    cursor: "pointer", transition: "all 0.2s",
+                  }}
+                >{b.label}</button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* SPECIALTY CHIPS */}
-        <div style={cs.specSection}>
-          <div style={cs.specScroll}>
-            {SPECIALTIES.map(sp => (
-              <button
-                key={sp}
-                style={{ ...cs.specChip, ...(activeSpec === sp ? cs.specChipActive : {}) }}
-                onClick={() => setActiveSpec(sp)}
-              >
-                {sp}
-              </button>
-            ))}
+        {/* Specialty chips */}
+        <div style={{ background: "#f8fafa", padding: "12px 24px", borderBottom: "1px solid #edf0f0" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
+              {SPECIALTIES.map(sp => (
+                <button
+                  key={sp}
+                  onClick={() => setActiveSpec(sp)}
+                  style={{
+                    whiteSpace: "nowrap", padding: "7px 16px", borderRadius: 20,
+                    border: `1.5px solid ${activeSpec === sp ? "#0a6e6e" : "#e0eaea"}`,
+                    background: activeSpec === sp ? "#e6f4f4" : "#fff",
+                    fontSize: 12, fontWeight: activeSpec === sp ? 700 : 500,
+                    color: activeSpec === sp ? "#0a6e6e" : "#4a6060",
+                    flexShrink: 0, cursor: "pointer", transition: "all 0.2s",
+                  }}
+                >{sp}</button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* GRID */}
-        <section style={cs.gridSection}>
-          <div style={cs.resultsBar}>
-            <span style={cs.resultsCount}>
+        {/* Grid */}
+        <section style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 80px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22, flexWrap: "wrap", gap: 10 }}>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#0f1a1a" }}>
               {filtered.length} doctor{filtered.length !== 1 ? "s" : ""} found
-              {activeBranch !== "all" && ` in ${BRANCHES.find(b => b.id === activeBranch)?.label}`}
+              {activeBranch !== "all" && ` · ${BRANCHES.find(b => b.id === activeBranch)?.label}`}
             </span>
-            <select style={cs.sortSelect}>
+            <select style={{
+              border: "1.5px solid #e0eeee", borderRadius: 9,
+              padding: "7px 12px", fontSize: 12, color: "#3a5050", background: "#fff", outline: "none",
+            }}>
               <option>Relevance</option>
               <option>Rating</option>
               <option>Experience</option>
@@ -847,208 +1369,38 @@ export default function DoctorsPage() {
             </select>
           </div>
 
-          {filtered.length === 0
-            ? <div style={cs.emptyState}>
-                <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: "#1a3030", marginBottom: 6 }}>No doctors found</h3>
-                <p style={{ fontSize: 13, color: "#7a9090", marginBottom: 18 }}>Try adjusting your filters.</p>
-                <button style={cs.resetBtn} onClick={() => { setActiveBranch("all"); setActiveSpec("All Specialties"); setSearch(""); }}>
-                  Reset Filters
-                </button>
-              </div>
-            : <div style={cs.docGrid}>
-                {filtered.map(d => <DoctorCard key={d.id} doctor={d} onClick={() => setSelectedDoc(d)} />)}
-              </div>
-          }
+          {filtered.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "80px 24px", background: "#fff", borderRadius: 20, border: "2px dashed #e0eeee" }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
+              <h3 style={{ fontSize: 20, fontWeight: 700, color: "#1a2f2f", marginBottom: 8 }}>No doctors found</h3>
+              <p style={{ fontSize: 13, color: "#7a9090", marginBottom: 20 }}>Try adjusting your filters.</p>
+              <button
+                onClick={() => { setActiveBranch("all"); setActiveSpec("All Specialties"); setSearch(""); }}
+                style={{ background: "#0a6e6e", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+              >Reset Filters</button>
+            </div>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
+              {filtered.map(d => <DoctorCard key={d.id} doctor={d} onClick={() => setSelectedDoc(d)} />)}
+            </div>
+          )}
         </section>
-
-        
       </div>
     </>
   );
 }
 
-// ─────────────────────────────────────────────
-// GLOBAL STYLE INJECTOR
-// ─────────────────────────────────────────────
-
 function GlobalStyle() {
   return (
     <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
       *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-      html,body{font-family:'DM Sans',sans-serif;background:#f4fafa;color:#2a3f3f}
-      a{text-decoration:none;color:inherit;cursor:pointer}
-      button{cursor:pointer;font-family:'DM Sans',sans-serif}
-      input,select{font-family:'DM Sans',sans-serif}
+      html,body{font-family:'DM Sans',sans-serif;background:#f5f7f7;color:#2a3f3f;scroll-behavior:smooth}
+      button,input,select{font-family:'DM Sans',sans-serif}
       ::-webkit-scrollbar{height:4px;width:4px}
       ::-webkit-scrollbar-track{background:transparent}
       ::-webkit-scrollbar-thumb{background:#c0d8d8;border-radius:2px}
-      @media(max-width:700px){
-        .detail-body{flex-direction:column!important}
-        .detail-sidebar{width:100%!important;border-left:none!important;border-top:0.5px solid #e0eeee!important}
-        .hero-inner{flex-direction:column!important;align-items:flex-start!important}
-        .spec-grid{grid-template-columns:1fr!important}
-        .doc-grid{grid-template-columns:1fr!important}
-        .footer-grid{grid-template-columns:1fr 1fr!important}
-        .nav-links{display:none!important}
-      }
+      input::placeholder{color:rgba(255,255,255,0.3)}
     `}</style>
   );
 }
-
-// ─────────────────────────────────────────────
-// STYLES OBJECT
-// ─────────────────────────────────────────────
-
-const cs: Record<string, React.CSSProperties> = {
-  // PAGE
-  page: { minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" },
-
-  // NAV
-  nav: { position: "sticky", top: 0, zIndex: 50, background: "rgba(255,255,255,0.97)", backdropFilter: "blur(10px)", borderBottom: "0.5px solid #d0e4e4", boxShadow: "0 1px 12px rgba(10,110,110,0.06)" },
-  navInner: { maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", height: 64 },
-  logo: { display: "flex", alignItems: "center", gap: 6 },
-  logoText: { fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: "#0a6e6e" },
-  logoSub: { fontSize: 11, color: "#7a9090", marginTop: 2 },
-  navLinks: { display: "flex", gap: 28 },
-  navLink: { fontSize: 14, fontWeight: 500, color: "#5a7070" },
-  navLinkActive: { color: "#0a6e6e", fontWeight: 700 },
-  navCta: { background: "#0a6e6e", color: "#fff", border: "none", borderRadius: 9, padding: "9px 16px", fontSize: 13, fontWeight: 600 },
-
-  // HERO
-  hero: { background: "linear-gradient(135deg, #C0145C, #880E4F)", padding: "64px 24px 52px", textAlign: "center" },
-  heroBadge: { display: "inline-block", background: "rgba(255,255,255,0.13)", color: "#a8e0d8", border: "1px solid rgba(255,255,255,0.2)", fontSize: 11, fontWeight: 600, padding: "4px 14px", borderRadius: 20, marginBottom: 18, textTransform: "uppercase", letterSpacing: "0.06em" },
-  heroTitle: { fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px,5vw,52px)", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 12 },
-  heroSub: { fontSize: 15, color: "rgba(255,255,255,0.7)", marginBottom: 28 },
-  searchBar: { display: "flex", alignItems: "center", gap: 10, background: "#fff", borderRadius: 13, padding: "13px 18px", maxWidth: 560, margin: "0 auto 24px", boxShadow: "0 4px 20px rgba(0,0,0,0.12)" },
-  searchInput: { flex: 1, border: "none", outline: "none", fontSize: 14, color: "#0f1f1f", background: "transparent" },
-  clearBtn: { background: "#f0f5f5", border: "none", borderRadius: 6, width: 22, height: 22, fontSize: 11, color: "#7a9090", display: "flex", alignItems: "center", justifyContent: "center" },
-  heroPills: { display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" },
-  heroPill: { background: "rgba(255,255,255,0.11)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 11, padding: "10px 20px", textAlign: "center" },
-  pillVal: { display: "block", color: "#fff", fontSize: 20, fontWeight: 700 },
-  pillLbl: { color: "rgba(255,255,255,0.55)", fontSize: 10 },
-
-  // BRANCH TABS
-  branchSection: { background: "#fff", padding: "22px 24px 20px", borderBottom: "0.5px solid #e0eeee" },
-  sectionLabel: { fontSize: 11, fontWeight: 700, color: "#5a7070", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 12 },
-  branchTabs: { display: "flex", gap: 8, flexWrap: "wrap" },
-  branchTab: { padding: "8px 16px", borderRadius: 9, border: "0.5px solid #d0e4e4", background: "#fff", fontSize: 12, fontWeight: 500, color: "#3a5050", transition: "all 0.15s" },
-  branchTabActive: { background: "#0a6e6e", color: "#fff", border: "0.5px solid #0a6e6e", fontWeight: 700 },
-
-  // SPECIALTY
-  specSection: { background: "#f4fafa", padding: "12px 24px", borderBottom: "0.5px solid #e0eeee" },
-  specScroll: { display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" },
-  specChip: { whiteSpace: "nowrap", padding: "6px 15px", borderRadius: 20, border: "0.5px solid #d0e4e4", background: "#fff", fontSize: 12, fontWeight: 500, color: "#3a5050", flexShrink: 0, transition: "all 0.15s" },
-  specChipActive: { background: "#e6f4f4", border: "0.5px solid #0a6e6e", color: "#0a6e6e", fontWeight: 600 },
-
-  // GRID SECTION
-  gridSection: { maxWidth: 1200, margin: "0 auto", padding: "28px 24px 60px" },
-  resultsBar: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, flexWrap: "wrap", gap: 10 },
-  resultsCount: { fontSize: 13, fontWeight: 600, color: "#3a5050" },
-  sortSelect: { border: "0.5px solid #d0e4e4", borderRadius: 8, padding: "6px 10px", fontSize: 12, color: "#3a5050", background: "#fff", outline: "none" },
-  docGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 },
-  emptyState: { textAlign: "center", padding: "60px 24px", background: "#fff", borderRadius: 16, border: "0.5px dashed #d0e4e4" },
-  resetBtn: { background: "#0a6e6e", color: "#fff", border: "none", borderRadius: 9, padding: "10px 22px", fontSize: 13, fontWeight: 600 },
-
-  // DOCTOR CARD
-  card: { background: "#fff", borderRadius: 14, padding: "18px 18px 14px", border: "0.5px solid #e0eeee", cursor: "pointer", transition: "all 0.2s", position: "relative" },
-  availBadge: { display: "inline-flex", alignItems: "center", gap: 5, fontSize: 10, fontWeight: 600, padding: "3px 9px", borderRadius: 20, marginBottom: 12, letterSpacing: "0.03em" },
-  availYes: { background: "#e6f7ee", color: "#1a7a45" },
-  availNo: { background: "#fff4e6", color: "#b06000" },
-  availDot: { width: 5, height: 5, borderRadius: "50%", flexShrink: 0 },
-  cardTop: { display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 },
-  cardAvatar: { width: 52, height: 52, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 16, fontWeight: 700, fontFamily: "'Playfair Display', serif", flexShrink: 0 },
-  cardName: { fontFamily: "'Playfair Display', serif", fontSize: 15, fontWeight: 700, color: "#0f1f1f", marginBottom: 2 },
-  cardSpec: { fontSize: 12, fontWeight: 600, color: "#0a6e6e", marginBottom: 2 },
-  cardQual: { fontSize: 10, color: "#9aafaf" },
-  statsRow: { display: "flex", alignItems: "center", background: "#f4fafa", borderRadius: 9, padding: "9px 12px", marginBottom: 10 },
-  st: { flex: 1, textAlign: "center" },
-  stv: { display: "block", fontSize: 12, fontWeight: 700, color: "#0f1f1f" },
-  stl: { display: "block", fontSize: 9, color: "#9aafaf", marginTop: 1 },
-  stDiv: { width: 1, height: 24, background: "#d8eaea", margin: "0 4px" },
-  langRow: { display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 12 },
-  langTag: { fontSize: 9, fontWeight: 600, color: "#2a6060", background: "#e6f4f4", padding: "2px 7px", borderRadius: 20 },
-  cardFoot: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 },
-  slotTxt: { display: "flex", alignItems: "center", fontSize: 11, color: "#5a7070" },
-  bookBtn: { background: "#0a6e6e", color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12, fontWeight: 600, whiteSpace: "nowrap" },
-
-  // FOOTER
-  footer: { background: "#0f1f1f", padding: "44px 24px 24px" },
-  footerGrid: { maxWidth: 1200, margin: "0 auto 32px", display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 36 },
-  footerLogo: { fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 700, color: "#fff", marginBottom: 8 },
-  footerDesc: { fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.65 },
-  footerColTitle: { color: "rgba(255,255,255,0.65)", fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 12 },
-  footerLink: { display: "block", fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 7, cursor: "pointer" },
-  footerBottom: { maxWidth: 1200, margin: "0 auto", borderTop: "0.5px solid rgba(255,255,255,0.08)", paddingTop: 18, display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "rgba(255,255,255,0.25)", flexWrap: "wrap", gap: 8 },
-
-  // ── DETAIL PAGE ──
-  detailPage: { fontFamily: "'DM Sans', sans-serif", background: "#f4fafa", minHeight: "100vh" },
-  topbar: { background: "#0a6e6e", padding: "12px 22px", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  backBtn: { display: "flex", alignItems: "center", color: "rgba(255,255,255,0.8)", fontSize: 13, background: "none", border: "none", fontFamily: "'DM Sans', sans-serif" },
-  topbarTitle: { color: "#fff", fontSize: 13, fontWeight: 500 },
-  tbBtn: { background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", borderRadius: 7, padding: "5px 12px", fontSize: 11 },
-  detailHero: { background: "#0a6e6e", padding: "22px 24px 0" },
-  detailHeroInner: { display: "flex", gap: 20, alignItems: "flex-end" },
-  detailAvatar: { width: 84, height: 84, borderRadius: 14, border: "3px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 24, fontWeight: 700, fontFamily: "'Playfair Display', serif", flexShrink: 0 },
-  heroInfo: { flex: 1, paddingBottom: 16 },
-  availPill: { display: "inline-flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,0.14)", color: "#a8e6d8", fontSize: 10, fontWeight: 600, padding: "3px 10px", borderRadius: 20, marginBottom: 8, border: "1px solid rgba(255,255,255,0.2)", letterSpacing: "0.04em" },
-  availPillDot: { width: 5, height: 5, borderRadius: "50%", background: "#5dcaa5" },
-  detailName: { fontFamily: "'Playfair Display', serif", color: "#fff", fontSize: 22, fontWeight: 700, marginBottom: 3 },
-  detailSpec: { color: "rgba(255,255,255,0.75)", fontSize: 13, marginBottom: 3 },
-  detailQual: { color: "rgba(255,255,255,0.5)", fontSize: 11, marginBottom: 10 },
-  heroTags: { display: "flex", gap: 6, flexWrap: "wrap" },
-  htag: { background: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)", fontSize: 10, padding: "3px 9px", borderRadius: 20, border: "1px solid rgba(255,255,255,0.15)" },
-  detailStats: { background: "#085858", padding: "14px 24px", display: "flex", justifyContent: "space-around", alignItems: "center", borderBottom: "0.5px solid rgba(255,255,255,0.1)" },
-  statItem: { textAlign: "center" },
-  detailStatVal: { display: "block", color: "#fff", fontSize: 17, fontWeight: 700 },
-  detailStatLbl: { color: "rgba(255,255,255,0.45)", fontSize: 10 },
-  detailStatDiv: { width: 1, height: 28, background: "rgba(255,255,255,0.14)", margin: "0 12px" },
-  detailBody: { display: "flex", maxWidth: 1100, margin: "0 auto" },
-  detailMain: { flex: 1, padding: "24px 24px", background: "#fff", borderRight: "0.5px solid #e0eeee" },
-  detailSidebar: { width: 280, flexShrink: 0, padding: "20px 16px", background: "#f9fcfc" },
-  aboutTxt: { fontSize: 13, color: "#5a7070", lineHeight: 1.75, marginBottom: 24 },
-  specGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 9, marginBottom: 24 },
-  specCard: { background: "#fff", border: "0.5px solid #e0eeee", borderRadius: 9, padding: "10px 12px", display: "flex", alignItems: "center", gap: 9 },
-  specIcon: { width: 32, height: 32, borderRadius: 7, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 },
-  specName: { fontSize: 11, fontWeight: 600, color: "#1a3030" },
-  eduItem: { display: "flex", gap: 10, marginBottom: 11, alignItems: "flex-start" },
-  eduDot: { width: 7, height: 7, borderRadius: "50%", background: "#0a6e6e", marginTop: 4, flexShrink: 0 },
-  eduDeg: { fontSize: 13, fontWeight: 600, color: "#1a3030" },
-  eduInst: { fontSize: 11, color: "#7a9090", marginTop: 2 },
-  expItem: { display: "flex", gap: 12, marginBottom: 13, paddingBottom: 13, alignItems: "flex-start" },
-  expLogo: { width: 36, height: 36, borderRadius: 8, background: "#e6f4f4", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "#0a6e6e", flexShrink: 0 },
-  expRole: { fontSize: 13, fontWeight: 600, color: "#1a3030" },
-  expOrg: { fontSize: 11, color: "#5a7070", marginTop: 2 },
-  expYr: { fontSize: 10, color: "#9aafaf", marginTop: 3 },
-  revCard: { background: "#f9fcfc", border: "0.5px solid #e0eeee", borderRadius: 10, padding: "12px 13px" },
-  revHeader: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 6 },
-  revName: { fontSize: 12, fontWeight: 600, color: "#1a3030" },
-  revDate: { fontSize: 10, color: "#9aafaf", marginTop: 2 },
-  revTxt: { fontSize: 12, color: "#5a7070", lineHeight: 1.65 },
-  // Sidebar booking
-  bookCard: { background: "#fff", border: "0.5px solid #d0e4e4", borderRadius: 13, padding: 15, marginBottom: 12 },
-  feeRow: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 13 },
-  feeLabel: { fontSize: 10, color: "#9aafaf", marginBottom: 2 },
-  feeAmt: { fontSize: 22, fontWeight: 700, color: "#0a6e6e" },
-  feeSub: { fontSize: 10, color: "#9aafaf" },
-  nextSlotPill: { display: "flex", alignItems: "center", background: "#e6f4f4", borderRadius: 7, padding: "5px 9px", marginTop: 4 },
-  slotHeading: { display: "flex", alignItems: "center", marginBottom: 8 },
-  slotsGrid: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 5, marginBottom: 11 },
-  slotBtn: { padding: "6px 2px", borderRadius: 6, border: "0.5px solid #d0e4e4", background: "#fff", fontSize: 10, fontWeight: 500, color: "#3a5050", textAlign: "center" },
-  slotBtnSel: { background: "#0a6e6e", color: "#fff", border: "0.5px solid #0a6e6e" },
-  bookBtnMain: { width: "100%", padding: 11, borderRadius: 9, background: "#0a6e6e", color: "#fff", border: "none", fontSize: 12, fontWeight: 700 },
-  bookBtnDis: { background: "#a8c0c0", cursor: "not-allowed" },
-  successMsg: { background: "#e6f7ee", color: "#1a7a45", borderRadius: 8, padding: "10px 13px", fontSize: 12, fontWeight: 600, textAlign: "center" },
-  bookNote: { fontSize: 9, color: "#9aafaf", textAlign: "center", marginTop: 7 },
-  infoCard: { background: "#fff", border: "0.5px solid #d0e4e4", borderRadius: 11, padding: "12px 13px", marginBottom: 12 },
-  infoRow: { display: "flex", alignItems: "center", gap: 10, padding: "7px 0" },
-  infoIcon: { width: 26, height: 26, borderRadius: 6, background: "#e6f4f4", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 },
-  infoLabel: { fontSize: 10, color: "#9aafaf" },
-  infoVal: { fontSize: 12, fontWeight: 600, color: "#1a3030", marginTop: 1 },
-  sideHeading: { fontSize: 10, fontWeight: 700, color: "#5a7070", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 },
-  branchBadge: { display: "flex", alignItems: "flex-start", gap: 8, background: "#e6f4f4", borderRadius: 8, padding: "8px 10px", marginBottom: 7 },
-  branchDot: { width: 6, height: 6, borderRadius: "50%", background: "#0a6e6e", marginTop: 4, flexShrink: 0 },
-  branchName: { fontSize: 12, fontWeight: 600, color: "#085041" },
-  branchAddr: { fontSize: 10, color: "#0F6E56", marginTop: 2 },
-};

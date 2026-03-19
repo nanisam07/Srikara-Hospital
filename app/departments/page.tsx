@@ -245,31 +245,31 @@ const FEATURED_DEPTS = [
 
 const DOCTORS = [
   {
-    name: "Dr. Rajesh Kumar",
-    dept: "Cardiology",
+    name: "Dr. Akhil Dadi",
+    dept: "Orthopedic",
     exp: "15+ Years",
-    img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&auto=format&fit=crop",
+    img: "/Akhildadi.jpg",
     color: "#C0145C",
   },
   {
-    name: "Dr. Sneha Reddy",
-    dept: "Neurosciences",
+    name: "Dr. Sreedhar Reddy",
+    dept: "Urology",
     exp: "12+ Years",
-    img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80&auto=format&fit=crop",
+    img: "/doctors/DR.SREEDHAR.png",
     color: "#6D3FC0",
   },
   {
-    name: "Dr. Arjun Mehta",
-    dept: "Orthopaedics",
+    name: "Dr. Sharath Chandra",
+    dept: "General Physican",
     exp: "10+ Years",
-    img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80&auto=format&fit=crop",
+    img: "/doctors/DR.SHARATHCHANDRA.png",
     color: "#C07014",
   },
   {
-    name: "Dr. Priya Sharma",
-    dept: "Robotic Surgery",
+    name: "Dr. Suman Babu",
+    dept: "Plastic Surgery",
     exp: "14+ Years",
-    img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80&auto=format&fit=crop",
+    img: "/doctors/DR.SUMANBABU.png",
     color: "#0A7A6A",
   },
 ];
@@ -942,7 +942,7 @@ export default function DepartmentsPage() {
                 style={{ borderRadius: 28, overflow: "hidden", height: 460, position: "relative" }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=88&auto=format&fit=crop"
+                  src="/department.jpeg"
                   alt="Advanced Care"
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
