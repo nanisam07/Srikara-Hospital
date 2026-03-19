@@ -1,76 +1,77 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
+// REAL SRIKARA BRANCH DATA
 const branches = [
-  { id: 1, city: "Hyderabad", area: "Banjara Hills", since: "2005", beds: 320, specialty: "Cardiac Care" },
-  { id: 2, city: "Hyderabad", area: "Kukatpally", since: "2008", beds: 280, specialty: "Neurosciences" },
-  { id: 3, city: "Hyderabad", area: "Secunderabad", since: "2010", beds: 250, specialty: "Orthopedics" },
-  { id: 4, city: "Vijayawada", area: "MG Road", since: "2011", beds: 300, specialty: "Oncology" },
-  { id: 5, city: "Visakhapatnam", area: "MVP Colony", since: "2013", beds: 260, specialty: "Pediatrics" },
-  { id: 6, city: "Warangal", area: "Hanamkonda", since: "2015", beds: 180, specialty: "Diabetology" },
-  { id: 7, city: "Tirupati", area: "Balaji Nagar", since: "2016", beds: 200, specialty: "Urology" },
-  { id: 8, city: "Nellore", area: "Grand Trunk Rd", since: "2018", beds: 160, specialty: "Gastroenterology" },
-  { id: 9, city: "Karimnagar", area: "RTC Colony", since: "2020", beds: 150, specialty: "Pulmonology" },
+  { id: 1, city: "Secunderabad", area: "RTC X Roads", since: "2013", beds: 200, specialty: "Orthopaedics & Joint Replacement" },
+  { id: 2, city: "Miyapur", area: "Hyderabad", since: "2015", beds: 150, specialty: "Multi-Specialty Care" },
+  { id: 3, city: "Kukatpally", area: "Hyderabad", since: "2017", beds: 100, specialty: "Emergency & Trauma" },
+  { id: 4, city: "Vijayawada", area: "Benz Circle", since: "2018", beds: 150, specialty: "Advanced Orthopaedics" },
+  { id: 5, city: "Kothapet", area: "Hyderabad", since: "2019", beds: 120, specialty: "Sports Medicine" },
+  { id: 6, city: "Nizamabad", area: "Telangana", since: "2020", beds: 100, specialty: "Neuro & Spine" },
+  { id: 7, city: "Tirupati", area: "Renigunta Road", since: "2021", beds: 150, specialty: "Arthroscopy & Joint Care" },
+  { id: 8, city: "Khammam", area: "Telangana", since: "2022", beds: 100, specialty: "General Surgery" },
 ];
 
 const stats = [
-  { value: "20+", label: "Years of Excellence" },
-  { value: "10", label: "Hospital Branches" },
-  { value: "2100+", label: "Beds Across Network" },
-  { value: "1M+", label: "Patients Treated" },
+  { value: "10+", label: "Years of Excellence" },
+  { value: "8", label: "Specialized Branches" },
+  { value: "1000+", label: "Beds Across Network" },
+  { value: "500k+", label: "Successful Surgeries" },
+];
+
+// LEADERSHIP UPDATED TO ACTUAL SRIKARA FOUNDER
+const leadership = [
+  {
+    name: "Dr. Akhil Dadi",
+    role: "Chairman & Managing Director",
+    specialty: "Joint Replacement & Orthopaedics",
+    exp: "25+ yrs",
+    initial: "AD",
+  },
+  {
+    name: "Dr. Sudhir Reddy",
+    role: "Director",
+    specialty: "Orthopaedics",
+    exp: "20 yrs",
+    initial: "SR",
+  },
+  {
+    name: "Dr. K.V. Ratnam",
+    role: "Chief of Neurosciences",
+    specialty: "Neurology",
+    exp: "22 yrs",
+    initial: "KR",
+  },
+  {
+    name: "Dr. R. Jagan",
+    role: "Medical Director",
+    specialty: "Internal Medicine",
+    exp: "18 yrs",
+    initial: "RJ",
+  },
 ];
 
 const values = [
   {
     icon: "✦",
-    title: "Compassionate Care",
-    desc: "Every patient is treated with dignity, empathy, and respect—from first visit to full recovery.",
+    title: "Precision Surgery",
+    desc: "Pioneers in computer-navigated and robotic joint replacement surgery in South India.",
   },
   {
     icon: "◈",
-    title: "Clinical Excellence",
-    desc: "Our physicians and specialists operate at the frontier of medicine with evidence-based protocols.",
+    title: "Patient Centric",
+    desc: "Personalized recovery protocols designed to get patients back on their feet in record time.",
   },
   {
     icon: "⬡",
-    title: "Innovation First",
-    desc: "We invest in cutting-edge technology and research to deliver tomorrow's treatments today.",
+    title: "Ethical Standards",
+    desc: "Transparent billing and evidence-based treatments are the cornerstones of our practice.",
   },
   {
     icon: "⊕",
-    title: "Community Rooted",
-    desc: "Born in Telangana, serving Andhra Pradesh—our mission is deeply tied to the communities we call home.",
-  },
-];
-
-const leadership = [
-  {
-    name: "Dr. Suresh Rao",
-    role: "Chairman & Founder",
-    specialty: "Cardiothoracic Surgery",
-    exp: "35 yrs",
-    initial: "SR",
-  },
-  {
-    name: "Dr. Priya Srikara",
-    role: "Managing Director",
-    specialty: "Internal Medicine",
-    exp: "28 yrs",
-    initial: "PS",
-  },
-  {
-    name: "Dr. Anil Reddy",
-    role: "Chief Medical Officer",
-    specialty: "Neurology",
-    exp: "22 yrs",
-    initial: "AR",
-  },
-  {
-    name: "Dr. Meena Sharma",
-    role: "Director — Oncology",
-    specialty: "Medical Oncology",
-    exp: "19 yrs",
-    initial: "MS",
+    title: "Rapid Recovery",
+    desc: "Specialized in minimally invasive techniques that reduce pain and hospital stays.",
   },
 ];
 
@@ -92,11 +93,7 @@ function useCountUp(target: string, duration = 1800, active = false) {
   return count;
 }
 
-function StatCard({ value, label, active }:{
-    value: string;
-    label: string;
-    active: boolean;
-}) {
+function StatCard({ value, label, active }:{ value: string; label: string; active: boolean; }) {
   const num = useCountUp(value, 1600, active);
   const suffix = value.replace(/[0-9]/g, "");
   return (
@@ -111,7 +108,6 @@ export default function AboutPage() {
   const [statsVisible, setStatsVisible] = useState(false);
   const [activeBranch, setActiveBranch] = useState<number | null>(0);
   const statsRef = useRef(null);
-  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -130,699 +126,153 @@ export default function AboutPage() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --teal: #0a5f5f;
-          --teal-light: #117a7a;
-          --teal-pale: #e6f4f4;
-          --gold: #c9a84c;
-          --gold-light: #e8c87a;
-          --cream: #faf8f4;
-          --deep: #0d1f1f;
-          --mid: #2a4040;
-          --soft: #6b8585;
+          --teal: #0c4e4e;
+          --teal-light: #166d6d;
+          --teal-pale: #f0f7f7;
+          --gold: #d4af37;
+          --gold-light: #f1d37a;
+          --cream: #fdfcf9;
+          --deep: #082d2d;
+          --mid: #2c3e3e;
+          --soft: #7a8c8c;
           --white: #ffffff;
-          --border: rgba(10,95,95,0.12);
+          --border: rgba(12,78,78,0.1);
         }
 
-        .about-root {
-          font-family: 'DM Sans', sans-serif;
-          background: var(--cream);
-          color: var(--deep);
-          overflow-x: hidden;
-        }
+        .about-root { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--deep); overflow-x: hidden; }
 
-        /* ─── HERO ─── */
-        .hero {
-          min-height: 92vh;
-          background: var(--deep);
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          position: relative;
-          overflow: hidden;
-        }
-        .hero::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse 80% 80% at 70% 50%, rgba(10,95,95,0.45) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .hero-grid-lines {
-          position: absolute;
-          inset: 0;
-          background-image:
-            linear-gradient(rgba(10,95,95,0.08) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(10,95,95,0.08) 1px, transparent 1px);
-          background-size: 60px 60px;
-          pointer-events: none;
-        }
-        .hero-left {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 100px 60px 100px 80px;
-          position: relative;
-          z-index: 1;
-        }
-        .hero-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          color: var(--gold);
-          margin-bottom: 32px;
-        }
-        .hero-eyebrow::before {
-          content: '';
-          width: 36px; height: 1px;
-          background: var(--gold);
-        }
-        .hero-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(52px, 6vw, 86px);
-          font-weight: 300;
-          line-height: 1.05;
-          color: var(--white);
-          margin-bottom: 28px;
-        }
-        .hero-title em {
-          font-style: italic;
-          color: var(--gold-light);
-        }
-        .hero-subtitle {
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 1.8;
-          color: rgba(255,255,255,0.65);
-          max-width: 440px;
-          margin-bottom: 48px;
-        }
-        .hero-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 12px;
-          background: var(--gold);
-          color: var(--deep);
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          padding: 16px 32px;
-          border: none;
-          cursor: pointer;
-          text-decoration: none;
-          transition: all 0.3s ease;
-          width: fit-content;
-        }
-        .hero-cta:hover { background: var(--gold-light); transform: translateX(4px); }
-        .hero-right {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1;
-        }
-        .hero-emblem {
-          width: 340px; height: 340px;
-          border-radius: 50%;
-          border: 1px solid rgba(201,168,76,0.25);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-        }
-        .hero-emblem::before {
-          content: '';
-          position: absolute;
-          width: 280px; height: 280px;
-          border-radius: 50%;
-          border: 1px solid rgba(201,168,76,0.15);
-        }
-        .hero-emblem::after {
-          content: '';
-          position: absolute;
-          width: 220px; height: 220px;
-          border-radius: 50%;
-          background: rgba(10,95,95,0.3);
-          border: 1px solid rgba(201,168,76,0.3);
-        }
-        .hero-emblem-inner {
-          position: relative;
-          z-index: 2;
-          text-align: center;
-        }
-        .hero-emblem-cross {
-          font-size: 64px;
-          color: var(--gold);
-          display: block;
-          line-height: 1;
-          margin-bottom: 8px;
-        }
-        .hero-emblem-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 22px;
-          font-weight: 400;
-          color: var(--white);
-          letter-spacing: 0.08em;
-        }
-        .hero-emblem-tagline {
-          font-size: 9px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--gold);
-          margin-top: 4px;
-        }
-        .hero-year-badge {
-          position: absolute;
-          bottom: 80px;
-          right: 80px;
-          text-align: right;
-        }
-        .hero-year {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 80px;
-          font-weight: 300;
-          color: rgba(255,255,255,0.06);
-          line-height: 1;
-        }
-        .hero-year-label {
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          color: rgba(255,255,255,0.3);
-          text-transform: uppercase;
-        }
+        .hero { min-height: 92vh; background: var(--deep); display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 50%, rgba(20,100,100,0.4) 0%, transparent 80%); }
+        .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px; position: relative; z-index: 1; }
+        .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 15px; }
+        .hero-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+        .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 6vw, 80px); font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 30px; }
+        .hero-title em { font-style: italic; color: var(--gold-light); }
+        .hero-subtitle { font-size: 17px; line-height: 1.8; color: rgba(255,255,255,0.7); max-width: 480px; margin-bottom: 40px; }
+        .hero-cta { background: var(--gold); color: var(--deep); padding: 18px 36px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; width: fit-content; transition: 0.3s; }
+        .hero-cta:hover { background: var(--white); transform: translateY(-3px); }
 
-        /* ─── SECTION WRAPPER ─── */
+        .hero-right { display: flex; align-items: center; justify-content: center; position: relative; }
+        .hero-emblem { width: 380px; height: 380px; border-radius: 50%; border: 1px solid rgba(212,175,55,0.2); display: flex; align-items: center; justify-content: center; }
+        .hero-emblem-inner { text-align: center; }
+        .hero-emblem-cross { font-size: 80px; color: var(--gold); display: block; margin-bottom: 10px; }
+        .hero-emblem-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--white); letter-spacing: 4px; font-weight: 400; }
+        
         .section { padding: 100px 80px; }
-        .section-inner { max-width: 1280px; margin: 0 auto; }
-        .section-header { margin-bottom: 64px; }
-        .section-tag {
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--teal);
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-        .section-tag::after { content: ''; flex: 1; height: 1px; background: var(--border); max-width: 80px; }
-        .section-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(36px, 4vw, 54px);
-          font-weight: 300;
-          line-height: 1.15;
-          color: var(--deep);
-        }
-        .section-title em { font-style: italic; color: var(--teal); }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-tag { font-size: 10px; font-weight: 700; color: var(--teal); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; margin-bottom: 30px; }
+        .section-title em { color: var(--teal); font-style: italic; }
 
-        /* ─── STATS ─── */
-        .stats-section {
-          background: var(--teal);
-          padding: 80px;
-          position: relative;
-          overflow: hidden;
-        }
-        .stats-section::before {
-          content: '';
-          position: absolute;
-          right: -100px; top: -100px;
-          width: 400px; height: 400px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.03);
-        }
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 2px;
-          max-width: 1280px;
-          margin: 0 auto;
-        }
-        .stat-card {
-          background: rgba(255,255,255,0.06);
-          padding: 48px 40px;
-          text-align: center;
-          border: 1px solid rgba(255,255,255,0.08);
-          transition: background 0.3s;
-        }
-        .stat-card:hover { background: rgba(255,255,255,0.1); }
-        .stat-value {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 64px;
-          font-weight: 300;
-          color: var(--gold-light);
-          line-height: 1;
-          margin-bottom: 12px;
-        }
-        .stat-label {
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.6);
-        }
+        .stats-section { background: var(--teal); padding: 60px 80px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background-color: rgba(255,255,255,0.1); }
+        .stat-card { background: var(--teal); padding: 50px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 60px; color: var(--gold-light); margin-bottom: 10px; }
+        .stat-label { color: rgba(255,255,255,0.6); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* ─── STORY ─── */
-        .story-section { background: var(--white); }
         .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .story-text p {
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 1.9;
-          color: var(--mid);
-          margin-bottom: 20px;
-        }
-        .story-text p:last-child { margin-bottom: 0; }
-        .story-quote {
-          border-left: 3px solid var(--gold);
-          padding: 24px 32px;
-          background: var(--cream);
-          margin: 32px 0;
-        }
-        .story-quote p {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 22px !important;
-          font-style: italic;
-          color: var(--teal) !important;
-          line-height: 1.5 !important;
-          margin: 0 !important;
-        }
-        .story-visual {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        }
-        .story-img-placeholder {
-          background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
-          border-radius: 2px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: rgba(255,255,255,0.5);
-          font-size: 13px;
-          letter-spacing: 0.1em;
-        }
-        .story-img-main { height: 320px; }
-        .story-img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .story-img-small { height: 160px; }
-        .story-badge {
-          position: absolute;
-          top: 24px; right: -20px;
-          background: var(--gold);
-          color: var(--deep);
-          padding: 20px 24px;
-          text-align: center;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-        }
-        .story-badge-num {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 36px;
-          font-weight: 600;
-          display: block;
-          line-height: 1;
-        }
-        .story-badge-text {
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-        }
+        .story-text p { font-size: 16px; line-height: 1.8; color: var(--mid); margin-bottom: 20px; }
+        .story-quote { border-left: 4px solid var(--gold); padding: 30px; background: var(--teal-pale); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--teal); margin: 30px 0; }
 
-        /* ─── VALUES ─── */
-        .values-section { background: var(--cream); }
-        .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-        .value-card {
-          background: var(--white);
-          padding: 48px 36px;
-          border-top: 3px solid transparent;
-          transition: all 0.3s ease;
-          cursor: default;
-        }
-        .value-card:hover { border-top-color: var(--teal); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
-        .value-icon {
-          font-size: 28px;
-          color: var(--teal);
-          margin-bottom: 24px;
-          display: block;
-        }
-        .value-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 22px;
-          font-weight: 600;
-          color: var(--deep);
-          margin-bottom: 16px;
-        }
-        .value-desc {
-          font-size: 14px;
-          font-weight: 300;
-          line-height: 1.8;
-          color: var(--soft);
-        }
+        .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 50px; }
+        .value-card { background: var(--white); padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-bottom: 3px solid transparent; transition: 0.3s; }
+        .value-card:hover { border-bottom-color: var(--gold); transform: translateY(-5px); }
+        .value-icon { font-size: 30px; color: var(--teal); margin-bottom: 20px; display: block; }
+        .value-title { font-weight: 600; margin-bottom: 15px; color: var(--deep); }
+        .value-desc { font-size: 14px; color: var(--soft); line-height: 1.6; }
 
-        /* ─── BRANCHES ─── */
-        .branches-section { background: var(--white); }
-        .branches-intro {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 80px;
-          margin-bottom: 64px;
-          align-items: end;
-        }
-        .branches-desc {
-          font-size: 16px;
-          font-weight: 300;
-          line-height: 1.9;
-          color: var(--mid);
-        }
-        .branches-map-hint {
-          text-align: right;
-          font-size: 13px;
-          color: var(--soft);
-        }
-        .branches-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 2px;
-        }
-        .branch-card {
-          background: var(--cream);
-          padding: 36px;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          border: 1px solid transparent;
-          position: relative;
-          overflow: hidden;
-        }
-        .branch-card::before {
-          content: '';
-          position: absolute;
-          bottom: 0; left: 0;
-          width: 0; height: 3px;
-          background: var(--gold);
-          transition: width 0.3s ease;
-        }
-        .branch-card:hover::before, .branch-card.active::before { width: 100%; }
-        .branch-card:hover, .branch-card.active {
-          background: var(--white);
-          border-color: var(--border);
-          box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-        }
-        .branch-number {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 48px;
-          font-weight: 300;
-          color: rgba(10,95,95,0.1);
-          line-height: 1;
-          margin-bottom: 16px;
-        }
-        .branch-city {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--deep);
-          margin-bottom: 4px;
-        }
-        .branch-area {
-          font-size: 13px;
-          color: var(--soft);
-          margin-bottom: 20px;
-        }
-        .branch-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-        .branch-tag {
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          padding: 5px 12px;
-          border: 1px solid var(--border);
-          color: var(--teal);
-          background: transparent;
-        }
-        .branch-specialty-tag { background: var(--teal); color: var(--white); border-color: var(--teal); }
+        .branches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 50px; }
+        .branch-card { background: var(--white); padding: 40px; cursor: pointer; transition: 0.3s; }
+        .branch-card.active { background: var(--teal-pale); }
+        .branch-city { font-size: 20px; font-weight: 600; margin-bottom: 5px; }
+        .branch-area { font-size: 14px; color: var(--soft); margin-bottom: 20px; }
+        .branch-tag { font-size: 10px; padding: 5px 12px; border: 1px solid var(--border); color: var(--teal); font-weight: 600; text-transform: uppercase; }
 
-        /* ─── LEADERSHIP ─── */
-        .leadership-section { background: var(--deep); }
-        .leadership-section .section-title { color: var(--white); }
-        .leadership-section .section-title em { color: var(--gold-light); }
-        .leadership-section .section-tag { color: var(--gold); }
-        .leadership-section .section-tag::after { background: rgba(255,255,255,0.1); }
-        .leadership-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-        .leader-card {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.08);
-          padding: 36px 28px;
-          transition: all 0.3s ease;
-          text-align: center;
-        }
-        .leader-card:hover {
-          background: rgba(255,255,255,0.08);
-          border-color: rgba(201,168,76,0.4);
-          transform: translateY(-4px);
-        }
-        .leader-avatar {
-          width: 88px; height: 88px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--teal), var(--teal-light));
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 24px;
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 28px;
-          font-weight: 600;
-          color: var(--gold-light);
-          border: 2px solid rgba(201,168,76,0.3);
-        }
-        .leader-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 20px;
-          font-weight: 400;
-          color: var(--white);
-          margin-bottom: 8px;
-        }
-        .leader-role {
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: var(--gold);
-          margin-bottom: 12px;
-        }
-        .leader-specialty {
-          font-size: 13px;
-          color: rgba(255,255,255,0.45);
-        }
-        .leader-exp {
-          display: inline-block;
-          margin-top: 16px;
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: var(--teal-light);
-          border: 1px solid rgba(10,95,95,0.4);
-          padding: 4px 12px;
-        }
+        .leadership-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 50px; }
+        .leader-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 40px; text-align: center; color: white; transition: 0.3s; }
+        .leader-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); }
+        .leader-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--gold); color: var(--deep); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 24px; font-weight: 700; }
+        .leader-name { font-size: 18px; margin-bottom: 5px; }
+        .leader-role { color: var(--gold); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
 
-        /* ─── CTA BANNER ─── */
-        .cta-banner {
-          background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
-          padding: 80px;
-          text-align: center;
-          position: relative;
-          overflow: hidden;
-        }
-        .cta-banner::before {
-          content: '✦';
-          position: absolute;
-          font-size: 400px;
-          color: rgba(255,255,255,0.03);
-          left: -100px; top: -100px;
-          line-height: 1;
-          pointer-events: none;
-        }
-        .cta-banner-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(36px, 5vw, 60px);
-          font-weight: 300;
-          color: var(--white);
-          line-height: 1.2;
-          margin-bottom: 20px;
-        }
-        .cta-banner-sub {
-          font-size: 16px;
-          font-weight: 300;
-          color: rgba(255,255,255,0.7);
-          margin-bottom: 40px;
-        }
-        .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .cta-btn-primary {
-          background: var(--gold);
-          color: var(--deep);
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          padding: 18px 40px;
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .cta-btn-primary:hover { background: var(--gold-light); }
-        .cta-btn-outline {
-          background: transparent;
-          color: var(--white);
-          font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          padding: 18px 40px;
-          border: 1px solid rgba(255,255,255,0.4);
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .cta-btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+        .cta-banner { background: var(--teal); padding: 100px; text-align: center; color: white; }
+        .cta-title { font-family: 'Cormorant Garamond', serif; font-size: 50px; margin-bottom: 30px; }
+        .cta-btn-primary { background: var(--gold); color: var(--deep); padding: 18px 40px; border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; }
 
-        /* ─── RESPONSIVE ─── */
         @media (max-width: 1024px) {
-          .hero { grid-template-columns: 1fr; min-height: auto; }
+          .hero, .story-grid, .stats-section, .values-grid, .branches-grid, .leadership-grid { grid-template-columns: 1fr; }
           .hero-right { display: none; }
-          .hero-left { padding: 80px 40px; }
-          .section { padding: 80px 40px; }
-          .stats-section { padding: 60px 40px; }
-          .stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .story-grid { grid-template-columns: 1fr; gap: 48px; }
-          .story-visual { order: -1; }
-          .story-badge { right: 0; }
-          .values-grid { grid-template-columns: repeat(2, 1fr); }
-          .branches-intro { grid-template-columns: 1fr; gap: 24px; }
-          .branches-map-hint { text-align: left; }
-          .branches-grid { grid-template-columns: repeat(2, 1fr); }
-          .leadership-grid { grid-template-columns: repeat(2, 1fr); }
+          .section { padding: 60px 20px; }
         }
-
-        @media (max-width: 640px) {
-          .hero-left { padding: 60px 24px; }
-          .section { padding: 60px 24px; }
-          .stats-section { padding: 48px 24px; }
-          .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
-          .values-grid { grid-template-columns: 1fr; }
-          .branches-grid { grid-template-columns: 1fr; }
-          .leadership-grid { grid-template-columns: 1fr; }
-          .cta-banner { padding: 60px 24px; }
-        }
-
-        /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .hero-eyebrow { animation: fadeUp 0.6s ease both; }
-        .hero-title { animation: fadeUp 0.6s 0.15s ease both; }
-        .hero-subtitle { animation: fadeUp 0.6s 0.3s ease both; }
-        .hero-cta { animation: fadeUp 0.6s 0.45s ease both; }
-
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .hero-emblem { animation: spin-slow 30s linear infinite; }
-        .hero-emblem-inner { animation: spin-slow 30s linear infinite reverse; }
       `}</style>
 
       <div className="about-root">
-
-        {/* ─── HERO ─── */}
         <section className="hero">
-          <div className="hero-grid-lines" />
           <div className="hero-left">
-            <span className="hero-eyebrow">About Srikara Hospitals</span>
+            <span className="hero-eyebrow">Excellence in Orthopaedics</span>
             <h1 className="hero-title">
-              Healing with<br />
-              <em>Heart,</em><br />
-              Since 2005.
+              Precision <em>Surgery,</em><br />
+              Personalized <em>Care.</em>
             </h1>
             <p className="hero-subtitle">
-              For over two decades, Srikara Hospitals has been the most trusted name in healthcare across Telangana and Andhra Pradesh — combining clinical precision with genuine human compassion.
+              Under the visionary leadership of Dr. Akhil Dadi, Srikara Hospitals has redefined joint replacement and multispecialty care in India for over a decade.
             </p>
-            <a href="#story" className="hero-cta">
-              Our Story &nbsp;→
-            </a>
+            <a href="#story" className="hero-cta">Our Clinical Journey &nbsp;→</a>
           </div>
           <div className="hero-right">
             <div className="hero-emblem">
               <div className="hero-emblem-inner">
                 <span className="hero-emblem-cross">✚</span>
                 <div className="hero-emblem-name">SRIKARA</div>
-                <div className="hero-emblem-tagline">Hospitals & Research</div>
               </div>
             </div>
-            <div className="hero-year-badge">
-              <div className="hero-year">2005</div>
-              <div className="hero-year-label">Est. Hyderabad</div>
-            </div>
           </div>
         </section>
 
-        {/* ─── STATS ─── */}
         <section className="stats-section" ref={statsRef}>
-          <div className="stats-grid">
-            {stats.map((s, i) => (
-              <StatCard key={i} value={s.value} label={s.label} active={statsVisible} />
-            ))}
-          </div>
+          {stats.map((s, i) => (
+            <StatCard key={i} value={s.value} label={s.label} active={statsVisible} />
+          ))}
         </section>
 
-        {/* ─── STORY ─── */}
-        <section className="section story-section" id="story">
+        <section className="section" id="story">
           <div className="section-inner">
             <div className="story-grid">
               <div className="story-text">
-                <div className="section-header">
-                  <div className="section-tag">Our Story</div>
-                  <h2 className="section-title">A vision born from<br /><em>community need</em></h2>
-                </div>
+                <span className="section-tag">Since 2013</span>
+                <h2 className="section-title">Redefining <em>Joint Replacement</em></h2>
                 <p>
-                  In 2005, Dr. Suresh Rao founded Srikara Hospitals in Banjara Hills, Hyderabad, with a singular conviction: that world-class healthcare should not be the privilege of a few, but the right of every family. Starting with just 80 beds and a team of 12 dedicated physicians, the hospital quickly earned a reputation for clinical excellence and patient-first care.
+                  Srikara Hospitals was founded as a boutique orthopedic center and has since evolved into a multi-city healthcare powerhouse. We are known for our "Rapid Recovery" protocols, allowing patients to walk within hours of major surgery.
                 </p>
                 <div className="story-quote">
-                  <p>"We did not build hospitals. We built sanctuaries of hope — places where every patient walks in knowing they will be heard, healed, and cared for."</p>
+                  "Our goal was never just to operate, but to restore quality of life through surgical precision and technological innovation."
+                  <br /><small>— Dr. Akhil Dadi</small>
                 </div>
                 <p>
-                  Over the next two decades, Srikara grew into a network of 10 hospitals spanning both Telugu states — each branch rooted in its local community, each carrying the founding values of compassion, innovation, and excellence. Today, we employ over 4,000 healthcare professionals and operate specialized centres of excellence in oncology, cardiac care, neurosciences, and more.
+                  With centers across Telangana and Andhra Pradesh, we bring together the finest surgical minds and the latest robotic technology to ensure every patient receives world-class treatment.
                 </p>
               </div>
-              <div className="story-visual">
-                <div className="story-badge">
-                  <span className="story-badge-num">10</span>
-                  <span className="story-badge-text">Branches</span>
-                </div>
-                <div className="story-img-placeholder story-img-main">
-                  Hospital Flagship — Banjara Hills
-                </div>
-                <div className="story-img-row">
-                  <div className="story-img-placeholder story-img-small">ICU Wing</div>
-                  <div className="story-img-placeholder story-img-small">Research Lab</div>
-                </div>
-              </div>
+              {/* Replace the current placeholder div with this */}
+<div className="story-visual-container" style={{ position: 'relative', height: '400px' }}>
+  <img 
+    src="/herosection.jpg" // Change this to your actual image path
+    alt="Srikara Flagship Facility"
+    style={{ 
+      width: '100%', 
+      height: '100%', 
+      objectFit: 'cover', 
+      borderRadius: '4px',
+      boxShadow: '0 20px 40px rgba(0,0,0,0.1)' 
+    }} 
+  />
+</div>
             </div>
           </div>
         </section>
 
-        {/* ─── VALUES ─── */}
-        <section className="section values-section">
+        <section className="section" style={{ background: 'var(--cream)' }}>
           <div className="section-inner">
-            <div className="section-header">
-              <div className="section-tag">What Drives Us</div>
-              <h2 className="section-title">Our Core <em>Values</em></h2>
-            </div>
+            <span className="section-tag">Core Values</span>
+            <h2 className="section-title">Why <em>Choose Srikara?</em></h2>
             <div className="values-grid">
               {values.map((v, i) => (
                 <div className="value-card" key={i}>
@@ -835,88 +285,43 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ─── BRANCHES ─── */}
-        <section className="section branches-section">
+        <section className="section">
           <div className="section-inner">
-            <div className="branches-intro">
-              <div>
-                <div className="section-tag">Our Network</div>
-                <h2 className="section-title">10 Hospitals.<br /><em>One Standard.</em></h2>
-              </div>
-              <p className="branches-desc">
-                From Hyderabad's city centres to Tirupati's sacred precincts — every Srikara branch delivers identical clinical protocols, technology standards, and patient care philosophy. Consistency is our promise.
-              </p>
-            </div>
+            <span className="section-tag">Our Network</span>
+            <h2 className="section-title">8 Centers of <em>Excellence</em></h2>
             <div className="branches-grid">
-              {/* Main branch */}
-              <div
-                className={`branch-card ${activeBranch === 0 ? "active" : ""}`}
-                onClick={() => setActiveBranch(activeBranch === 0 ? null : 0)}
-                style={{ background: activeBranch === 0 ? "white" : undefined }}
-              >
-                <div className="branch-number">01</div>
-                <div className="branch-city">Hyderabad — Flagship</div>
-                <div className="branch-area">Banjara Hills · Est. 2005</div>
-                <div className="branch-tags">
-                  <span className="branch-tag">320 Beds</span>
-                  <span className="branch-tag branch-specialty-tag">Headquarters</span>
-                </div>
-              </div>
-              {/* Other branches */}
-              {branches.map((b, i) => (
-                <div
-                  key={b.id}
-                  className={`branch-card ${activeBranch === b.id ? "active" : ""}`}
-                  onClick={() => setActiveBranch(activeBranch === b.id ? null : b.id)}
-                >
-                  <div className="branch-number">0{i + 2}</div>
+              {branches.map((b) => (
+                <div key={b.id} className={`branch-card ${activeBranch === b.id ? "active" : ""}`} onClick={() => setActiveBranch(b.id)}>
                   <div className="branch-city">{b.city}</div>
-                  <div className="branch-area">{b.area} · Est. {b.since}</div>
-                  <div className="branch-tags">
-                    <span className="branch-tag">{b.beds} Beds</span>
-                    <span className="branch-tag branch-specialty-tag">{b.specialty}</span>
-                  </div>
+                  <div className="branch-area">{b.area} · Since {b.since}</div>
+                  <span className="branch-tag">{b.specialty}</span>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── LEADERSHIP ─── */}
-        <section className="section leadership-section">
+        <section className="section" style={{ background: 'var(--deep)' }}>
           <div className="section-inner">
-            <div className="section-header">
-              <div className="section-tag">Leadership</div>
-              <h2 className="section-title">The Minds Behind<br /><em>Srikara</em></h2>
-            </div>
+            <span className="section-tag" style={{ color: 'var(--gold)' }}>Leadership</span>
+            <h2 className="section-title" style={{ color: 'white' }}>World-Class <em>Specialists</em></h2>
             <div className="leadership-grid">
               {leadership.map((l, i) => (
                 <div className="leader-card" key={i}>
                   <div className="leader-avatar">{l.initial}</div>
                   <div className="leader-name">{l.name}</div>
                   <div className="leader-role">{l.role}</div>
-                  <div className="leader-specialty">{l.specialty}</div>
-                  <div className="leader-exp">{l.exp} Experience</div>
+                  <div style={{ fontSize: '13px', opacity: 0.6 }}>{l.specialty}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── CTA BANNER ─── */}
         <section className="cta-banner">
-          <h2 className="cta-banner-title">
-            Your health journey<br />begins here.
-          </h2>
-          <p className="cta-banner-sub">
-            Find a Srikara Hospital near you — across 7 cities in Telangana & Andhra Pradesh.
-          </p>
-          <div className="cta-group">
-            <button className="cta-btn-primary">Book an Appointment</button>
-            <button className="cta-btn-outline">Find a Branch</button>
-          </div>
+          <h2 className="cta-title">Your path to painless mobility starts here.</h2>
+          <button className="cta-btn-primary">Book a Consultation</button>
         </section>
-
       </div>
     </>
   );

@@ -86,14 +86,14 @@ function useCountUp(
 ═══════════════════════════════════════════════ */
 const SLIDES = [
   {
-    img: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1800&q=88&auto=format&fit=crop",
+    img: "/herosection.jpg",
     tag: "Robotic Surgery",
     h1: "Precision Surgery,",
     h2: "Life-Changing Results",
     sub: "South India's No. 1 robotic surgery centre — minimally invasive procedures, dramatically faster recovery times.",
   },
   {
-    img: "/herosection.jpg",
+    img: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1800&q=88&auto=format&fit=crop",
     tag: "Compassionate Care",
     h1: "Every Patient,",
     h2: "Every Heartbeat Matters",
@@ -153,16 +153,71 @@ const QUICK_TILES = [
 ];
 
 const DEPT_FALLBACK = [
-  { icon: "🫀", name: "Cardiology",       tagline: "Heart & Vascular",    count: 18, slug: "cardiology",       img: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=480&q=80&auto=format&fit=crop" },
-  { icon: "🧠", name: "Neurosciences",    tagline: "Brain & Spine",       count: 22, slug: "neurosciences",    img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=480&q=80&auto=format&fit=crop" },
-  { icon: "🦴", name: "Orthopaedics",     tagline: "Bone & Joint Care",   count: 15, slug: "orthopaedics",     img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=480&q=80&auto=format&fit=crop" },
-  { icon: "🤖", name: "Robotic Surgery",  tagline: "Minimally Invasive",  count: 12, slug: "robotic-surgery",  img: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=480&q=80&auto=format&fit=crop" },
-  { icon: "👶", name: "Mother & Child",   tagline: "Obstetrics & Paeds",  count: 14, slug: "mother-child",     img: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=480&q=80&auto=format&fit=crop" },
-  { icon: "🔬", name: "Oncology",         tagline: "Cancer Centre",       count: 20, slug: "oncology",         img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=480&q=80&auto=format&fit=crop" },
-  { icon: "🫁", name: "Pulmonology",      tagline: "Lung & Respiratory",  count: 10, slug: "pulmonology",      img: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=480&q=80&auto=format&fit=crop" },
-  { icon: "🦷", name: "Dental",           tagline: "Oral Health",         count: 8,  slug: "dental",           img: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?w=480&q=80&auto=format&fit=crop" },
+  { 
+    icon: "🦴", 
+    name: "Orthopaedics", 
+    tagline: "No.1 Robotic Knee Replacement Center in India", 
+    count: 6, 
+    slug: "orthopaedics", 
+    img: "https://images.unsplash.com/photo-1706777193603-76c3e9613553?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Joint/Bone model
+  },
+  { 
+    icon: "🫀", 
+    name: "Cardiology", 
+    tagline: "7 Cath Lab Centers across our network", 
+    count: 6, 
+    slug: "cardiology", 
+    img: "https://images.unsplash.com/photo-1559757296-5c84adc6d116?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  { 
+    icon: "🧠", 
+    name: "Neurology", 
+    tagline: "24/7 Neuro Critical Care across all branches", 
+    count: 6, 
+    slug: "neurology", 
+    img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=480&q=80&auto=format&fit=crop" // Brain scan/model
+  },
+  { 
+    icon: "⚡", 
+    name: "Urology", 
+    tagline: "6 Laser Urology Centers in our network", 
+    count: 6, 
+    slug: "urology", 
+    img: "https://plus.unsplash.com/premium_photo-1702598804759-8fb687f774fb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Urology specific
+  },
+  { 
+    icon: "🧬", 
+    name: "Spine", 
+    tagline: "Dedicated spine surgery centers", 
+    count: 6, 
+    slug: "spine", 
+    img: "https://images.unsplash.com/photo-1624716346720-6c96dfd07807?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Spine X-ray/Model
+  },
+  { 
+    icon: "🤱", 
+    name: "Gynaecology", 
+    tagline: "Advanced laparoscopic gynaecology", 
+    count: 6, 
+    slug: "gynaecology", 
+    img: "https://media.istockphoto.com/id/2263270289/photo/human-fetus-and-dna-on-scientific-background-3d-illustration.jpg?s=2048x2048&w=is&k=20&c=kRjsVLkBonp9xYSq5PRvDxAPoTHojaIESd_TcPZJ0gA="
+  },
+  { 
+    icon: "🫘", 
+    name: "Nephrology", 
+    tagline: "Dialysis centers across all branches", 
+    count: 6, 
+    slug: "nephrology", 
+    img: "https://images.unsplash.com/photo-1650897492524-bbc1adb72626?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8a2lkbmV5fGVufDB8fDB8fHww"
+  },
+  { 
+    icon: "🍕", // Use a stomach or food icon if 🍕 isn't right; emoji support for 'stomach' varies
+    name: "Gastro", 
+    tagline: "Advanced endoscopy & liver care", 
+    count: 6, 
+    slug: "gastro", 
+    img: "https://images.unsplash.com/photo-1743767587835-7a80fe384236?q=80&w=1355&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
 ];
-
 const HOSP_FALLBACK = [
   { name: "Srikara Secunderabad", location: "Secunderabad",    beds: 350, tags: ["Flagship","NABH"], slug: "secunderabad", img: "/rtc-x-roads.jpeg", color: "#B8103F", accentColor: "#0B1F3A" },
   { name: "Srikara Kukatpally",   location: "Kukatpally, Hyd", beds: 250, tags: ["NABH"],            slug: "kukatpally",   img: "/Miyapur.jpeg", color: "#0B1F3A", accentColor: "#0D7A6B" },
