@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
-
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
@@ -1202,6 +1203,7 @@ export default function DoctorsPage() {
 
   return (
     <>
+    <Navbar/>
       <GlobalStyle />
       <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", background: "#f5f7f7" }}>
 
@@ -1386,6 +1388,7 @@ export default function DoctorsPage() {
           )}
         </section>
       </div>
+      <Footer />
     </>
   );
 }

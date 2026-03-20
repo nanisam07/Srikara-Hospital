@@ -1,4 +1,5 @@
 "use client";
+import {useRef} from "react"
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,9 +18,9 @@ const NAV_LINKS = [
     href: "/hospitals",
     sub: [
       { label: "All Hospitals", href: "/hospitals" },
-      { label: "Hyderabad",     href: "/hospitals?city=hyderabad" },
-      { label: "Vijayawada",    href: "/hospitals?city=vijayawada" },
-      { label: "Vizag",         href: "/hospitals?city=vizag" },
+      { label: "Kompally",     href: "/hospitals/kompally" },
+      { label: "Vijayawada",    href: "/hospitals/vijayawada" },
+      { label: "Vizag",         href: "/hospitals/vizag" },
     ],
   },
   {
@@ -41,7 +42,18 @@ export default function Navbar() {
   const [scrolled,     setScrolled]     = useState(false);
   const [mobileOpen,   setMobileOpen]   = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+const handleEnter = (label: string) => {
+  if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  setOpenDropdown(label);
+};
+
+const handleLeave = () => {
+  timeoutRef.current = setTimeout(() => {
+    setOpenDropdown(null);
+  }, 120);
+};
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -75,7 +87,8 @@ export default function Navbar() {
     }
     .sk-dropdown {
       position: absolute;
-      top: calc(100% + 10px);
+      top: 100px;
+      margin-top:10px;
       left: 0;
       min-width: 210px;
       border-radius: 18px;
@@ -91,6 +104,14 @@ export default function Navbar() {
       from { opacity: 0; transform: translateY(-6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    .sk-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
     .sk-dropdown a {
       display: block;
       padding: 11px 16px;
@@ -336,27 +357,35 @@ export default function Navbar() {
               justifyContent: "center",
             }}
           >
-            {NAV_LINKS.map((link) => (
-              <div
-                key={link.label}
-                style={{ position: "relative" }}
-                onMouseEnter={() => link.sub && setOpenDropdown(link.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link href={link.href} className="sk-nav-link">
-                  {link.label}
-                  {link.sub && (
-                    <svg
-                      className={`sk-chevron ${openDropdown === link.label ? "open" : ""}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.8}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )}
-                </Link>
+
+
+{NAV_LINKS.map((link) => (
+  <div
+    key={link.label}
+    style={{ position: "relative" }}
+    onMouseEnter={() => link.sub && handleEnter(link.label)}
+    onMouseLeave={handleLeave}
+  >
+    <Link href={link.href} className="sk-nav-link">
+      {link.label}
+      {link.sub && (
+        <svg
+          className={`sk-chevron ${
+            openDropdown === link.label ? "open" : ""
+          }`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2.8}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      )}
+    </Link>
 
                 {/* Dropdown */}
                 {link.sub && openDropdown === link.label && (

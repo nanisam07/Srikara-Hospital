@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 // REAL SRIKARA BRANCH DATA
 const branches = [
   { id: 1, city: "Secunderabad", area: "RTC X Roads", since: "2013", beds: 200, specialty: "Orthopaedics & Joint Replacement" },
@@ -120,6 +121,7 @@ export default function AboutPage() {
 
   return (
     <>
+      <Navbar />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
@@ -254,7 +256,7 @@ export default function AboutPage() {
               {/* Replace the current placeholder div with this */}
 <div className="story-visual-container" style={{ position: 'relative', height: '400px' }}>
   <img 
-    src="/herosection.jpg" // Change this to your actual image path
+    src="/herosection.jpg" 
     alt="Srikara Flagship Facility"
     style={{ 
       width: '100%', 
@@ -323,6 +325,7 @@ export default function AboutPage() {
           <button className="cta-btn-primary">Book a Consultation</button>
         </section>
       </div>
+      <Footer />
     </>
   );
 }

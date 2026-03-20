@@ -7,6 +7,8 @@ import {
   Star, Shield, Award, Ambulance, Calendar, Search,
   BedDouble, Users, Stethoscope, Heart,
 } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 /*
   SRIKARA PALETTE
@@ -456,9 +458,11 @@ function HospitalCard({ hosp, index }: { hosp: typeof HOSPITALS[0]; index: numbe
                 paddingTop: 14,
               }}
             >
-              <a
-                href={`tel:${hosp.phone}`}
-                onClick={(e) => e.stopPropagation()}
+              <button
+                onClick={(e) => {
+                e.stopPropagation();
+                window.location.href = `tel:${hosp.phone}`;
+                }}
                 style={{
                   flex: 1,
                   display: "flex",
@@ -477,7 +481,7 @@ function HospitalCard({ hosp, index }: { hosp: typeof HOSPITALS[0]; index: numbe
                 }}
               >
                 <Phone size={11} /> Call
-              </a>
+              </button>
               <a
                 href={hosp.mapLink}
                 target="_blank"
@@ -626,6 +630,7 @@ export default function HospitalsPage() {
 
   return (
     <>
+    <Navbar />
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
       <div style={{ background: "#F8F6F9", minHeight: "100vh" }}>
@@ -990,6 +995,7 @@ export default function HospitalsPage() {
         </section>
 
       </div>
+      <Footer />
     </>
   );
 }

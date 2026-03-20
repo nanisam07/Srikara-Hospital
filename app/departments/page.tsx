@@ -8,6 +8,8 @@ import {
   Scan, FlaskConical, UserRound, Wind, Droplets,
   ArrowRight, ChevronRight, Phone, Calendar,
 } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 /*
   SRIKARA PALETTE
@@ -531,6 +533,7 @@ export default function DepartmentsPage() {
 
   return (
     <>
+      <Navbar />
       <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
 
       <div style={{ background: "#F8F6F9", minHeight: "100vh" }}>
@@ -1768,6 +1771,7 @@ export default function DepartmentsPage() {
         </section>
 
       </div>
+      <Footer />
     </>
   );
 }

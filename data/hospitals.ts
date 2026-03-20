@@ -1,7 +1,7 @@
 export const hospitals = [
   {
     id: 1,
-    slug: "rtc-cross-roads",
+    slug: "rtc-x-roads",
     name: "RTC Cross Roads",
     fullName: "Srikara Hospitals — RTC Cross Roads",
     location: "RTC Cross Roads, Hyderabad",

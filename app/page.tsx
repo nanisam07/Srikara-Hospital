@@ -4,6 +4,8 @@ import Link from "next/link";
 import { departments } from "@/data/departments";
 import { hospitals } from "@/data/hospitals";
 import { doctors } from "@/data/doctors";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 /*
   ╔══════════════════════════════════════════════╗
@@ -294,6 +296,7 @@ function StatItem({ num, suffix, label, icon, start }:{
 }) {
   const count = useCountUp(num, 1800, start);
   return (
+    
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 72 }}>
       <span style={{ fontSize: 20, marginBottom: 3 }}>{icon}</span>
       <span
@@ -657,6 +660,7 @@ export default function HomePage() {
 
   return (
     <>
+    <Navbar />
       <style dangerouslySetInnerHTML={{ __html: globalCSS }} />
 
       {/* ═══════════════════════════════════════════════════
@@ -2436,6 +2440,7 @@ export default function HomePage() {
                  </p>
                </div>
              </section>
+             <Footer />
            </>
          );
        }

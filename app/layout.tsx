@@ -41,8 +41,7 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${dmSans.variable} font-sans bg-white text-srikara-navy antialiased`}
       >
-        {/* NAVBAR */}
-        <Navbar />
+        
 
         {/* ✅ MAIN WRAPPER */}
         <div className="flex flex-col min-h-screen">
@@ -54,8 +53,7 @@ export default function RootLayout({
 
         </div>
 
-        {/* FOOTER */}
-        <Footer />
+        
 
         {/* FLOATING BUTTON */}
         <WhatsAppButton />
