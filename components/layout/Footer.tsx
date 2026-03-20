@@ -12,10 +12,15 @@ import Image from "next/image";
 */
 
 const HOSPITAL_BRANCHES = [
-  { id: "SECUNDERABAD", name: "Secunderabad Branch",   address: "Main Road, Secunderabad",         phone: "040-456789" },
-  { id: "MIYAPUR",      name: "Miyapur Branch",        address: "Miyapur X Roads, Hyderabad",      phone: "040-556789" },
-  { id: "KARKHANA",     name: "Karkhana Branch",       address: "Karkhana, Secunderabad",          phone: "040-656789" },
-  { id: "VIJAYAWADA",   name: "Vijayawada Branch",     address: "MG Road, Vijayawada",             phone: "0866-456789" },
+  { id: "RTC-X-ROADS", name: "RTC X Roads Branch",   address: "Main Road, Secunderabad",         phone: "040 4646 0000" },
+  { id: "MIYAPUR",      name: "Miyapur Branch",        address: "Miyapur X Roads, Hyderabad",      phone: "040 4747 0000" },
+  { id: "LB NAGAR",     name: "LB Nagar Branch",       address: "LB Nagar, Hyderabad",             phone: "040 66 000 108" },
+  { id: "VIJAYAWADA",   name: "Vijayawada Branch",     address: "MG Road, Vijayawada",             phone: "772 999 0003" },
+  { id: "ECIL",       name: "ECIL Branch",         address: "ECIL X Roads, Hyderabad",               phone: "040 41 108 108" },
+  { id: "KOMPALLY",     name: "Kompally Branch",       address: "Kompally, Secunderabad",         phone: "040 6818 0000" },
+  { id: "PEERZADIGUDA",    name: "Peerzadiguda Branch",      address: "Peerzadiguda, Hyderabad",         phone: "040 68 108 108" },
+  { id: "LAKDIKAPUL",     name: "Lakdikapul Branch",       address: "Lakdikapul, Hyderabad",           phone: "040 6969 0000" },
+  { id: "RAJAHMUNDRA",      name: "Rajahmundry Branch",        address: "Dwaraka Nagar, Khammam",        phone: "0883 6818 000" },
 ];
 
 const DEPT_COLUMNS = [
@@ -28,13 +33,16 @@ const QUICK_ACTIONS = [
   { label: "Book Appointment", icon: "⚡", href: "/doctors",   accent: true  },
   { label: "Find Specialist",  icon: "🔬", href: "/doctors",   accent: false },
   { label: "Emergency Care",   icon: "❤️", href: "tel:1800-123-4567", accent: false },
-  { label: "Patient Portal",   icon: "🛡️", href: "/portal",   accent: false },
+  
 ];
 
-export default function Footer() {
-  const [activeBranch, setActiveBranch] = useState("SECUNDERABAD");
-  const branch = HOSPITAL_BRANCHES.find((b) => b.id === activeBranch)!;
 
+export default function Footer() {
+  const [activeBranch, setActiveBranch] = useState("RTC-X-ROADS");
+
+  const branch =
+    HOSPITAL_BRANCHES.find((b) => b.id === activeBranch) ||
+    HOSPITAL_BRANCHES[0]; // fallback safety
   return (
     <>
       {/* ═══════════════════════════════════════════
