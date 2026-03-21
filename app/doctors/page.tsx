@@ -1,6 +1,7 @@
 "use client";
 export const dynamic = "force-dynamic";
-import { useState, useMemo, useEffect, useRef } from "react";
+
+import { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { doctors as rawDoctors } from "@/data/doctors";
@@ -146,14 +147,13 @@ function getInitials(name: string): string {
     .join("");
 }
 
-// Seed-based pseudo-random so values stay stable per doctor
 function seededRandom(seed: number) {
   const x = Math.sin(seed + 1) * 10000;
   return x - Math.floor(x);
 }
 
 // ─────────────────────────────────────────────
-// BUILD DOCTORS LIST FROM doctors.ts
+// BUILD DOCTORS LIST
 // ─────────────────────────────────────────────
 
 const DOCTORS: Doctor[] = rawDoctors.map((d, idx) => {
@@ -190,44 +190,16 @@ const DOCTORS: Doctor[] = rawDoctors.map((d, idx) => {
       { label: "Expert Consultation", bg: "#faeeda", iconColor: "#854F0B", icon: "award" },
     ],
     education: [
-      {
-        degree: d.qualification || d.department,
-        institute: "Osmania Medical College, Hyderabad",
-        year: `${2000 + Math.floor(seededRandom(seed + 5) * 20)}`,
-      },
-      {
-        degree: "MBBS",
-        institute: "Gandhi Medical College, Hyderabad",
-        year: `${1995 + Math.floor(seededRandom(seed + 6) * 15)}`,
-      },
+      { degree: d.qualification || d.department, institute: "Osmania Medical College, Hyderabad", year: `${2000 + Math.floor(seededRandom(seed + 5) * 20)}` },
+      { degree: "MBBS", institute: "Gandhi Medical College, Hyderabad", year: `${1995 + Math.floor(seededRandom(seed + 6) * 15)}` },
     ],
     workExp: [
-      {
-        role: d.designation,
-        org: `Srikara Hospitals – ${d.branch}`,
-        period: `${2015 + Math.floor(seededRandom(seed + 7) * 8)} – Present`,
-        code: "SH",
-      },
-      {
-        role: "Consultant",
-        org: "Apollo Hospitals, Hyderabad",
-        period: `${2010 + Math.floor(seededRandom(seed + 8) * 5)} – ${2015 + Math.floor(seededRandom(seed + 7) * 8)}`,
-        code: "AH",
-      },
+      { role: d.designation, org: `Srikara Hospitals – ${d.branch}`, period: `${2015 + Math.floor(seededRandom(seed + 7) * 8)} – Present`, code: "SH" },
+      { role: "Consultant", org: "Apollo Hospitals, Hyderabad", period: `${2010 + Math.floor(seededRandom(seed + 8) * 5)} – ${2015 + Math.floor(seededRandom(seed + 7) * 8)}`, code: "AH" },
     ],
     patientReviews: [
-      {
-        name: "Patient",
-        stars: 5,
-        text: `Excellent doctor. ${d.name} was very thorough and caring throughout the treatment.`,
-        date: "1 week ago",
-      },
-      {
-        name: "Satisfied Patient",
-        stars: 5,
-        text: "Highly recommended. Professional and compassionate care.",
-        date: "2 weeks ago",
-      },
+      { name: "Patient", stars: 5, text: `Excellent doctor. ${d.name} was very thorough and caring throughout the treatment.`, date: "1 week ago" },
+      { name: "Satisfied Patient", stars: 5, text: "Highly recommended. Professional and compassionate care.", date: "2 weeks ago" },
     ],
     branches: [{ name: `Srikara Hospitals – ${d.branch}`, address: `${d.branch}, Hyderabad` }],
   };
@@ -272,7 +244,6 @@ function Icon({ name, size = 16, color = "currentColor" }: { name: string; size?
 
 function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
-
   return (
     <div
       onClick={onClick}
@@ -285,86 +256,45 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
         transition: "all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
         transform: hovered ? "translateY(-8px) scale(1.01)" : "translateY(0) scale(1)",
         boxShadow: hovered ? `0 24px 60px ${doctor.color}30` : "0 4px 18px rgba(0,0,0,0.06)",
-        position: "relative",
       }}
     >
-      {/* Top accent */}
-      <div style={{
-        height: 4,
-        background: `linear-gradient(90deg, ${doctor.color}, #C0145C)`,
-        opacity: hovered ? 1 : 0.5,
-        transition: "opacity 0.3s",
-      }} />
-
+      <div style={{ height: 4, background: `linear-gradient(90deg, ${doctor.color}, #C0145C)`, opacity: hovered ? 1 : 0.5, transition: "opacity 0.3s" }} />
       <div style={{ padding: "18px 18px 16px" }}>
-        {/* Availability */}
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 5,
-          fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20,
-          marginBottom: 14, letterSpacing: "0.04em",
+          fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, marginBottom: 14,
           background: doctor.available ? "rgba(22,163,74,0.08)" : "rgba(234,179,8,0.1)",
           color: doctor.available ? "#15803d" : "#b45309",
           border: `1px solid ${doctor.available ? "rgba(22,163,74,0.2)" : "rgba(234,179,8,0.3)"}`,
         }}>
-          <span style={{
-            width: 5, height: 5, borderRadius: "50%", flexShrink: 0,
-            background: doctor.available ? "#16a34a" : "#d97706",
-            boxShadow: doctor.available ? "0 0 0 2px rgba(22,163,74,0.25)" : "none",
-          }} />
+          <span style={{ width: 5, height: 5, borderRadius: "50%", background: doctor.available ? "#16a34a" : "#d97706" }} />
           {doctor.available ? "Available Today" : "Next Available"}
         </div>
 
-        {/* Avatar + Name */}
         <div style={{ display: "flex", gap: 13, alignItems: "flex-start", marginBottom: 14 }}>
           <div style={{
-            width: 58, height: 58, borderRadius: 14, overflow: "hidden",
-            flexShrink: 0, background: doctor.color,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 17, fontWeight: 800, color: "#fff",
-            fontFamily: "'Cormorant Garamond', serif",
-            boxShadow: `0 4px 12px ${doctor.color}40`,
-            border: "2px solid #f8f8f8",
+            width: 58, height: 58, borderRadius: 14, overflow: "hidden", flexShrink: 0,
+            background: doctor.color, display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 17, fontWeight: 800, color: "#fff", fontFamily: "'Cormorant Garamond', serif",
+            boxShadow: `0 4px 12px ${doctor.color}40`, border: "2px solid #f8f8f8",
           }}>
             {doctor.image
               ? <img src={doctor.image} alt={doctor.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               : doctor.initials}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, fontWeight: 700, color: "#0f1a1a", marginBottom: 2, lineHeight: 1.2 }}>
-              {doctor.name}
-            </div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: doctor.color, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              {doctor.department}
-            </div>
-            <div style={{ fontSize: 10, color: "#94a3a3", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {doctor.qualifications}
-            </div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, fontWeight: 700, color: "#0f1a1a", marginBottom: 2 }}>{doctor.name}</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: doctor.color, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>{doctor.department}</div>
+            <div style={{ fontSize: 10, color: "#94a3a3", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{doctor.qualifications}</div>
           </div>
         </div>
 
-        {/* Designation pill */}
-        <div style={{
-          fontSize: 10, fontWeight: 600, color: doctor.color,
-          background: `${doctor.color}12`, padding: "3px 10px", borderRadius: 20,
-          display: "inline-block", marginBottom: 10,
-          border: `1px solid ${doctor.color}25`,
-          maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-        }}>
+        <div style={{ fontSize: 10, fontWeight: 600, color: doctor.color, background: `${doctor.color}12`, padding: "3px 10px", borderRadius: 20, display: "inline-block", marginBottom: 10, border: `1px solid ${doctor.color}25`, maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {doctor.specialty}
         </div>
 
-        {/* Stats */}
-        <div style={{
-          display: "flex", alignItems: "center",
-          background: "linear-gradient(135deg, #f8fafa, #f0f8f8)",
-          borderRadius: 11, padding: "10px 12px", marginBottom: 12,
-          border: "1px solid #e8f4f4",
-        }}>
-          {[
-            { v: `⭐ ${doctor.rating}`, l: `${doctor.reviews} reviews` },
-            { v: doctor.experience, l: "Experience" },
-            { v: doctor.fee, l: "per visit" },
-          ].map((s) => (
+        <div style={{ display: "flex", alignItems: "center", background: "linear-gradient(135deg, #f8fafa, #f0f8f8)", borderRadius: 11, padding: "10px 12px", marginBottom: 12, border: "1px solid #e8f4f4" }}>
+          {[{ v: `⭐ ${doctor.rating}`, l: `${doctor.reviews} reviews` }, { v: doctor.experience, l: "Experience" }, { v: doctor.fee, l: "per visit" }].map((s) => (
             <div key={s.l} style={{ flex: 1, textAlign: "center", display: "flex", flexDirection: "column", gap: 2 }}>
               <strong style={{ fontSize: 12, fontWeight: 700, color: "#0f1a1a" }}>{s.v}</strong>
               <small style={{ fontSize: 9, color: "#7a9090" }}>{s.l}</small>
@@ -372,34 +302,22 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
           ))}
         </div>
 
-        {/* Tags */}
         <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 14 }}>
           <span style={{ fontSize: 9, fontWeight: 600, color: "#0a6e6e", background: "#e6f4f4", padding: "2px 8px", borderRadius: 20 }}>Telugu</span>
           <span style={{ fontSize: 9, fontWeight: 600, color: "#0a6e6e", background: "#e6f4f4", padding: "2px 8px", borderRadius: 20 }}>English</span>
-          <span style={{ fontSize: 9, fontWeight: 600, color: "#C0145C", background: "rgba(192,20,92,0.07)", padding: "2px 8px", borderRadius: 20 }}>
-            {doctor.branch}
-          </span>
+          <span style={{ fontSize: 9, fontWeight: 600, color: "#C0145C", background: "rgba(192,20,92,0.07)", padding: "2px 8px", borderRadius: 20 }}>{doctor.branch}</span>
         </div>
 
-        {/* Footer */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#5a7070" }}>
-            <Icon name="clock" size={12} color="#7a9090" />
-            {doctor.nextSlot}
+            <Icon name="clock" size={12} color="#7a9090" /> {doctor.nextSlot}
           </div>
-          <button
-            onClick={(e) => { e.stopPropagation(); onClick(); }}
-            style={{
-              background: hovered ? `linear-gradient(135deg, ${doctor.color}, #C0145C)` : "#0a6e6e",
-              color: "#fff", border: "none", borderRadius: 9,
-              padding: "8px 14px", fontSize: 11, fontWeight: 700,
-              transition: "all 0.3s ease", whiteSpace: "nowrap",
-              boxShadow: hovered ? `0 4px 16px ${doctor.color}60` : "none",
-              cursor: "pointer",
-            }}
-          >
-            Book Now
-          </button>
+          <button onClick={(e) => { e.stopPropagation(); onClick(); }} style={{
+            background: hovered ? `linear-gradient(135deg, ${doctor.color}, #C0145C)` : "#0a6e6e",
+            color: "#fff", border: "none", borderRadius: 9, padding: "8px 14px",
+            fontSize: 11, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap",
+            boxShadow: hovered ? `0 4px 16px ${doctor.color}60` : "none", transition: "all 0.3s ease",
+          }}>Book Now</button>
         </div>
       </div>
     </div>
@@ -436,28 +354,12 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
 
   return (
     <div id="detail-scroll-container" style={{ minHeight: "100vh", overflowY: "auto", background: "#0a0f0f", fontFamily: "'DM Sans', sans-serif" }}>
-
       {/* Floating Nav */}
-      <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        padding: "14px 28px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        background: scrollY > 120 ? "rgba(10,15,15,0.95)" : "transparent",
-        backdropFilter: scrollY > 120 ? "blur(20px)" : "none",
-        borderBottom: scrollY > 120 ? "1px solid rgba(255,255,255,0.06)" : "none",
-        transition: "all 0.4s ease",
-      }}>
-        <button onClick={onBack} style={{
-          display: "flex", alignItems: "center", gap: 8,
-          background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)",
-          color: "#fff", padding: "8px 16px", borderRadius: 30,
-          fontSize: 12, fontWeight: 600, cursor: "pointer",
-        }}>
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "14px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrollY > 120 ? "rgba(10,15,15,0.95)" : "transparent", backdropFilter: scrollY > 120 ? "blur(20px)" : "none", borderBottom: scrollY > 120 ? "1px solid rgba(255,255,255,0.06)" : "none", transition: "all 0.4s ease" }}>
+        <button onClick={onBack} style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", padding: "8px 16px", borderRadius: 30, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
           <Icon name="back" size={14} color="#fff" /> All Doctors
         </button>
-        <div style={{ color: "#fff", fontSize: 13, fontWeight: 600, opacity: scrollY > 120 ? 1 : 0, transition: "opacity 0.3s" }}>
-          {doctor.name}
-        </div>
+        <div style={{ color: "#fff", fontSize: 13, fontWeight: 600, opacity: scrollY > 120 ? 1 : 0, transition: "opacity 0.3s" }}>{doctor.name}</div>
         <div style={{ display: "flex", gap: 8 }}>
           <button style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", padding: "8px 16px", borderRadius: 30, fontSize: 12, cursor: "pointer" }}>Share</button>
           <button style={{ background: "rgba(192,20,92,0.8)", border: "none", color: "#fff", padding: "8px 16px", borderRadius: 30, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Save</button>
@@ -467,92 +369,34 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
       {/* Hero */}
       <div ref={heroRef} style={{ position: "relative", height: "100vh", minHeight: 600, overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
         <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, #0a0f0f 0%, ${doctor.color}22 50%, #C0145C15 100%)` }} />
-        <div style={{
-          position: "absolute", inset: 0, opacity: 0.04,
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-          transform: `translateY(${parallaxOffset}px)`,
-        }} />
-        <div style={{
-          position: "absolute", top: "20%", right: "10%",
-          width: 400, height: 400, borderRadius: "50%",
-          background: `radial-gradient(circle, ${doctor.color}30, transparent 70%)`,
-          filter: "blur(40px)",
-          transform: `translateY(${parallaxOffset * 0.5}px)`,
-        }} />
+        <div style={{ position: "absolute", inset: 0, opacity: 0.04, backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "40px 40px", transform: `translateY(${parallaxOffset}px)` }} />
+        <div style={{ position: "absolute", top: "20%", right: "10%", width: 400, height: 400, borderRadius: "50%", background: `radial-gradient(circle, ${doctor.color}30, transparent 70%)`, filter: "blur(40px)", transform: `translateY(${parallaxOffset * 0.5}px)` }} />
 
-        {/* Doctor portrait */}
-        <div style={{
-          position: "absolute", right: "5%", bottom: 0,
-          width: "min(45%, 420px)", height: "85%",
-          transform: `translateY(${parallaxOffset * 0.2}px)`,
-          opacity: heroOpacity,
-        }}>
+        {/* Portrait */}
+        <div style={{ position: "absolute", right: "5%", bottom: 0, width: "min(45%, 420px)", height: "85%", transform: `translateY(${parallaxOffset * 0.2}px)`, opacity: heroOpacity }}>
           <div style={{ width: "100%", height: "100%", borderRadius: 24, overflow: "hidden", background: "#000" }}>
             {doctor.image ? (
-              <img src={doctor.image} alt={doctor.name}
-                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center", borderRadius: 24 }} />
+              <img src={doctor.image} alt={doctor.name} style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center", borderRadius: 24 }} />
             ) : (
-              <div style={{
-                width: "100%", height: "100%",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: `linear-gradient(180deg, ${doctor.color}40 0%, transparent 100%)`,
-              }}>
-                <span style={{ fontSize: 140, fontWeight: 900, color: "rgba(255,255,255,0.08)", fontFamily: "'Cormorant Garamond', serif" }}>
-                  {doctor.initials}
-                </span>
+              <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(180deg, ${doctor.color}40 0%, transparent 100%)` }}>
+                <span style={{ fontSize: 140, fontWeight: 900, color: "rgba(255,255,255,0.08)", fontFamily: "'Cormorant Garamond', serif" }}>{doctor.initials}</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Hero text */}
-        <div style={{
-          position: "relative", zIndex: 10,
-          padding: "0 40px 60px", maxWidth: 600,
-          opacity: heroOpacity,
-          transform: `translateY(${-parallaxOffset * 0.3}px)`,
-        }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            background: doctor.available ? "rgba(22,163,74,0.12)" : "rgba(234,179,8,0.12)",
-            border: `1px solid ${doctor.available ? "rgba(22,163,74,0.3)" : "rgba(234,179,8,0.3)"}`,
-            color: doctor.available ? "#4ade80" : "#fbbf24",
-            padding: "6px 14px", borderRadius: 30, fontSize: 11, fontWeight: 700,
-            marginBottom: 20, backdropFilter: "blur(10px)",
-          }}>
-            <span style={{
-              width: 6, height: 6, borderRadius: "50%",
-              background: doctor.available ? "#4ade80" : "#fbbf24",
-            }} />
+        <div style={{ position: "relative", zIndex: 10, padding: "0 40px 60px", maxWidth: 600, opacity: heroOpacity, transform: `translateY(${-parallaxOffset * 0.3}px)` }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: doctor.available ? "rgba(22,163,74,0.12)" : "rgba(234,179,8,0.12)", border: `1px solid ${doctor.available ? "rgba(22,163,74,0.3)" : "rgba(234,179,8,0.3)"}`, color: doctor.available ? "#4ade80" : "#fbbf24", padding: "6px 14px", borderRadius: 30, fontSize: 11, fontWeight: 700, marginBottom: 20, backdropFilter: "blur(10px)" }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: doctor.available ? "#4ade80" : "#fbbf24" }} />
             {doctor.available ? "AVAILABLE TODAY" : `NEXT: ${doctor.nextSlot}`}
           </div>
-
-          <h1 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "clamp(36px, 5vw, 62px)",
-            fontWeight: 700, color: "#fff", lineHeight: 1.1,
-            marginBottom: 10, letterSpacing: "-0.02em",
-          }}>{doctor.name}</h1>
-
-          <div style={{ fontSize: 14, fontWeight: 700, color: "#C0145C", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>
-            {doctor.specialty}
-          </div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginBottom: 28 }}>
-            {doctor.qualifications}
-          </div>
-
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 62px)", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: 10, letterSpacing: "-0.02em" }}>{doctor.name}</h1>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#C0145C", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>{doctor.specialty}</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginBottom: 28 }}>{doctor.qualifications}</div>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 32 }}>
-            {[
-              { icon: "star", val: doctor.rating.toString(), lbl: "Rating", color: "#fbbf24" },
-              { icon: "award", val: doctor.experience, lbl: "Experience", color: "#60a5fa" },
-              { icon: "users", val: doctor.patients, lbl: "Patients", color: "#34d399" },
-            ].map((s) => (
-              <div key={s.lbl} style={{
-                display: "flex", alignItems: "center", gap: 10,
-                background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "10px 16px",
-              }}>
+            {[{ icon: "star", val: doctor.rating.toString(), lbl: "Rating", color: "#fbbf24" }, { icon: "award", val: doctor.experience, lbl: "Experience", color: "#60a5fa" }, { icon: "users", val: doctor.patients, lbl: "Patients", color: "#34d399" }].map((s) => (
+              <div key={s.lbl} style={{ display: "flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "10px 16px" }}>
                 <Icon name={s.icon} size={16} color={s.color} />
                 <div>
                   <div style={{ fontSize: 15, fontWeight: 800, color: "#fff" }}>{s.val}</div>
@@ -561,26 +405,15 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
               </div>
             ))}
           </div>
-
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {doctor.languages.map((l) => (
-              <span key={l} style={{
-                background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 600, padding: "4px 12px", borderRadius: 20,
-              }}>{l}</span>
+              <span key={l} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 600, padding: "4px 12px", borderRadius: 20 }}>{l}</span>
             ))}
-            <span style={{
-              background: "rgba(192,20,92,0.2)", border: "1px solid rgba(192,20,92,0.4)",
-              color: "#f472b6", fontSize: 10, fontWeight: 700, padding: "4px 12px", borderRadius: 20,
-            }}>{doctor.branch}</span>
+            <span style={{ background: "rgba(192,20,92,0.2)", border: "1px solid rgba(192,20,92,0.4)", color: "#f472b6", fontSize: 10, fontWeight: 700, padding: "4px 12px", borderRadius: 20 }}>{doctor.branch}</span>
           </div>
         </div>
 
-        <div style={{
-          position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
-          opacity: Math.max(1 - scrollY / 100, 0),
-        }}>
+        <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, opacity: Math.max(1 - scrollY / 100, 0) }}>
           <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Scroll</div>
           <div style={{ width: 1, height: 30, background: "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)" }} />
         </div>
@@ -588,46 +421,23 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
 
       {/* Main Content */}
       <div style={{ background: "#f5f7f7" }}>
-
-        {/* Sticky tab bar */}
-        <div style={{
-          background: "#fff", borderBottom: "1px solid #e8f0f0",
-          padding: "16px 40px",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          flexWrap: "wrap", gap: 12,
-          position: "sticky", top: 0, zIndex: 50,
-        }}>
+        {/* Sticky tabs */}
+        <div style={{ background: "#fff", borderBottom: "1px solid #e8f0f0", padding: "16px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, position: "sticky", top: 0, zIndex: 50 }}>
           <div style={{ display: "flex", gap: 4 }}>
             {(["overview", "education", "reviews"] as const).map((tab) => (
-              <button key={tab} onClick={() => setActiveTab(tab)} style={{
-                padding: "8px 18px", borderRadius: 9, border: "none", cursor: "pointer",
-                fontSize: 12, fontWeight: 600, textTransform: "capitalize",
-                background: activeTab === tab ? "#0a0f0f" : "transparent",
-                color: activeTab === tab ? "#fff" : "#5a7070",
-                transition: "all 0.2s",
-              }}>{tab}</button>
+              <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "8px 18px", borderRadius: 9, border: "none", cursor: "pointer", fontSize: 12, fontWeight: 600, textTransform: "capitalize", background: activeTab === tab ? "#0a0f0f" : "transparent", color: activeTab === tab ? "#fff" : "#5a7070", transition: "all 0.2s" }}>{tab}</button>
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ fontSize: 13, color: "#5a7070" }}>Consultation:</span>
             <span style={{ fontSize: 20, fontWeight: 800, color: "#0a6e6e" }}>{doctor.fee}</span>
-            <button
-              onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
-              style={{
-                background: "linear-gradient(135deg, #C0145C, #880E4F)",
-                color: "#fff", border: "none", borderRadius: 10,
-                padding: "10px 22px", fontSize: 12, fontWeight: 700, cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(192,20,92,0.35)",
-              }}
-            >Book Appointment</button>
+            <button onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg, #C0145C, #880E4F)", color: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", fontSize: 12, fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(192,20,92,0.35)" }}>Book Appointment</button>
           </div>
         </div>
 
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px 80px", display: "flex", gap: 28, alignItems: "flex-start" }}>
-
-          {/* Left content */}
+          {/* Left */}
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 24 }}>
-
             {activeTab === "overview" && (
               <>
                 <div style={cardStyle}>
@@ -638,16 +448,8 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
                   <SectionHeading>Areas of Expertise</SectionHeading>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
                     {doctor.specializations.map((sp) => (
-                      <div key={sp.label} style={{
-                        display: "flex", alignItems: "center", gap: 12,
-                        padding: "14px 16px", borderRadius: 12,
-                        border: "1px solid #e8f0f0",
-                        background: "linear-gradient(135deg, #fff, #f8fdfd)",
-                      }}>
-                        <div style={{
-                          width: 38, height: 38, borderRadius: 10,
-                          background: sp.bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-                        }}>
+                      <div key={sp.label} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", borderRadius: 12, border: "1px solid #e8f0f0", background: "linear-gradient(135deg, #fff, #f8fdfd)" }}>
+                        <div style={{ width: 38, height: 38, borderRadius: 10, background: sp.bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                           <Icon name={sp.icon} size={16} color={sp.iconColor} />
                         </div>
                         <span style={{ fontSize: 12, fontWeight: 600, color: "#1a2f2f" }}>{sp.label}</span>
@@ -658,16 +460,8 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
                 <div style={cardStyle}>
                   <SectionHeading>Work Experience</SectionHeading>
                   {doctor.workExp.map((e, i) => (
-                    <div key={e.role + i} style={{
-                      display: "flex", gap: 16, padding: "16px 0",
-                      borderBottom: i < doctor.workExp.length - 1 ? "1px solid #f0f8f8" : "none",
-                    }}>
-                      <div style={{
-                        width: 44, height: 44, borderRadius: 10,
-                        background: "linear-gradient(135deg, #e6f4f4, #d0ebeb)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: 11, fontWeight: 800, color: "#0a6e6e", flexShrink: 0,
-                      }}>{e.code}</div>
+                    <div key={e.role + i} style={{ display: "flex", gap: 16, padding: "16px 0", borderBottom: i < doctor.workExp.length - 1 ? "1px solid #f0f8f8" : "none" }}>
+                      <div style={{ width: 44, height: 44, borderRadius: 10, background: "linear-gradient(135deg, #e6f4f4, #d0ebeb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: "#0a6e6e", flexShrink: 0 }}>{e.code}</div>
                       <div>
                         <div style={{ fontSize: 14, fontWeight: 700, color: "#1a2f2f" }}>{e.role}</div>
                         <div style={{ fontSize: 12, color: "#4a6060", marginTop: 2 }}>{e.org}</div>
@@ -678,55 +472,34 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
                 </div>
               </>
             )}
-
             {activeTab === "education" && (
               <div style={cardStyle}>
                 <SectionHeading>Education & Qualifications</SectionHeading>
                 <div style={{ position: "relative", paddingLeft: 28 }}>
-                  <div style={{
-                    position: "absolute", left: 8, top: 8, bottom: 8,
-                    width: 2, background: "linear-gradient(to bottom, #C0145C, #0a6e6e)", borderRadius: 1,
-                  }} />
+                  <div style={{ position: "absolute", left: 8, top: 8, bottom: 8, width: 2, background: "linear-gradient(to bottom, #C0145C, #0a6e6e)", borderRadius: 1 }} />
                   {doctor.education.map((e, i) => (
-                    <div key={e.degree} style={{
-                      position: "relative", marginBottom: 24,
-                      background: "#fff", borderRadius: 12, padding: "16px 18px",
-                      border: "1px solid #e8f0f0", boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-                    }}>
-                      <div style={{
-                        position: "absolute", left: -38, top: 18,
-                        width: 12, height: 12, borderRadius: "50%",
-                        background: i === 0 ? "#C0145C" : "#0a6e6e",
-                        border: "2px solid #fff",
-                      }} />
+                    <div key={e.degree} style={{ position: "relative", marginBottom: 24, background: "#fff", borderRadius: 12, padding: "16px 18px", border: "1px solid #e8f0f0", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+                      <div style={{ position: "absolute", left: -38, top: 18, width: 12, height: 12, borderRadius: "50%", background: i === 0 ? "#C0145C" : "#0a6e6e", border: "2px solid #fff" }} />
                       <div style={{ fontSize: 14, fontWeight: 700, color: "#1a2f2f" }}>{e.degree}</div>
                       <div style={{ fontSize: 12, color: "#4a6060", marginTop: 4 }}>{e.institute}</div>
-                      <div style={{ fontSize: 10, color: "#C0145C", fontWeight: 700, marginTop: 6, background: "rgba(192,20,92,0.07)", padding: "2px 8px", borderRadius: 20, display: "inline-block" }}>
-                        Class of {e.year}
-                      </div>
+                      <div style={{ fontSize: 10, color: "#C0145C", fontWeight: 700, marginTop: 6, background: "rgba(192,20,92,0.07)", padding: "2px 8px", borderRadius: 20, display: "inline-block" }}>Class of {e.year}</div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-
             {activeTab === "reviews" && (
               <div style={cardStyle}>
                 <SectionHeading>Patient Reviews</SectionHeading>
                 <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                   {doctor.patientReviews.map((r, ri) => (
-                    <div key={ri} style={{
-                      background: "linear-gradient(135deg, #f8fdfd, #fff)",
-                      border: "1px solid #e0eeee", borderRadius: 14, padding: "16px 18px",
-                    }}>
+                    <div key={ri} style={{ background: "linear-gradient(135deg, #f8fdfd, #fff)", border: "1px solid #e0eeee", borderRadius: 14, padding: "16px 18px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
                         <div>
                           <div style={{ fontSize: 13, fontWeight: 700, color: "#1a2f2f" }}>{r.name}</div>
                           <div style={{ fontSize: 10, color: "#9aafaf", marginTop: 2 }}>{r.date}</div>
                         </div>
-                        <div style={{ display: "flex", gap: 2 }}>
-                          {Array.from({ length: r.stars }).map((_, i) => <Icon key={i} name="star" size={13} color="#f59e0b" />)}
-                        </div>
+                        <div style={{ display: "flex", gap: 2 }}>{Array.from({ length: r.stars }).map((_, i) => <Icon key={i} name="star" size={13} color="#f59e0b" />)}</div>
                       </div>
                       <p style={{ fontSize: 13, color: "#4a6060", lineHeight: 1.7 }}>{r.text}</p>
                     </div>
@@ -746,74 +519,35 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
                     <div style={{ fontSize: 28, fontWeight: 800, color: "#fff" }}>{doctor.fee}</div>
                     <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>per visit · Includes follow-up</div>
                   </div>
-                  <div style={{
-                    background: doctor.available ? "rgba(74,222,128,0.12)" : "rgba(251,191,36,0.12)",
-                    border: `1px solid ${doctor.available ? "rgba(74,222,128,0.25)" : "rgba(251,191,36,0.25)"}`,
-                    borderRadius: 8, padding: "6px 10px", textAlign: "center",
-                  }}>
-                    <div style={{ fontSize: 9, color: doctor.available ? "#4ade80" : "#fbbf24", fontWeight: 700 }}>
-                      {doctor.available ? "TODAY" : "TOMORROW"}
-                    </div>
+                  <div style={{ background: doctor.available ? "rgba(74,222,128,0.12)" : "rgba(251,191,36,0.12)", border: `1px solid ${doctor.available ? "rgba(74,222,128,0.25)" : "rgba(251,191,36,0.25)"}`, borderRadius: 8, padding: "6px 10px", textAlign: "center" }}>
+                    <div style={{ fontSize: 9, color: doctor.available ? "#4ade80" : "#fbbf24", fontWeight: 700 }}>{doctor.available ? "TODAY" : "TOMORROW"}</div>
                   </div>
                 </div>
               </div>
-
               <div style={{ padding: "16px 18px" }}>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
-                  Select Time Slot
-                </div>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Select Time Slot</div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 6, marginBottom: 16 }}>
                   {TIME_SLOTS.map((s) => (
-                    <button key={s} onClick={() => setSelectedSlot(s)} style={{
-                      padding: "7px 2px", borderRadius: 8,
-                      border: `1px solid ${selectedSlot === s ? "#C0145C" : "rgba(255,255,255,0.1)"}`,
-                      background: selectedSlot === s ? "rgba(192,20,92,0.25)" : "rgba(255,255,255,0.04)",
-                      color: selectedSlot === s ? "#f472b6" : "rgba(255,255,255,0.5)",
-                      fontSize: 10, fontWeight: selectedSlot === s ? 700 : 500,
-                      cursor: "pointer", transition: "all 0.2s", textAlign: "center",
-                    }}>{s}</button>
+                    <button key={s} onClick={() => setSelectedSlot(s)} style={{ padding: "7px 2px", borderRadius: 8, border: `1px solid ${selectedSlot === s ? "#C0145C" : "rgba(255,255,255,0.1)"}`, background: selectedSlot === s ? "rgba(192,20,92,0.25)" : "rgba(255,255,255,0.04)", color: selectedSlot === s ? "#f472b6" : "rgba(255,255,255,0.5)", fontSize: 10, fontWeight: selectedSlot === s ? 700 : 500, cursor: "pointer", transition: "all 0.2s", textAlign: "center" }}>{s}</button>
                   ))}
                 </div>
-
                 {booked ? (
-                  <div style={{
-                    background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.25)",
-                    borderRadius: 10, padding: "12px 16px", display: "flex", alignItems: "center", gap: 8,
-                    color: "#4ade80", fontSize: 13, fontWeight: 700,
-                  }}>
+                  <div style={{ background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.25)", borderRadius: 10, padding: "12px 16px", display: "flex", alignItems: "center", gap: 8, color: "#4ade80", fontSize: 13, fontWeight: 700 }}>
                     <Icon name="check" size={16} color="#4ade80" /> Booked for {selectedSlot}!
                   </div>
                 ) : (
-                  <button onClick={handleBook} disabled={!selectedSlot} style={{
-                    width: "100%", padding: "13px", borderRadius: 10, border: "none",
-                    background: selectedSlot ? "linear-gradient(135deg, #C0145C, #880E4F)" : "rgba(255,255,255,0.06)",
-                    color: selectedSlot ? "#fff" : "rgba(255,255,255,0.25)",
-                    fontSize: 13, fontWeight: 700, cursor: selectedSlot ? "pointer" : "not-allowed",
-                    boxShadow: selectedSlot ? "0 8px 24px rgba(192,20,92,0.4)" : "none",
-                    transition: "all 0.3s",
-                  }}>
+                  <button onClick={handleBook} disabled={!selectedSlot} style={{ width: "100%", padding: "13px", borderRadius: 10, border: "none", background: selectedSlot ? "linear-gradient(135deg, #C0145C, #880E4F)" : "rgba(255,255,255,0.06)", color: selectedSlot ? "#fff" : "rgba(255,255,255,0.25)", fontSize: 13, fontWeight: 700, cursor: selectedSlot ? "pointer" : "not-allowed", boxShadow: selectedSlot ? "0 8px 24px rgba(192,20,92,0.4)" : "none", transition: "all 0.3s" }}>
                     {selectedSlot ? `Confirm ${selectedSlot}` : "Select a time slot"}
                   </button>
                 )}
-                <p style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", textAlign: "center", marginTop: 8 }}>
-                  Free cancellation up to 2 hrs before
-                </p>
+                <p style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", textAlign: "center", marginTop: 8 }}>Free cancellation up to 2 hrs before</p>
               </div>
             </div>
 
             <div style={{ background: "#fff", borderRadius: 16, padding: "16px", border: "1px solid #e8f0f0" }}>
-              {[
-                { icon: "pin", label: "Branch", val: doctor.branch },
-                { icon: "clock", label: "Timings", val: "9:00 AM – 6:00 PM" },
-                { icon: "phone", label: "Helpline", val: "040 4646 0000" },
-              ].map((r, i, a) => (
-                <div key={r.label} style={{
-                  display: "flex", alignItems: "center", gap: 12, padding: "10px 0",
-                  borderBottom: i < a.length - 1 ? "1px solid #f0f8f8" : "none",
-                }}>
-                  <div style={{ width: 32, height: 32, borderRadius: 8, background: "#e6f4f4", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Icon name={r.icon} size={14} color="#0a6e6e" />
-                  </div>
+              {[{ icon: "pin", label: "Branch", val: doctor.branch }, { icon: "clock", label: "Timings", val: "9:00 AM – 6:00 PM" }, { icon: "phone", label: "Helpline", val: "040 4646 0000" }].map((r, i, a) => (
+                <div key={r.label} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: i < a.length - 1 ? "1px solid #f0f8f8" : "none" }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 8, background: "#e6f4f4", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon name={r.icon} size={14} color="#0a6e6e" /></div>
                   <div>
                     <div style={{ fontSize: 10, color: "#9aafaf" }}>{r.label}</div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: "#1a2f2f", marginTop: 1 }}>{r.val}</div>
@@ -825,10 +559,7 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
             <div style={{ background: "#fff", borderRadius: 16, padding: "16px", border: "1px solid #e8f0f0" }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: "#5a7070", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Available At</div>
               {doctor.branches.map((b) => (
-                <div key={b.name} style={{
-                  display: "flex", alignItems: "flex-start", gap: 10,
-                  background: "linear-gradient(135deg, #e6f4f4, #d8eded)", borderRadius: 10, padding: "10px 12px",
-                }}>
+                <div key={b.name} style={{ display: "flex", alignItems: "flex-start", gap: 10, background: "linear-gradient(135deg, #e6f4f4, #d8eded)", borderRadius: 10, padding: "10px 12px" }}>
                   <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#0a6e6e", marginTop: 4, flexShrink: 0 }} />
                   <div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: "#085041" }}>{b.name}</div>
@@ -840,15 +571,11 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
           </div>
         </div>
 
-        {/* YouTube section */}
+        {/* YouTube */}
         <div style={{ background: "#0a0f0f", padding: "70px 24px 80px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <div style={{ marginBottom: 40, textAlign: "center" }}>
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                background: "rgba(192,20,92,0.1)", border: "1px solid rgba(192,20,92,0.25)",
-                borderRadius: 30, padding: "6px 16px", marginBottom: 16,
-              }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(192,20,92,0.1)", border: "1px solid rgba(192,20,92,0.25)", borderRadius: 30, padding: "6px 16px", marginBottom: 16 }}>
                 <Icon name="play" size={12} color="#C0145C" />
                 <span style={{ fontSize: 11, fontWeight: 700, color: "#C0145C", letterSpacing: "0.08em", textTransform: "uppercase" }}>Watch & Learn</span>
               </div>
@@ -860,23 +587,14 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
               {YOUTUBE_VIDEOS.map((video, idx) => <VideoCard key={video.id} video={video} index={idx} />)}
             </div>
             <div style={{ textAlign: "center", marginTop: 36 }}>
-              <a href="https://www.youtube.com/@SrikaraHospitals" target="_blank" rel="noopener noreferrer" style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.7)", padding: "12px 28px", borderRadius: 30,
-                fontSize: 13, fontWeight: 600, textDecoration: "none",
-              }}>
+              <a href="https://www.youtube.com/@SrikaraHospitals" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", padding: "12px 28px", borderRadius: 30, fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
                 View All Videos on YouTube <Icon name="chevron_right" size={14} color="rgba(255,255,255,0.5)" />
               </a>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes pulse { 0%,100%{box-shadow:0 0 8px #4ade80}50%{box-shadow:0 0 16px #4ade80,0 0 24px rgba(74,222,128,0.3)} }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
-      `}</style>
+      <style>{`@keyframes pulse{0%,100%{box-shadow:0 0 8px #4ade80}50%{box-shadow:0 0 16px #4ade80,0 0 24px rgba(74,222,128,0.3)}}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}`}</style>
     </div>
   );
 }
@@ -884,36 +602,15 @@ function DoctorDetail({ doctor, onBack }: { doctor: Doctor; onBack: () => void }
 function VideoCard({ video, index }: { video: typeof YOUTUBE_VIDEOS[0]; index: number }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer"
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "block", textDecoration: "none", borderRadius: 16, overflow: "hidden",
-        border: `1px solid ${hovered ? "rgba(192,20,92,0.4)" : "rgba(255,255,255,0.08)"}`,
-        transform: hovered ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)",
-        transition: "all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-        background: "#111819",
-        animation: `fadeUp 0.5s ease ${index * 0.1}s both`,
-      }}
-    >
+    <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      style={{ display: "block", textDecoration: "none", borderRadius: 16, overflow: "hidden", border: `1px solid ${hovered ? "rgba(192,20,92,0.4)" : "rgba(255,255,255,0.08)"}`, transform: hovered ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)", transition: "all 0.35s cubic-bezier(0.34,1.56,0.64,1)", background: "#111819", animation: `fadeUp 0.5s ease ${index * 0.1}s both` }}>
       <div style={{ position: "relative", paddingTop: "56.25%", background: "#1a2020", overflow: "hidden" }}>
         <img src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} alt={video.title}
-          style={{
-            position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
-            filter: hovered ? "brightness(0.7)" : "brightness(0.5)",
-            transform: hovered ? "scale(1.06)" : "scale(1)", transition: "all 0.5s ease",
-          }}
-          onError={(e) => { (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`; }}
-        />
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: hovered ? "brightness(0.7)" : "brightness(0.5)", transform: hovered ? "scale(1.06)" : "scale(1)", transition: "all 0.5s ease" }}
+          onError={(e) => { (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`; }} />
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{
-            width: 52, height: 52, borderRadius: "50%",
-            background: hovered ? "#C0145C" : "rgba(255,255,255,0.9)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            transition: "all 0.3s", transform: hovered ? "scale(1.1)" : "scale(1)",
-          }}>
-            <svg viewBox="0 0 24 24" style={{ width: 20, height: 20 }}>
-              <polygon points="5 3 19 12 5 21 5 3" fill={hovered ? "#fff" : "#C0145C"} />
-            </svg>
+          <div style={{ width: 52, height: 52, borderRadius: "50%", background: hovered ? "#C0145C" : "rgba(255,255,255,0.9)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s", transform: hovered ? "scale(1.1)" : "scale(1)" }}>
+            <svg viewBox="0 0 24 24" style={{ width: 20, height: 20 }}><polygon points="5 3 19 12 5 21 5 3" fill={hovered ? "#fff" : "#C0145C"} /></svg>
           </div>
         </div>
       </div>
@@ -927,11 +624,7 @@ function VideoCard({ video, index }: { video: typeof YOUTUBE_VIDEOS[0]; index: n
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 700, color: "#0f1a1a",
-      marginBottom: 16, paddingBottom: 12, borderBottom: "2px solid #f0f8f8",
-      display: "flex", alignItems: "center", gap: 10,
-    }}>
+    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 700, color: "#0f1a1a", marginBottom: 16, paddingBottom: 12, borderBottom: "2px solid #f0f8f8", display: "flex", alignItems: "center", gap: 10 }}>
       <span style={{ width: 3, height: 18, background: "linear-gradient(to bottom, #C0145C, #0a6e6e)", borderRadius: 2, display: "inline-block" }} />
       {children}
     </div>
@@ -944,21 +637,18 @@ const cardStyle: React.CSSProperties = {
 };
 
 // ─────────────────────────────────────────────
-// MAIN PAGE
+// INNER COMPONENT — uses useSearchParams safely inside Suspense
 // ─────────────────────────────────────────────
 
-export default function DoctorsPage() {
+function DoctorsPageInner() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const slug = searchParams.get("doctor");
+  const selectedDoctor = slug ? DOCTORS.find((d) => d.slug === slug) : null;
+
   const [activeBranch, setActiveBranch] = useState("all");
   const [activeSpec, setActiveSpec] = useState("All Specialties");
   const [search, setSearch] = useState("");
-  const router = useRouter();
-const searchParams = useSearchParams();
-
-const slug = searchParams.get("doctor");
-
-const selectedDoctor = DOCTORS.find(
-  (d) => d.slug === slug
-);
 
   const filtered = useMemo(() => {
     return DOCTORS.filter((d) => {
@@ -976,19 +666,14 @@ const selectedDoctor = DOCTORS.find(
     });
   }, [activeBranch, activeSpec, search]);
 
-  
-
   if (selectedDoctor) {
-  return (
-    <>
-      <GlobalStyle />
-      <DoctorDetail
-        doctor={selectedDoctor}
-        onBack={() => router.push("/doctors")}
-      />
-    </>
-  );
-}
+    return (
+      <>
+        <GlobalStyle />
+        <DoctorDetail doctor={selectedDoctor} onBack={() => router.push("/doctors")} />
+      </>
+    );
+  }
 
   return (
     <>
@@ -997,68 +682,27 @@ const selectedDoctor = DOCTORS.find(
       <div style={{ minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", background: "#f5f7f7" }}>
 
         {/* Hero */}
-        <section style={{
-          background: "linear-gradient(135deg, #0a0f0f 0%, #1a0a14 60%, #0f1a1a 100%)",
-          padding: "80px 24px 70px", textAlign: "center", position: "relative", overflow: "hidden",
-        }}>
+        <section style={{ background: "linear-gradient(135deg, #0a0f0f 0%, #1a0a14 60%, #0f1a1a 100%)", padding: "80px 24px 70px", textAlign: "center", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, opacity: 0.03, backgroundImage: "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
           <div style={{ position: "absolute", top: -100, left: "20%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(192,20,92,0.15), transparent 70%)", filter: "blur(40px)" }} />
           <div style={{ position: "absolute", bottom: -100, right: "15%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(10,110,110,0.15), transparent 70%)", filter: "blur(40px)" }} />
 
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 6,
-              background: "rgba(192,20,92,0.1)", border: "1px solid rgba(192,20,92,0.25)",
-              borderRadius: 30, padding: "6px 16px", marginBottom: 24,
-              color: "#f472b6", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em",
-            }}>✦ Srikara Hospitals · Multiple Branches</div>
-
-            <h1 style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(36px, 6vw, 68px)", fontWeight: 700, color: "#fff",
-              lineHeight: 1.1, marginBottom: 16, letterSpacing: "-0.02em",
-            }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(192,20,92,0.1)", border: "1px solid rgba(192,20,92,0.25)", borderRadius: 30, padding: "6px 16px", marginBottom: 24, color: "#f472b6", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em" }}>✦ Srikara Hospitals · Multiple Branches</div>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 6vw, 68px)", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: 16, letterSpacing: "-0.02em" }}>
               Find the Right <span style={{ color: "#C0145C" }}>Doctor</span> for You
             </h1>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", maxWidth: 480, margin: "0 auto 32px" }}>
-              Expert specialists across every domain, available at a Srikara branch near you.
-            </p>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", maxWidth: 480, margin: "0 auto 32px" }}>Expert specialists across every domain, available at a Srikara branch near you.</p>
 
-            {/* Search */}
-            <div style={{
-              display: "flex", alignItems: "center", gap: 12,
-              background: "rgba(255,255,255,0.05)", backdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16,
-              padding: "14px 20px", maxWidth: 560, margin: "0 auto 32px",
-            }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "14px 20px", maxWidth: 560, margin: "0 auto 32px" }}>
               <Icon name="search" size={16} color="rgba(255,255,255,0.3)" />
-              <input
-                style={{ flex: 1, border: "none", outline: "none", fontSize: 14, color: "#fff", background: "transparent" }}
-                placeholder="Search doctor, specialty or branch..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              {search && (
-                <button onClick={() => setSearch("")} style={{
-                  background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 6,
-                  width: 24, height: 24, color: "rgba(255,255,255,0.5)", cursor: "pointer",
-                  fontSize: 11, display: "flex", alignItems: "center", justifyContent: "center",
-                }}>✕</button>
-              )}
+              <input style={{ flex: 1, border: "none", outline: "none", fontSize: 14, color: "#fff", background: "transparent" }} placeholder="Search doctor, specialty or branch..." value={search} onChange={(e) => setSearch(e.target.value)} />
+              {search && <button onClick={() => setSearch("")} style={{ background: "rgba(255,255,255,0.08)", border: "none", borderRadius: 6, width: 24, height: 24, color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: 11, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>}
             </div>
 
-            {/* Stats */}
             <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
-              {[
-                { v: `${DOCTORS.length}+`, l: "Doctors" },
-                { v: `${DOCTORS.filter((d) => d.available).length}+`, l: "Available Now" },
-                { v: "5", l: "Branches" },
-                { v: `${SPECIALTIES.length - 1}`, l: "Specialties" },
-              ].map((s) => (
-                <div key={s.l} style={{
-                  background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "12px 20px", textAlign: "center",
-                }}>
+              {[{ v: `${DOCTORS.length}+`, l: "Doctors" }, { v: `${DOCTORS.filter((d) => d.available).length}+`, l: "Available Now" }, { v: "5", l: "Branches" }, { v: `${SPECIALTIES.length - 1}`, l: "Specialties" }].map((s) => (
+                <div key={s.l} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "12px 20px", textAlign: "center" }}>
                   <strong style={{ display: "block", color: "#fff", fontSize: 22, fontWeight: 800, fontFamily: "'Cormorant Garamond', serif" }}>{s.v}</strong>
                   <small style={{ color: "rgba(255,255,255,0.35)", fontSize: 10 }}>{s.l}</small>
                 </div>
@@ -1073,14 +717,7 @@ const selectedDoctor = DOCTORS.find(
             <div style={{ fontSize: 10, fontWeight: 800, color: "#9aafaf", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12 }}>Our Branches</div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {BRANCHES.map((b) => (
-                <button key={b.id} onClick={() => setActiveBranch(b.id)} style={{
-                  padding: "9px 18px", borderRadius: 10,
-                  border: `1.5px solid ${activeBranch === b.id ? "#C0145C" : "#e0eeee"}`,
-                  background: activeBranch === b.id ? "rgba(192,20,92,0.06)" : "#fff",
-                  fontSize: 12, fontWeight: activeBranch === b.id ? 700 : 500,
-                  color: activeBranch === b.id ? "#C0145C" : "#3a5050",
-                  cursor: "pointer", transition: "all 0.2s",
-                }}>{b.label}</button>
+                <button key={b.id} onClick={() => setActiveBranch(b.id)} style={{ padding: "9px 18px", borderRadius: 10, border: `1.5px solid ${activeBranch === b.id ? "#C0145C" : "#e0eeee"}`, background: activeBranch === b.id ? "rgba(192,20,92,0.06)" : "#fff", fontSize: 12, fontWeight: activeBranch === b.id ? 700 : 500, color: activeBranch === b.id ? "#C0145C" : "#3a5050", cursor: "pointer", transition: "all 0.2s" }}>{b.label}</button>
               ))}
             </div>
           </div>
@@ -1091,20 +728,13 @@ const selectedDoctor = DOCTORS.find(
           <div style={{ maxWidth: 1200, margin: "0 auto" }}>
             <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
               {SPECIALTIES.map((sp) => (
-                <button key={sp} onClick={() => setActiveSpec(sp)} style={{
-                  whiteSpace: "nowrap", padding: "7px 16px", borderRadius: 20,
-                  border: `1.5px solid ${activeSpec === sp ? "#0a6e6e" : "#e0eaea"}`,
-                  background: activeSpec === sp ? "#e6f4f4" : "#fff",
-                  fontSize: 12, fontWeight: activeSpec === sp ? 700 : 500,
-                  color: activeSpec === sp ? "#0a6e6e" : "#4a6060",
-                  flexShrink: 0, cursor: "pointer", transition: "all 0.2s",
-                }}>{sp}</button>
+                <button key={sp} onClick={() => setActiveSpec(sp)} style={{ whiteSpace: "nowrap", padding: "7px 16px", borderRadius: 20, border: `1.5px solid ${activeSpec === sp ? "#0a6e6e" : "#e0eaea"}`, background: activeSpec === sp ? "#e6f4f4" : "#fff", fontSize: 12, fontWeight: activeSpec === sp ? 700 : 500, color: activeSpec === sp ? "#0a6e6e" : "#4a6060", flexShrink: 0, cursor: "pointer", transition: "all 0.2s" }}>{sp}</button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Doctors grid */}
+        {/* Grid */}
         <section style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px 80px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22, flexWrap: "wrap", gap: 10 }}>
             <span style={{ fontSize: 14, fontWeight: 700, color: "#0f1a1a" }}>
@@ -1113,10 +743,7 @@ const selectedDoctor = DOCTORS.find(
               {activeSpec !== "All Specialties" && ` · ${activeSpec}`}
             </span>
             <select style={{ border: "1.5px solid #e0eeee", borderRadius: 9, padding: "7px 12px", fontSize: 12, color: "#3a5050", background: "#fff", outline: "none" }}>
-              <option>Relevance</option>
-              <option>Rating</option>
-              <option>Experience</option>
-              <option>Fee: Low to High</option>
+              <option>Relevance</option><option>Rating</option><option>Experience</option><option>Fee: Low to High</option>
             </select>
           </div>
 
@@ -1125,14 +752,11 @@ const selectedDoctor = DOCTORS.find(
               <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
               <h3 style={{ fontSize: 20, fontWeight: 700, color: "#1a2f2f", marginBottom: 8 }}>No doctors found</h3>
               <p style={{ fontSize: 13, color: "#7a9090", marginBottom: 20 }}>Try adjusting your filters.</p>
-              <button
-                onClick={() => { setActiveBranch("all"); setActiveSpec("All Specialties"); setSearch(""); }}
-                style={{ background: "#0a6e6e", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
-              >Reset Filters</button>
+              <button onClick={() => { setActiveBranch("all"); setActiveSpec("All Specialties"); setSearch(""); }} style={{ background: "#0a6e6e", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>Reset Filters</button>
             </div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
-              {filtered.map((d) => <DoctorCard key={d.id} doctor={d} onClick={() => router.push(`/doctors?doctor=${d.slug}`)}/>)}
+              {filtered.map((d) => <DoctorCard key={d.id} doctor={d} onClick={() => router.push(`/doctors?doctor=${d.slug}`)} />)}
             </div>
           )}
         </section>
@@ -1141,6 +765,10 @@ const selectedDoctor = DOCTORS.find(
     </>
   );
 }
+
+// ─────────────────────────────────────────────
+// MAIN EXPORT — wraps inner component in Suspense
+// ─────────────────────────────────────────────
 
 function GlobalStyle() {
   return (
@@ -1154,5 +782,20 @@ function GlobalStyle() {
       ::-webkit-scrollbar-thumb{background:#c0d8d8;border-radius:2px}
       input::placeholder{color:rgba(255,255,255,0.3)}
     `}</style>
+  );
+}
+
+export default function DoctorsPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: "100vh", background: "#f5f7f7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: 32, marginBottom: 12 }}>👨‍⚕️</div>
+          <p style={{ fontSize: 14, color: "#6b7280", fontFamily: "sans-serif" }}>Loading doctors...</p>
+        </div>
+      </div>
+    }>
+      <DoctorsPageInner />
+    </Suspense>
   );
 }
