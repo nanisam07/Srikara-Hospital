@@ -155,69 +155,173 @@ const QUICK_TILES = [
 ];
 
 const DEPT_FALLBACK = [
-  { 
-    icon: "🦴", 
-    name: "Orthopaedics", 
-    tagline: "No.1 Robotic Knee Replacement Center in India", 
-    count: 6, 
-    slug: "orthopaedics", 
-    img: "https://images.unsplash.com/photo-1706777193603-76c3e9613553?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Joint/Bone model
+  {
+    icon: "🦴",
+    name: "Orthopedic",
+    tagline: "No.1 Robotic Knee Replacement Center in Hyderabad",
+    count: 10,
+    slug: "orthopedic",
+    img: "https://images.unsplash.com/photo-1706777193603-76c3e9613553?q=80&w=1170&auto=format&fit=crop",
   },
-  { 
-    icon: "🫀", 
-    name: "Cardiology", 
-    tagline: "7 Cath Lab Centers across our network", 
-    count: 6, 
-    slug: "cardiology", 
-    img: "https://images.unsplash.com/photo-1559757296-5c84adc6d116?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  {
+    icon: "🫀",
+    name: "Cardiology",
+    tagline: "Advanced interventional cardiology across all branches",
+    count: 5,
+    slug: "cardiology",
+    img: "https://images.unsplash.com/photo-1559757296-5c84adc6d116?q=80&w=1331&auto=format&fit=crop",
   },
-  { 
-    icon: "🧠", 
-    name: "Neurology", 
-    tagline: "24/7 Neuro Critical Care across all branches", 
-    count: 6, 
-    slug: "neurology", 
-    img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=480&q=80&auto=format&fit=crop" // Brain scan/model
+  {
+    icon: "🩺",
+    name: "General Physician",
+    tagline: "Comprehensive diabetes & internal medicine care",
+    count: 7,
+    slug: "general-physician",
+    img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=1191&auto=format&fit=crop",
   },
-  { 
-    icon: "⚡", 
-    name: "Urology", 
-    tagline: "6 Laser Urology Centers in our network", 
-    count: 6, 
-    slug: "urology", 
-    img: "https://plus.unsplash.com/premium_photo-1702598804759-8fb687f774fb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Urology specific
+  {
+    icon: "🧠",
+    name: "Neurology",
+    tagline: "Expert stroke, epilepsy & neuro rehabilitation care",
+    count: 6,
+    slug: "neurology",
+    img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=480&q=80&auto=format&fit=crop",
   },
-  { 
-    icon: "🧬", 
-    name: "Spine", 
-    tagline: "Dedicated spine surgery centers", 
-    count: 6, 
-    slug: "spine", 
-    img: "https://images.unsplash.com/photo-1624716346720-6c96dfd07807?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Spine X-ray/Model
+  {
+    icon: "🔬",
+    name: "Neuro Surgery",
+    tagline: "Advanced brain & spine surgical care",
+    count: 3,
+    slug: "neuro-surgery",
+    img: "https://images.unsplash.com/photo-1624716346720-6c96dfd07807?q=80&w=1172&auto=format&fit=crop",
   },
-  { 
-    icon: "🤱", 
-    name: "Gynaecology", 
-    tagline: "Advanced laparoscopic gynaecology", 
-    count: 6, 
-    slug: "gynaecology", 
-    img: "https://media.istockphoto.com/id/2263270289/photo/human-fetus-and-dna-on-scientific-background-3d-illustration.jpg?s=2048x2048&w=is&k=20&c=kRjsVLkBonp9xYSq5PRvDxAPoTHojaIESd_TcPZJ0gA="
+  {
+    icon: "🏥",
+    name: "General Surgery",
+    tagline: "Minimally invasive laparoscopic & laser surgery",
+    count: 5,
+    slug: "general-surgery",
+    img: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?q=80&w=1170&auto=format&fit=crop",
   },
-  { 
-    icon: "🫘", 
-    name: "Nephrology", 
-    tagline: "Dialysis centers across all branches", 
-    count: 6, 
-    slug: "nephrology", 
-    img: "https://images.unsplash.com/photo-1650897492524-bbc1adb72626?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8a2lkbmV5fGVufDB8fDB8fHww"
+  {
+    icon: "💧",
+    name: "Urology",
+    tagline: "Laser urology & andrology specialists",
+    count: 5,
+    slug: "urology",
+    img: "https://images.unsplash.com/photo-1650897492524-bbc1adb72626?w=600&auto=format&fit=crop&q=60",
   },
-  { 
-    icon: "🍕", // Use a stomach or food icon if 🍕 isn't right; emoji support for 'stomach' varies
-    name: "Gastro", 
-    tagline: "Advanced endoscopy & liver care", 
-    count: 6, 
-    slug: "gastro", 
-    img: "https://images.unsplash.com/photo-1743767587835-7a80fe384236?q=80&w=1355&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  {
+    icon: "🤸",
+    name: "Physiotherapy",
+    tagline: "Sports rehab & post-surgical recovery experts",
+    count: 9,
+    slug: "physiotherapy",
+    img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1170&auto=format&fit=crop",
+  },
+  {
+    icon: "✨",
+    name: "Plastic Surgery",
+    tagline: "Reconstructive, aesthetic & burn care surgery",
+    count: 4,
+    slug: "plastic-surgery",
+    img: "https://images.unsplash.com/photo-1614859324967-bdf413c35191?q=80&w=1170&auto=format&fit=crop",
+  },
+  {
+    icon: "💉",
+    name: "Anesthesia",
+    tagline: "Critical care & pain management specialists",
+    count: 7,
+    slug: "anesthesia",
+    img: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=1170&auto=format&fit=crop",
+  },
+  {
+    icon: "🌸",
+    name: "Gynaecology",
+    tagline: "Complete women's health & maternity care",
+    count: 1,
+    slug: "gynaecology",
+    img: "https://images.unsplash.com/photo-1609220136736-443140cffec6?q=80&w=1170&auto=format&fit=crop",
+  },
+  {
+    icon: "🫘",
+    name: "Nephrology",
+    tagline: "Kidney disease & dialysis care across all branches",
+    count: 3,
+    slug: "nephrology",
+    img: "https://images.unsplash.com/photo-1559757296-5c84adc6d116?q=80&w=1331&auto=format&fit=crop",
+  },
+  {
+    icon: "❤️‍🔥",
+    name: "Critical Care",
+    tagline: "24/7 ICU & life support across all branches",
+    count: 2,
+    slug: "critical-care",
+    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1153&auto=format&fit=crop",
+  },
+  {
+    icon: "👶",
+    name: "Pediatrics",
+    tagline: "Specialist child health & newborn care",
+    count: 2,
+    slug: "pediatrics",
+    img: "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?q=80&w=1170&auto=format&fit=crop",
+  },
+  {
+    icon: "👂",
+    name: "ENT",
+    tagline: "Ear, nose & throat surgical specialists",
+    count: 2,
+    slug: "ent",
+    img: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?q=80&w=1240&auto=format&fit=crop",
+  },
+  {
+    icon: "🌿",
+    name: "Dermatology",
+    tagline: "Advanced skin, hair & cosmetic dermatology",
+    count: 1,
+    slug: "dermatology",
+    img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1287&auto=format&fit=crop",
+  },
+  {
+    icon: "🦷",
+    name: "Dental",
+    tagline: "Maxillofacial & oral surgery specialists",
+    count: 1,
+    slug: "dental",
+    img: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1287&auto=format&fit=crop",
+  },
+  {
+    icon: "🧘",
+    name: "Psychiatry",
+    tagline: "Mental health & psychotherapy care",
+    count: 1,
+    slug: "psychiatry",
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1288&auto=format&fit=crop",
+  },
+  {
+    icon: "🔭",
+    name: "Radiology",
+    tagline: "CT, MRI, X-Ray & ultrasound diagnostics",
+    count: 2,
+    slug: "radiology",
+    img: "https://images.unsplash.com/photo-1516069677018-378515003435?q=80&w=1169&auto=format&fit=crop",
+  },
+  {
+    icon: "🧪",
+    name: "Pathology",
+    tagline: "Accurate lab diagnostics & histopathology",
+    count: 1,
+    slug: "pathology",
+    img: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?q=80&w=1287&auto=format&fit=crop",
+  },
+  {
+    icon: "🫁",
+    name: "Pulmonology",
+    tagline: "Asthma, COPD & lung disease specialists",
+    count: 1,
+    slug: "pulmonology",
+    img: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?q=80&w=1170&auto=format&fit=crop",
   },
 ];
 const HOSP_FALLBACK = [
@@ -232,13 +336,13 @@ const HOSP_FALLBACK = [
 /* Real doctor images for the Healing Hands section background hover */
 const DOCTOR_BG_IMAGES = [
   "/Akhildadi.jpg",
-  "/doctors/DR.SREEDHAR.png",
+  "/doctors/TVSURESH.png",
+  "/doctors/DR.KIRAN.png",
+  "/doctors/DR.KUSHAL.png",
   "/doctors/DR.SHARATHCHANDRA.png",
-  "/doctors/DR.SUMANBABU.png",
-  "/doctors/DR.TVSURESH.png",
-  "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=85&auto=format&fit=crop",
+  "/doctors/DR.SANDEEP.png",
+  "/doctors/DR.NAGARAJU.png",
+  "/doctors/DR.SREEDHAR.png",
 ];
 
 const EXCELLENCE_PANELS = [
@@ -327,8 +431,19 @@ function StatItem({ num, suffix, label, icon, start }:{
 }
 
 /* ── Doctor card with hover bg image (right-side only) ── */
-function DoctorCard({ doc, bgImage, index }:{
-  doc: { name: string; specialty: string; hospital: string; initials: string; color: string };
+function DoctorCard({
+  doc,
+  bgImage,
+  index,
+}: {
+  doc: {
+    name: string;
+    specialty: string;
+    hospital: string;
+    initials: string;
+    color: string;
+    [key: string]: any; 
+  };
   bgImage: string;
   index: number;
 }) {
@@ -531,6 +646,27 @@ export default function HomePage() {
     return () => clearInterval(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slide]);
+const formattedDoctors = doctors.map((d, i) => ({
+  id: i + 1,
+
+  name: d.name,
+
+  specialty: d.department,
+
+  hospital: d.branch,
+
+  initials: d.name
+    .replace("Dr.", "")
+    .trim()
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2),
+
+  color: "#0a6e6e",
+}));
+
+const docList = formattedDoctors.slice(0, 8);
 
   const cur     = SLIDES[slide];
   const subText = useTypewriter(cur.sub, 30, typed);
@@ -538,8 +674,9 @@ export default function HomePage() {
   /* Pick data — use real if loaded, otherwise fallback */
   const deptList = departments?.length ? departments.slice(0, 8) : DEPT_FALLBACK;
   const hospList = hospitals?.length   ? hospitals.slice(0, 6)   : HOSP_FALLBACK;
-  const docList  = doctors?.length     ? doctors.slice(0, 8)     : [];
 
+
+  
   /* ── Global CSS injected once ── */
   const globalCSS = `
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800&display=swap');

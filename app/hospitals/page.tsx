@@ -482,6 +482,7 @@ function HospitalCard({ hosp, index }: { hosp: typeof HOSPITALS[0]; index: numbe
               >
                 <Phone size={11} /> Call
               </button>
+              {hosp.mapLink &&(
               <a
                 href={hosp.mapLink}
                 target="_blank"
@@ -505,6 +506,7 @@ function HospitalCard({ hosp, index }: { hosp: typeof HOSPITALS[0]; index: numbe
               >
                 <MapPin size={11} /> Directions
               </a>
+              )}
               <div
                 style={{
                   width: 40,
