@@ -101,7 +101,7 @@ const DEPARTMENTS = [
     icon: <Shield size={26} />,
     color: "#1270A0",
     slug: "urology",
-    img: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=500&q=80&auto=format&fit=crop",
+    img: "https://api.neohospital.com/uploads/categories/image-1716788528326-837446693-Urology.jpg",
     procedures: 5,
   },
   {
@@ -110,7 +110,7 @@ const DEPARTMENTS = [
     icon: <UserRound size={26} />,
     color: "#8e44ad",
     slug: "plastic-surgery",
-    img: "https://images.unsplash.com/photo-1614859324967-bdf413c35191?q=80&w=1170&auto=format&fit=crop",
+    img: "https://plus.unsplash.com/premium_photo-1683147837347-511490205397?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGxhc3RpYyUyMHN1cmdlcnl8ZW58MHx8MHx8fDA%3D",
     procedures: 4,
   },
   {
@@ -119,7 +119,7 @@ const DEPARTMENTS = [
     icon: <Activity size={26} />,
     color: "#2e7d52",
     slug: "physiotherapy",
-    img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1170&auto=format&fit=crop",
+    img: "https://media.istockphoto.com/id/1478745519/photo/close-up-of-physiotherapist-working-with-patient-on-the-bed.jpg?s=612x612&w=0&k=20&c=etDD6btysRBkAtl_0-L71kB50Pl_oNgFvLO_PyS49cM=",
     procedures: 9,
   },
   {
@@ -146,7 +146,7 @@ const DEPARTMENTS = [
     icon: <Baby size={26} />,
     color: "#e07020",
     slug: "pediatrics",
-    img: "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?q=80&w=1170&auto=format&fit=crop",
+    img: "https://t4.ftcdn.net/jpg/04/84/86/95/360_F_484869531_B79MGsEMR6KgiO6hSbcpwCNSux12qk13.jpg",
     procedures: 2,
   },
   {
@@ -155,7 +155,7 @@ const DEPARTMENTS = [
     icon: <Ear size={26} />,
     color: "#16a085",
     slug: "ent",
-    img: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?q=80&w=1240&auto=format&fit=crop",
+    img: "https://media.istockphoto.com/id/1806607483/photo/child-at-doctors-appointment-ear-exam.jpg?s=612x612&w=0&k=20&c=3IdU3Vt8mNtDpcTUbgKJk61DHd1RKLbmA8o1EdPhOVI=",
     procedures: 2,
   },
   {
@@ -164,7 +164,7 @@ const DEPARTMENTS = [
     icon: <Eye size={26} />,
     color: "#e67e22",
     slug: "dermatology",
-    img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1287&auto=format&fit=crop",
+    img: "https://www.oasisdermatology.com/wp-content/uploads/2022/12/What-is-Cosmetic-Dermatology-Oasis-Dermatology-1000x658.jpg",
     procedures: 1,
   },
   {
@@ -182,7 +182,7 @@ const DEPARTMENTS = [
     icon: <Brain size={26} />,
     color: "#8e44ad",
     slug: "psychiatry",
-    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1288&auto=format&fit=crop",
+    img: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/6AABBF14-F784-4D3A-922AAF7C5C78EEB0/29C4E326-3DE9-44FE-BCB33242F26A4BC3/WebsiteJpg_XL-FPSYT_Main%20Visual_Purple_Website.jpg",
     procedures: 1,
   },
   {
@@ -200,7 +200,7 @@ const DEPARTMENTS = [
     icon: <FlaskConical size={26} />,
     color: "#7f8c8d",
     slug: "pathology",
-    img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1287&auto=format&fit=crop",
+    img: "https://media.istockphoto.com/id/519559505/photo/microscope.jpg?s=612x612&w=0&k=20&c=rAsZn6AYnxz7Zy1XASPTjY5jqRFZ8mj9k5fylazvnP8=",
     procedures: 1,
   },
   {
@@ -209,7 +209,7 @@ const DEPARTMENTS = [
     icon: <Wind size={26} />,
     color: "#3060a0",
     slug: "pulmonology",
-    img: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=500&q=80&auto=format&fit=crop",
+    img: "https://media.istockphoto.com/id/1609493340/photo/doctor-examining-the-health-of-the-patients-lungs-pulmonologist-doctor-lungs-specialist.jpg?s=612x612&w=0&k=20&c=yhRY0bs-Poyd1_0Vq98-bGIjT4596axEq03xD4Qrda8=",
     procedures: 1,
   },
   {

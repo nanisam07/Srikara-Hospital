@@ -8,6 +8,9 @@ import LBNagarPage from "@/components/hospitals/lbnagar/LBNagarPage";
 import VijayaPage from "@/components/hospitals/vijayawada/VijayaPage";
 import EcilPage from "@/components/hospitals/ecil/EcilPage";
 import KompallyPage from "@/components/hospitals/kompally/KompallyPage";
+import RajahmundryPage from "@/components/hospitals/rajahmundry/RajahmundryPage";
+import LakdikapulPage from "@/components/hospitals/lakdikapul/LadikapulPage";
+import PeerzadigudaPage from "@/components/hospitals/peerazadiguda/PeerzadigudaPage";
 // Mapping
 
 const hospitalPages: any = {
@@ -17,6 +20,9 @@ const hospitalPages: any = {
     "vijayawada": VijayaPage,
     "ecil": EcilPage,
     "kompally": KompallyPage,
+    "rajahmundry":RajahmundryPage,
+    "lakdikapul":LakdikapulPage,
+    "peerzadiguda":PeerzadigudaPage,
 };
 
 export default async function HospitalPage({

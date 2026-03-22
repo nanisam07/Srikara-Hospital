@@ -251,7 +251,7 @@ export const departments: Department[] = [
     tagline: "Kidney Stones, Prostate & Andrology",
     color: "#1270A0",
     slug: "urology",
-    img: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=400&q=70",
+    img: "https://api.neohospital.com/uploads/categories/image-1716788528326-837446693-Urology.jpg",
     procedures: 5,
     badge: "Laser Urology · Andrology Specialists",
     heroImg: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=900&q=85",
