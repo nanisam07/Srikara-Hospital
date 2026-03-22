@@ -48,21 +48,30 @@ const STATS = [
 ];
 
 const SPECIALITIES = [
-  { name:"Cardiology",               tag:"Heart & Vascular",         img:IMG.cardio, desc:"Advanced interventional cardiology — cath lab, angioplasty, pacemakers, electrophysiology and cardiac rehab.",                                       icon:"🫀" },
-  { name:"Orthopaedics",             tag:"Bone, Joint & Spine",       img:IMG.ortho,  desc:"Robotic joint replacement, arthroscopy, sports medicine, fracture care and comprehensive spinal surgeries.",                                            icon:"🦴" },
-  { name:"Neurology",                tag:"Brain & Nervous System",    img:IMG.neuro,  desc:"Stroke unit, epilepsy monitoring, Parkinson's & movement disorder clinic, neuro-oncology and neuro-rehab.",                                             icon:"🧠" },
-  { name:"Obstetrics & Gynaecology", tag:"Women's Health",            img:IMG.gynae,  desc:"High-risk obstetrics, IVF & fertility, laparoscopic surgery, menopause clinic and comprehensive breast care.",                                          icon:"👶" },
-  { name:"Paediatrics & NICU",       tag:"Child Health",              img:IMG.paeds,  desc:"Level III NICU, paediatric surgery, child development, adolescent medicine and paediatric intensive care.",                                              icon:"🩺" },
-  { name:"Oncology",                 tag:"Comprehensive Cancer Care", img:IMG.onco,   desc:"Multi-disciplinary tumour board, precision chemotherapy, targeted therapy, immunotherapy and palliative services.",                                      icon:"🔬" },
+  { name:"Orthopedic",       tag:"Bone, Joint & Spine",       img:IMG.ortho,  desc:"Robotic joint replacement, arthroscopic surgery, sports medicine, fracture care and comprehensive spinal surgeries.",                                    icon:"🦴" },
+  { name:"Cardiology",       tag:"Heart & Vascular",          img:IMG.cardio, desc:"Advanced interventional cardiology — cath lab, angioplasty, pacemakers and cardiac rehabilitation.",                                                   icon:"🫀" },
+  { name:"General Physician",tag:"Internal Medicine",         img:IMG.gynae,  desc:"Expert general medicine, diabetology, preventive care and critical care management of complex systemic conditions.",                                   icon:"🩺" },
+  { name:"Neurology",        tag:"Brain & Nervous System",    img:IMG.neuro,  desc:"Brain and neuro surgery, spine procedures, stroke unit, epilepsy monitoring and complete neurological rehabilitation.",                                icon:"🧠" },
+  { name:"General Surgery",  tag:"Surgical Care",             img:IMG.icu,    desc:"General, laser and laparoscopic surgery using minimally invasive techniques for faster patient recovery.",                                             icon:"⚕️" },
+  { name:"Urology",          tag:"Urological Care",           img:IMG.paeds,  desc:"Complete urological care including kidney stones, prostate conditions, reconstructive and minimally invasive procedures.",                             icon:"🔬" },
+  { name:"Physiotherapy",    tag:"Rehabilitation",            img:IMG.onco,   desc:"Comprehensive physiotherapy for orthopaedic, neurological and sports-related conditions with structured rehabilitation protocols.",                    icon:"🏃" },
+  { name:"Plastic Surgery",  tag:"Reconstructive & Aesthetic",img:IMG.mri,    desc:"Plastic reconstructive and aesthetic surgery for trauma, burns, cosmetic enhancement and microsurgical procedures.",                                  icon:"✨" },
 ];
 
 const DOCTORS = [
-  { name:"Dr. Nagendra Babu K.",   role:"Senior Cardiologist & Electrophysiologist",    exp:"21 yrs", qual:"DM Cardiology · Nizam's Institute of Medical Sciences", avail:"Mon–Sat · 10:00 AM – 2:00 PM",    img:IMG.doc1 },
-  { name:"Dr. Sunita Ramachandra", role:"Head of Orthopaedics",                         exp:"18 yrs", qual:"MS Ortho · Fellowship Royal College UK",                  avail:"Mon, Wed, Fri · 3:00 PM – 7:00 PM",img:IMG.doc2 },
-  { name:"Dr. Aravind Prasad",     role:"Consultant Neurologist",                       exp:"15 yrs", qual:"DM Neurology · AIIMS New Delhi",                          avail:"Tue, Thu, Sat · 9:00 AM – 1:00 PM", img:IMG.doc3 },
-  { name:"Dr. Kavitha Nair",       role:"Gynaecologist & IVF Specialist",               exp:"17 yrs", qual:"MS OBG, FRCOG · Apollo Hospitals",                        avail:"Mon–Fri · 11:00 AM – 3:00 PM",     img:IMG.doc4 },
-  { name:"Dr. Ramprasad Goud",     role:"Surgical Oncologist",                          exp:"13 yrs", qual:"MCh Oncosurgery · Tata Memorial Centre",                  avail:"Mon–Fri · 2:00 PM – 6:00 PM",      img:IMG.doc5 },
-  { name:"Dr. Latha Reddy",        role:"Consultant Paediatrician & Neonatologist",     exp:"14 yrs", qual:"DNB Paeds, Fellowship NNF",                               avail:"Mon–Sat · 8:00 AM – 12:00 PM",     img:IMG.doc6 },
+  { name:"Dr. N. Pranay Kumar",    role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual:"DNB Ortho, FIJR",                                      slug:"pranay-kumar",        img:"/ecil/PRANAY.png" },
+  { name:"Dr. Shiva Kumar Kotra",  role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual:"MBBS, DNB Ortho, FIJR",                                slug:"siva-kumar-kotra",    img:"/ecil/dr.shivakumar kotra.jpg" },
+  { name:"Dr. Peddi Sai Kiran",    role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual:"MBBS, D. Ortho, FIJR",                                 slug:"peddi-sai-kiran",     img:"/ecil/DR.PEDDI SAI KIRAN.jpeg" },
+  { name:"Dr. Venkatesh Kumar",    role:"Interventional Cardiologist",                              qual:"MD, DM (Cardiology)",                                  slug:"venkatesh-kumar",     img:"/ecil/DR.VENKATESH.png" },
+  { name:"Dr. Mohan Rao",          role:"General Physician & Diabetologist",                        qual:"MD (Internal Medicine)",                               slug:"mohan-rao",            img:"/ecil/DR.MURALI MOHAN.png" },
+  { name:"Dr. Geetanjali Puvvada", role:"General Physician & Diabetologist",                        qual:"MD (General Medicine)",                                slug:"geetanjali-puvvada",  img:"/ecil/DR.GEETHANJALI.png" },
+  { name:"Dr. Kamalesh Lokhande", role:"Critical Care Specialist",                                  qual:"DA, DNB",                                              slug:"kamalesh-lokhande",   img:"/ecil/DR.KAMALESH.png" },
+  { name:"Dr. K. Naresh Babu",    role:"Brain & Neuro Surgeon",                                     qual:"DNB, M.Ch (Neuro Surgery)",                            slug:"naresh-babu",          img:"/ecil/DR.NARESH.png" },
+  { name:"Dr. Sandeep",           role:"Neuro Physician",                                           qual:"MD, DM (Neurology)",                                   slug:"sandeep",              img:"/ecil/DR.SANDEEP.png" },
+  { name:"Dr. M. Anurag",         role:"General, Laser & Laparoscopic Surgeon",                     qual:"MS (GS), FMAS, FIAGES, FISCP, FALS (H)",               slug:"m-anurag",             img:"/ecil/DR.ANURAG.png" },
+  { name:"Dr. P. Raghunath",      role:"Physiotherapist",                                           qual:"MPT (Sports), MIAP",                                   slug:"raghunath",            img:"/ecil/DR.RAGHUNATH.png" },
+  { name:"Dr. Vinayak Ingalalli", role:"Urologist",                                                 qual:"MBBS, MS, MCh",                                        slug:"vinayak-ingalalli",    img:"" },
+  { name:"Dr. Vineel Kolloju",    role:"Plastic Reconstructive & Aesthetic Surgeon",                 qual:"MS, M.Ch (Plastic Surgery)",                           slug:"vineel-kolloju",       img:"/ecil/DR.VENEEL.png" },
 ];
 
 const FACILITIES = [
@@ -264,11 +273,18 @@ export default function EcilPage() {
 
           {/* Logo — navy + magenta gradient square */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <div style={{ width: 42, height: 42, borderRadius: 8, background: `linear-gradient(135deg,${C.navy},${C.navyL})`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 12px rgba(27,42,74,.22)`, position: "relative" }}>
-              <span style={{ color: "#fff", fontSize: "1.3rem", fontFamily: "'Merriweather',serif", fontWeight: 700, fontStyle: "italic" }}>S</span>
-              {/* Magenta accent dot */}
-              <span style={{ position: "absolute", bottom: 4, right: 4, width: 6, height: 6, borderRadius: "50%", background: C.magenta, display: "block" }} />
-            </div>
+           
+            {/* 🔥 LOGO IMAGE */}
+  <img
+    src="/srikara-logo.png"   
+    alt="Srikara Hospitals"
+    style={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      borderRadius: 6,
+    }}
+  />
             <div>
               <p style={{ fontSize: "1rem", fontWeight: 800, color: C.navy, lineHeight: 1.1 }}>Srikara Hospital</p>
               <p style={{ fontSize: ".58rem", color: C.magenta, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600 }}>ECIL Branch · Hyderabad</p>
@@ -523,7 +539,7 @@ export default function EcilPage() {
                 <h2 className="section-h">Meet Our Specialists</h2>
                 <p className="section-sub" style={{ marginTop: ".5rem", maxWidth: 480 }}>Board-certified experts with international training, united by a single purpose — your well-being.</p>
               </div>
-              <Link href="#" style={{ fontSize: ".8rem", fontWeight: 700, color: C.magenta, textDecoration: "none", borderBottom: `1.5px solid ${C.magenta}`, paddingBottom: 2 }}>All 45 Doctors →</Link>
+              <Link href="#" style={{ fontSize: ".8rem", fontWeight: 700, color: C.magenta, textDecoration: "none", borderBottom: `1.5px solid ${C.magenta}`, paddingBottom: 2 }}>All 13 Doctors →</Link>
             </div>
           </Reveal>
 
@@ -531,26 +547,23 @@ export default function EcilPage() {
             {DOCTORS.map((d, i) => (
               <Reveal key={d.name} delay={i * 70}>
                 <div className="doc-card" style={{ background: "#fff", borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }}>
-                  <div style={{ height: 240, overflow: "hidden", position: "relative" }}>
-                    <img src={d.img} alt={d.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
+                  <div style={{ height: 240, overflow: "hidden", position: "relative", background: "#EEF2FA" }}>
+                    {d.img ? (
+                      <img src={d.img} alt={d.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
+                    ) : (
+                      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ fontSize: "4rem", opacity: .3 }}>👨‍⚕️</span>
+                      </div>
+                    )}
                     <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg,transparent 55%,rgba(15,30,53,.7) 100%)` }} />
-                    {/* Experience badge — magenta */}
-                    <div style={{ position: "absolute", bottom: "1rem", left: "1rem" }}>
-                      <span style={{ background: C.magenta, color: "#fff", fontSize: ".6rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", padding: ".25rem .7rem", borderRadius: 100 }}>{d.exp} experience</span>
-                    </div>
                   </div>
                   <div style={{ padding: "1.4rem" }}>
                     <h3 style={{ fontFamily: "'Merriweather',serif", fontSize: "1rem", fontWeight: 700, color: C.navy, lineHeight: 1.25, marginBottom: ".3rem" }}>{d.name}</h3>
-                    {/* Role — magenta */}
                     <p style={{ fontSize: ".75rem", fontWeight: 700, color: C.magenta, marginBottom: ".5rem" }}>{d.role}</p>
                     <p style={{ fontSize: ".72rem", color: C.mid, lineHeight: 1.55, marginBottom: "1rem" }}>{d.qual}</p>
                     <div style={{ paddingTop: "1rem", borderTop: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <div>
-                        <p style={{ fontSize: ".58rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", color: C.light, marginBottom: ".2rem" }}>Available</p>
-                        <p style={{ fontSize: ".72rem", fontWeight: 600, color: C.text }}>{d.avail}</p>
-                      </div>
-                      {/* Book btn — navy */}
-                      <button className="btn-primary" onClick={() => setApptOpen(true)} style={{ fontSize: ".68rem", padding: ".45rem 1rem" }}>Book →</button>
+                      <p style={{ fontSize: ".7rem", color: C.light }}>View Profile</p>
+                      <Link href={`/doctors?doctor=${d.slug}`} className="btn-primary" style={{ fontSize: ".68rem", padding: ".45rem 1rem" }}>View →</Link>
                     </div>
                   </div>
                 </div>

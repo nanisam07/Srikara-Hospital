@@ -40,39 +40,54 @@ type Page = "home"|"departments"|"doctors";
 const BRANCHES = ["Miyapur","RTC X Roads","Kompally","Peerzadiguda","Rajahmundry","Lakdikapul","LB Nagar","Vijayawada","ECIL"];
 
 const DEPTS = [
-  {n:"Cardiology",      sub:"Heart & Vascular",      ic:"🫀",img:IMG.d1,col:PINK,
-   pts:["Cardiac Cath Lab","Angioplasty","TAVR","Echocardiography","CCU 24/7"],
-   desc:"Full cardiac care — cath lab, angioplasty, TAVR and a 12-bed CCU staffed round the clock."},
-  {n:"Orthopaedics",    sub:"Bone, Joint & Spine",   ic:"🦴",img:IMG.d2,col:NAV,
-   pts:["Robotic Replacement","Arthroscopy","Spine Surgery","Sports Medicine"],
-   desc:"Robotic joint replacement, arthroscopy, sports medicine and complex spinal surgery."},
-  {n:"Neurology",       sub:"Brain & Nervous System",ic:"🧠",img:IMG.d3,col:"#5B21B6",
-   pts:["Stroke Unit","Epilepsy Clinic","Parkinson's","Neuro Rehab"],
-   desc:"Stroke unit, epilepsy monitoring, Parkinson's clinic and full neuro-rehabilitation."},
-  {n:"Obs & Gynaecology",sub:"Women's Health",       ic:"👶",img:IMG.d4,col:PINK,
-   pts:["High-Risk OB","IVF & Fertility","Laparoscopy","Level III NICU"],
-   desc:"High-risk obstetrics, IVF & fertility, laparoscopic surgery and Level III NICU."},
-  {n:"Oncology",        sub:"Cancer Care",           ic:"🔬",img:IMG.d5,col:"#065F46",
-   pts:["Tumour Board","Chemotherapy","Immunotherapy","Palliative Care"],
-   desc:"Weekly tumour board, precision chemotherapy, immunotherapy and palliative care."},
-  {n:"Gastroenterology",sub:"Digestive Health",      ic:"🫁",img:IMG.d6,col:NAVLT,
-   pts:["GI Endoscopy","Hepatology","IBD Clinic","Bariatric Surgery"],
-   desc:"Advanced GI endoscopy, hepatology, IBD clinic and comprehensive bariatric care."},
-  {n:"Physiotherapy",   sub:"Rehabilitation",        ic:"🏃",img:IMG.d7,col:"#047857",
-   pts:["Post-Surgery Rehab","Cardiac Rehab","Neuro Rehab","Speech Therapy"],
-   desc:"Post-surgery, cardiac and neurological rehab — physiotherapy, OT and speech therapy."},
-  {n:"Diagnostics",     sub:"Imaging & Lab",         ic:"🔭",img:IMG.d8,col:"#92400E",
-   pts:["3T MRI","256-Slice CT","PET-CT","NABL Lab"],
-   desc:"3T MRI, 256-slice CT, PET-CT, digital mammography and NABL-certified lab."},
+  {n:"Orthopedics",     sub:"Bone, Joint & Spine",        ic:"🦴",img:IMG.d2,col:NAV,
+   pts:["Robotic Joint Replacement","Arthroscopy","Ilizarov Surgery","Complex Trauma"],
+   desc:"Robotic joint replacement, arthroscopic, Ilizarov and complex trauma surgery by gold-medallist specialists."},
+  {n:"Cardiology",      sub:"Heart & Vascular",           ic:"🫀",img:IMG.d1,col:PINK,
+   pts:["Interventional Cardiology","Angioplasty","Echo & ECG","Cardiac Rehab"],
+   desc:"Comprehensive interventional cardiac care including cath lab, angioplasty and cardiac rehabilitation."},
+  {n:"Nephrology",      sub:"Kidney Care",                ic:"🫘",img:IMG.d3,col:"#5B21B6",
+   pts:["Dialysis","Kidney Transplant","CKD Management","Electrolyte Disorders"],
+   desc:"Expert nephrology care for CKD, dialysis, kidney transplant and complex electrolyte disorders."},
+  {n:"Neuro Surgery",   sub:"Brain & Spine",              ic:"🧠",img:IMG.d4,col:NAV,
+   pts:["Brain Surgery","Spine Surgery","Neuro Oncology","Cranial Procedures"],
+   desc:"Advanced brain and spine surgery, neuro-oncology and comprehensive cranial procedures."},
+  {n:"Neurology",       sub:"Neurological Medicine",      ic:"⚡",img:IMG.d5,col:"#5B21B6",
+   pts:["Neuro Physician","Stroke Care","Epilepsy Clinic","Movement Disorders"],
+   desc:"Expert neurological medicine for stroke, epilepsy, movement disorders and neuro-rehabilitation."},
+  {n:"General Surgery", sub:"Surgical Care",              ic:"⚕️",img:IMG.d6,col:NAVLT,
+   pts:["Laparoscopic Surgery","Hernia","General Surgery","Minimally Invasive"],
+   desc:"General, laparoscopic and minimally invasive surgery by experienced surgical specialists."},
+  {n:"General Medicine",sub:"Internal Medicine",          ic:"🩺",img:IMG.d7,col:"#047857",
+   pts:["General Physician","Diabetology","Preventive Care","Critical Care"],
+   desc:"Expert general medicine, diabetology, preventive care and management of complex conditions."},
+  {n:"Urology",         sub:"Urological Care",            ic:"🔬",img:IMG.d8,col:"#92400E",
+   pts:["Kidney Stones","Prostate Care","Reconstructive Urology","Endourology"],
+   desc:"Complete urological care including kidney stones, prostate, reconstructive and endoscopic procedures."},
+  {n:"Physiotherapy",   sub:"Rehabilitation",             ic:"🏃",img:IMG.d1,col:"#047857",
+   pts:["Post-Surgery Rehab","Ortho Rehab","Neuro Rehab","Sports Physio"],
+   desc:"Comprehensive physiotherapy and rehabilitation for orthopaedic, neurological and post-surgical recovery."},
+  {n:"Plastic Surgery", sub:"Reconstructive & Aesthetic", ic:"✨",img:IMG.d2,col:PINK,
+   pts:["Reconstructive Surgery","Aesthetic Surgery","Burns Care","Microsurgery"],
+   desc:"Plastic reconstructive and aesthetic surgery for trauma, burns and cosmetic enhancement."},
 ];
 
 const DOCS = [
-  {name:"Dr. Kavitha Reddy",      role:"Senior Cardiologist",           qual:"DM Cardiology · NIMS",          exp:"18",img:IMG.dr1,avail:"Mon–Sat 10–2",   dept:"Cardiology"},
-  {name:"Dr. Srinivas Allam",     role:"Orthopaedic Surgeon",           qual:"MS Ortho · Royal College UK",   exp:"16",img:IMG.dr2,avail:"MWF 3–7 PM",     dept:"Orthopaedics"},
-  {name:"Dr. Lalitha Prasad",     role:"Neurologist",                   qual:"DM Neurology · AIIMS Delhi",    exp:"14",img:IMG.dr3,avail:"TTS 9–1 PM",     dept:"Neurology"},
-  {name:"Dr. Meena Chakravarthy", role:"Gynaecologist & IVF Specialist",qual:"MS OBG · FRCOG",                exp:"17",img:IMG.dr4,avail:"Mon–Fri 11–3",   dept:"Gynaecology"},
-  {name:"Dr. Ravi Kumar Rao",     role:"Medical Oncologist",            qual:"DM Oncology · Tata Memorial",   exp:"13",img:IMG.dr5,avail:"Mon–Fri 2–6",    dept:"Oncology"},
-  {name:"Dr. Sudha Narayana",     role:"Gastroenterologist",            qual:"DM Gastro · PGIMER",            exp:"12",img:IMG.dr6,avail:"Mon–Sat 8–12",   dept:"Gastroenterology"},
+  {name:"Dr. Bhanu Pratap P",    role:"Consultant Robotic Joint Replacement, Arthroscopic, Ilizarov & Complex Trauma Surgeon", qual:"MBBS, MS (Ortho) – Gold Medalist, FIJR, FIAS, FILRDC", slug:"bhanu-pratap-p",    img:"/Ladikapul/DR.BHANUPRATAPP.png",         dept:"Orthopedics"},
+  {name:"Dr. Shashank",          role:"Orthopedic Surgeon",                                                                   qual:"Ortho",                                                 slug:"shashank",          img:"/Ladikapul/DR.SHASHANK.jpeg",            dept:"Orthopedics"},
+  {name:"Dr. Rameshwari",        role:"Cardiologist",                                                                         qual:"MBBS, MD, DM",                                          slug:"rameshwari",         img:"/Ladikapul/DR.RAMESHWARI.png",           dept:"Cardiology"},
+  {name:"Dr. Vaishnavi P",       role:"Nephrologist",                                                                         qual:"MBBS, MD, FACP, FASN (USA)",                            slug:"vaishnavi-p",        img:"/Ladikapul/DR.VAISHNAVI.png",            dept:"Nephrology"},
+  {name:"Dr. Nikhil Veludandi",  role:"Neuro Surgeon",                                                                        qual:"MBBS, MS (GS), MCh",                                    slug:"nikhil-veludandi",   img:"/Ladikapul/DR.NIKHIL.png",               dept:"Neuro Surgery"},
+  {name:"Dr. Sushmita",          role:"Neuro Physician",                                                                      qual:"MBBS, MD (GM, NIMS)",                                   slug:"sushmita",           img:"",                                       dept:"Neurology"},
+  {name:"Dr. Gopi Srikanth",     role:"Neuro Physician",                                                                      qual:"MD (General Medicine), DM (Neurology)",                 slug:"gopi-srikanth",      img:"",                                       dept:"Neurology"},
+  {name:"Dr. Sreedhar Reddy",    role:"General Surgeon",                                                                      qual:"MBBS, DNB, FMAS",                                       slug:"srredhar-reddy",     img:"/Ladikapul/DR.SREEDHARREDDY.png",        dept:"General Surgery"},
+  {name:"Dr. Ganesh G",          role:"General Physician",                                                                    qual:"MBBS, DNB",                                             slug:"ganesh-g",           img:"/Ladikapul/DR.GANESH.png",               dept:"General Medicine"},
+  {name:"Dr. Harsha Vardhan",    role:"Urologist",                                                                            qual:"MBBS, DNB, MCh (Urology)",                              slug:"harsha-vardhan",     img:"/Ladikapul/DR.HARSHAVARDHAN.png",        dept:"Urology"},
+  {name:"Dr. Junaid",            role:"Physiotherapist",                                                                      qual:"BPT, DAC, MIAP",                                        slug:"junaid",             img:"/Ladikapul/DR.JUNAID.png",               dept:"Physiotherapy"},
+  {name:"Dr. Vinay Kumar",       role:"Pediatrician",                                                                         qual:"Pediatrics",                                            slug:"vinay-kumar",        img:"",                                       dept:"Pediatrics"},
+  {name:"Dr. Saka Laxman",       role:"Plastic Surgeon",                                                                      qual:"Plastic Surgery",                                       slug:"saka-laxman",        img:"",                                       dept:"Plastic Surgery"},
+  {name:"Dr. Nalinikanth",       role:"ENT Surgeon",                                                                          qual:"DLO",                                                   slug:"nalinikanth",        img:"",                                       dept:"ENT"},
+  {name:"Dr. Irshad",            role:"Pathologist",                                                                          qual:"MBBS, MD (Osmania)",                                    slug:"irshad",             img:"",                                       dept:"Pathology"},
 ];
 
 const TESTI = [
@@ -97,19 +112,52 @@ function Reveal({c,d=0,y=28,x=0}:{c:React.ReactNode;d?:number;y?:number;x?:numbe
 /* ── LOGO SVG ── */
 const Logo=({h=42}:{h?:number})=>(
   <svg height={h} viewBox="0 0 265 80" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(4,5)">
-      {[0,40,80,120,160,200,240,280,320].map((deg,i)=>(
-        <g key={i} transform={`rotate(${deg},34,34)`}>
-          <ellipse cx="34" cy="10" rx="5" ry="9.5" fill={PINK} opacity=".92"/>
-          <circle cx="34" cy="3" r="3.6" fill={NAV}/>
-        </g>
-      ))}
-      <circle cx="34" cy="34" r="5.5" fill={WH}/>
-    </g>
-    <text x="84" y="52" fontFamily="'Arial Black',Arial,sans-serif" fontWeight="900" fontSize="32" fill={NAV} letterSpacing="-0.5">SRIKARA</text>
-    <ellipse cx="103" cy="43" rx="4" ry="10" fill={PINK} opacity=".95" transform="rotate(-8,103,43)"/>
-    <text x="84" y="73" fontFamily="'Arial Black',Arial,sans-serif" fontWeight="900" fontSize="19" fill={PINK} letterSpacing="2.5">HOSPITALS</text>
-  </svg>
+  
+  {/* ✅ USE image INSTEAD OF img */}
+  <image
+    href="/srikara-logo.png"
+    x="0"
+    y="10"
+    width="80"
+    height="80"
+    preserveAspectRatio="xMidYMid meet"
+  />
+
+  <text
+    x="84"
+    y="52"
+    fontFamily="'Arial Black',Arial,sans-serif"
+    fontWeight="900"
+    fontSize="32"
+    fill={NAV}
+    letterSpacing="-0.5"
+  >
+    SRIKARA
+  </text>
+
+  <ellipse
+    cx="103"
+    cy="43"
+    rx="4"
+    ry="10"
+    fill={PINK}
+    opacity=".95"
+    transform="rotate(-8,103,43)"
+  />
+
+  <text
+    x="84"
+    y="73"
+    fontFamily="'Arial Black',Arial,sans-serif"
+    fontWeight="900"
+    fontSize="19"
+    fill={PINK}
+    letterSpacing="2.5"
+  >
+    HOSPITALS
+  </text>
+
+</svg>
 );
 
 /* ══════════════════════════════════════════════════════
@@ -695,34 +743,32 @@ export default function LakdikapulPage(){
               {/* Top colour bar */}
               <div style={{height:4,background:`linear-gradient(90deg,${PINK},${NAV})`}}/>
               {/* Photo */}
-              <div style={{height:280,overflow:"hidden",position:"relative"}}>
-                <img src={d.img} alt={d.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",display:"block",transition:"transform .5s"}}
-                  onMouseEnter={e=>(e.currentTarget as HTMLImageElement).style.transform="scale(1.06)"}
-                  onMouseLeave={e=>(e.currentTarget as HTMLImageElement).style.transform=""}/>
+              <div style={{height:280,overflow:"hidden",position:"relative",background:"#1B2D5B"}}>
+                {d.img ? (
+                  <img src={d.img} alt={d.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",display:"block",transition:"transform .5s"}}
+                    onMouseEnter={e=>(e.currentTarget as HTMLImageElement).style.transform="scale(1.06)"}
+                    onMouseLeave={e=>(e.currentTarget as HTMLImageElement).style.transform=""}/>
+                ) : (
+                  <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    <span style={{fontSize:"4rem",opacity:.3}}>👨‍⚕️</span>
+                  </div>
+                )}
                 <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,transparent 45%,${NAVDKR}CC 100%)`}}/>
                 {/* Dept tag */}
                 <span style={{position:"absolute",top:"1rem",left:"1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".6rem",fontWeight:800,letterSpacing:".1em",textTransform:"uppercase",background:PINK,color:WH,padding:".22rem .7rem"}}>{d.dept}</span>
-                {/* Exp */}
-                <div style={{position:"absolute",bottom:"1rem",right:"1rem",background:"rgba(0,0,0,.5)",backdropFilter:"blur(8px)",padding:".5rem .8rem"}}>
-                  <p style={{fontFamily:"'Anton',sans-serif",fontSize:"1.4rem",color:WH,lineHeight:1}}>{d.exp}<span style={{fontSize:".75rem"}}>yr</span></p>
-                </div>
               </div>
               {/* Info */}
               <div style={{padding:"1.6rem"}}>
                 <h3 style={{fontFamily:"'Lora',serif",fontStyle:"italic",fontSize:"1.05rem",color:WH,marginBottom:".3rem",lineHeight:1.3}}>{d.name}</h3>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".75rem",fontWeight:800,color:GLOW,marginBottom:".4rem"}}>{d.role}</p>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".7rem",color:"rgba(255,255,255,.45)",lineHeight:1.5,marginBottom:"1.4rem"}}>{d.qual}</p>
-                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingTop:".9rem",borderTop:"1px solid rgba(255,255,255,.1)"}}>
-                  <div>
-                    <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".58rem",fontWeight:700,letterSpacing:".12em",textTransform:"uppercase",color:"rgba(255,255,255,.35)",marginBottom:".2rem"}}>Schedule</p>
-                    <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".72rem",fontWeight:700,color:"rgba(255,255,255,.75)"}}>{d.avail}</p>
-                  </div>
-                  <button onClick={()=>setBookOpen(true)}
-                    style={{fontFamily:"'DM Sans',sans-serif",background:PINK,color:WH,border:"none",padding:".5rem 1.1rem",fontSize:".72rem",fontWeight:800,cursor:"pointer",transition:"background .25s",letterSpacing:".06em",textTransform:"uppercase"}}
-                    onMouseEnter={e=>(e.currentTarget as HTMLButtonElement).style.background=PINKLT}
-                    onMouseLeave={e=>(e.currentTarget as HTMLButtonElement).style.background=PINK}>
-                    Book →
-                  </button>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"flex-end",paddingTop:".9rem",borderTop:"1px solid rgba(255,255,255,.1)"}}>
+                  <Link href={`/doctors?doctor=${d.slug}`}
+                    style={{fontFamily:"'DM Sans',sans-serif",background:PINK,color:WH,border:"none",padding:".5rem 1.1rem",fontSize:".72rem",fontWeight:800,cursor:"pointer",letterSpacing:".06em",textTransform:"uppercase",textDecoration:"none"}}
+                    onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.background=PINKLT}
+                    onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.background=PINK}>
+                    View Profile →
+                  </Link>
                 </div>
               </div>
             </div>

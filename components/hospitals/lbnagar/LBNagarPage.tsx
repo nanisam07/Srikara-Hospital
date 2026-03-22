@@ -20,80 +20,68 @@ const STATS = [
 
 const SPECIALITIES = [
   {
-    roman: "I",   name: "Cardiology",              tag: "Heart & Vascular",
-    desc: "Full-spectrum cardiac care — from non-invasive diagnostics to complex interventional procedures and cardiac surgery.",
-    treatments: ["Angioplasty", "Pacemaker", "Echo & Stress Test", "Cardiac Rehab"],
-    img: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=700&q=80",
-  },
-  {
-    roman: "II",  name: "Orthopaedics",             tag: "Bone, Joint & Spine",
-    desc: "Precision musculoskeletal care from fracture management to advanced joint replacement and spinal reconstruction.",
-    treatments: ["Knee Replacement", "Arthroscopy", "Spine Surgery", "Sports Medicine"],
+    roman: "I",    name: "Orthopedic",       tag: "Bone, Joint & Spine",
+    desc: "Robotic joint replacement, arthroscopic surgery, trauma surgery and comprehensive musculoskeletal care.",
+    treatments: ["Robotic Joint Replacement", "Arthroscopy", "Trauma Surgery", "Sports Medicine"],
     img: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=700&q=80",
   },
   {
-    roman: "III", name: "Neurology & Neurosurgery", tag: "Brain & Nervous System",
-    desc: "Comprehensive neurological and neurosurgical care with a dedicated stroke unit and epilepsy monitoring centre.",
-    treatments: ["Stroke Care", "Epilepsy Clinic", "Brain Tumour", "Neuro Rehab"],
-    img: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=700&q=80",
+    roman: "II",   name: "Cardiology",       tag: "Heart & Vascular",
+    desc: "Clinical and interventional cardiology, echocardiography, pacemakers and comprehensive cardiac rehabilitation.",
+    treatments: ["Clinical Cardiology", "Echo & ECG", "Pacemaker", "Cardiac Rehab"],
+    img: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=700&q=80",
   },
   {
-    roman: "IV",  name: "Gastroenterology",         tag: "Digestive Health",
-    desc: "Advanced endoscopy, hepatology, IBD management and bariatric surgery performed by dedicated GI specialists.",
-    treatments: ["Endoscopy", "Liver Disease", "Bariatric Surgery", "IBD Clinic"],
+    roman: "III",  name: "General Physician", tag: "Internal Medicine",
+    desc: "Expert general medicine, diabetology, preventive care and critical care for complex systemic conditions.",
+    treatments: ["General Medicine", "Diabetology", "Critical Care", "Preventive Care"],
     img: "https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=700&q=80",
   },
   {
-    roman: "V",   name: "Obstetrics & Gynaecology", tag: "Women's Health",
-    desc: "Complete women's health from high-risk obstetrics and fertility to minimally invasive gynaecological surgery.",
-    treatments: ["High-Risk OB", "Fertility & IVF", "Laparoscopy", "Menopause Clinic"],
+    roman: "IV",   name: "Gynaecology",      tag: "Women's Health",
+    desc: "Comprehensive gynaecological care and obstetric services for women across all life stages.",
+    treatments: ["Gynaecology", "Obstetrics", "Minimally Invasive Surgery", "Antenatal Care"],
     img: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=700&q=80",
   },
   {
-    roman: "VI",  name: "Oncology",                 tag: "Cancer Care",
-    desc: "Multidisciplinary tumour board, precision chemotherapy, targeted therapy and comprehensive palliative care.",
-    treatments: ["Tumour Board", "Chemotherapy", "Targeted Therapy", "Palliative Care"],
+    roman: "V",    name: "Neuro Surgery",    tag: "Brain & Spine",
+    desc: "Advanced brain and spine surgery, stroke care, tumour resection and complete neurological intervention.",
+    treatments: ["Brain Surgery", "Spine Surgery", "Stroke Care", "Tumour Resection"],
+    img: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=700&q=80",
+  },
+  {
+    roman: "VI",   name: "General Surgery",  tag: "Surgical Care",
+    desc: "Surgical gastroenterology, laparoscopic surgery, hernia repair and minimally invasive procedures.",
+    treatments: ["Laparoscopic Surgery", "Hernia Repair", "GI Surgery", "Laser Surgery"],
     img: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=700&q=80",
+  },
+  {
+    roman: "VII",  name: "Urology",          tag: "Urological Care",
+    desc: "Urological and andrological care including kidney stones, prostate, reconstructive and endoscopic procedures.",
+    treatments: ["Kidney Stones", "Prostate Care", "Andrology", "Endourology"],
+    img: "https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=700&q=80",
+  },
+  {
+    roman: "VIII", name: "Physiotherapy",    tag: "Rehabilitation",
+    desc: "Structured physiotherapy and rehabilitation for orthopaedic, neurological and post-surgical recovery.",
+    treatments: ["Ortho Rehab", "Neuro Rehab", "Post-Op Rehab", "Sports Physio"],
+    img: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=700&q=80",
   },
 ];
 
 const DOCTORS = [
-  {
-    name: "Dr. Madhavi Latha Reddy", role: "Senior Cardiologist",
-    qual: "DM Cardiology · Nizam's Institute of Medical Sciences",
-    exp: "20", avail: "Mon – Sat · 10 AM – 2 PM", initial: "M",
-    img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80",
-  },
-  {
-    name: "Dr. Sreenivas Rao Boddu", role: "Orthopaedic & Joint Replacement Surgeon",
-    qual: "MS Ortho, Fellowship · Royal College UK",
-    exp: "18", avail: "Mon, Wed, Fri · 3 PM – 7 PM", initial: "S",
-    img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80",
-  },
-  {
-    name: "Dr. Farida Sultana",      role: "Neurologist & Stroke Specialist",
-    qual: "DM Neurology · AIIMS New Delhi",
-    exp: "16", avail: "Tue, Thu, Sat · 9 AM – 1 PM", initial: "F",
-    img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80",
-  },
-  {
-    name: "Dr. Ramesh Chandra Nair", role: "Surgical Gastroenterologist",
-    qual: "MCh GI Surgery · KEM Hospital Mumbai",
-    exp: "22", avail: "Mon – Fri · 11 AM – 3 PM", initial: "R",
-    img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80",
-  },
-  {
-    name: "Dr. Usha Priyadarshini",  role: "Obstetrician & Gynaecologist",
-    qual: "MS OBG, FRCOG · Apollo Hospitals",
-    exp: "14", avail: "Mon – Sat · 9 AM – 12 PM", initial: "U",
-    img: "https://images.unsplash.com/photo-1638202993928-7267aad84c31?w=400&q=80",
-  },
-  {
-    name: "Dr. Ajay Krishnaswamy",   role: "Medical Oncologist",
-    qual: "DM Medical Oncology · Tata Memorial Centre",
-    exp: "13", avail: "Mon – Fri · 2 PM – 6 PM", initial: "A",
-    img: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80",
-  },
+  { name: "Dr. Bharath Reddy Katta",   role: "Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual: "MS (Ortho), FIJR",                                           slug: "bharath-reddy-katta",   initial: "B", img: "/LBnagar/DR.BHARATH.png" },
+  { name: "Dr. Sameer Hanu Maharshi",  role: "Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual: "MS (Ortho), FIJR",                                           slug: "sameer-hanu-maharshi",  initial: "S", img: "/LBnagar/DR.SAMEER HANU.png" },
+  { name: "Dr. Akhil Dadi",            role: "Robotic Joint Replacement Surgeon",                        qual: "MS (Ortho)",                                                  slug: "akhil-dadi",            initial: "A", img: "/Akhildadi.jpg" },
+  { name: "Dr. Rajashekar",            role: "Clinical Cardiologist",                                    qual: "MBBS, Diploma (Cardiology)",                                  slug: "rajashekar",            initial: "R", img: "/LBnagar/DR.SRAJASHEKAR.png" },
+  { name: "Dr. Karunakar",             role: "General Physician & Diabetologist & Critical Care",        qual: "MBBS, MD",                                                    slug: "karunakar",             initial: "K", img: "/LBnagar/DR.KARUNAKAR.png" },
+  { name: "Dr. Pranathi",              role: "Gynaecologist",                                            qual: "MBBS, DGO",                                                   slug: "pranathi",              initial: "P", img: "" },
+  { name: "Dr. Kota Ravi Chandra",     role: "Brain & Spine Surgeon",                                   qual: "MBBS, MS, MCh (Neuro Surgery)",                               slug: "ravi-chandra",          initial: "K", img: "/LBnagar/DR.RAVICHANDER.png" },
+  { name: "Dr. Hemanth Kumar",         role: "Surgical Gastro & Laparoscopic Surgeon",                  qual: "MBBS, DNB (GS), FMAS, FIAGES, FISCP, FALS – HERNIA",          slug: "hemanth-kumar",         initial: "H", img: "/LBnagar/DR.HEMANTH.png" },
+  { name: "Dr. Srikanth",              role: "Urologist & Andrologist",                                 qual: "MBBS, DNB, DrNB (Urology)",                                   slug: "srikanth",              initial: "S", img: "" },
+  { name: "Dr. Raj Kiran",             role: "Plastic Reconstructive & Aesthetic Surgeon",              qual: "MS (General Surgery), M.Ch (Plastic Surgery)",                slug: "raj-kiran",             initial: "R", img: "" },
+  { name: "Dr. Jaipal",               role: "Pediatrician",                                             qual: "MBBS (Pediatrics)",                                           slug: "jaipal",                initial: "J", img: "" },
+  { name: "Dr. Raghu Kumar",           role: "ENT Specialist",                                          qual: "MBBS, MS",                                                    slug: "raghu-kumar",           initial: "R", img: "" },
 ];
 
 const FACILITIES = [
@@ -344,7 +332,17 @@ export default function LBNagarPage() {
                 <polygon points="22,4 40,13 40,31 22,40 4,31 4,13" fill="none" stroke={N} strokeWidth="1.5" />
                 <polygon points="22,9 35,15.5 35,28.5 22,35 9,28.5 9,15.5" fill="none" stroke={M} strokeWidth=".75" opacity=".55" />
               </svg>
-              <span style={{ position: "absolute", ...serif1, fontSize: "1rem", fontWeight: 700, fontStyle: "italic", color: N }}>S</span>
+              {/* 🔥 LOGO IMAGE */}
+  <img
+    src="/srikara-logo.png"   
+    alt="Srikara Hospitals"
+    style={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      borderRadius: 6,
+    }}
+  />
             </div>
             <div>
               <p style={{ ...serif1, fontSize: "1.1rem", fontWeight: 700, color: N, lineHeight: 1.1, letterSpacing: ".02em" }}>Srikara Hospital</p>
@@ -658,15 +656,17 @@ export default function LBNagarPage() {
 
                   {/* Doctor photo */}
                   <div style={{ height: 220, overflow: "hidden", position: "relative", background: "#EDF0F5" }}>
-                    <img src={d.img} alt={d.name} loading="lazy"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", transition: "transform .5s ease" }}
-                      onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"}
-                      onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"} />
+                    {d.img ? (
+                      <img src={d.img} alt={d.name} loading="lazy"
+                        style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", transition: "transform .5s ease" }}
+                        onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"}
+                        onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"} />
+                    ) : (
+                      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ fontSize: "4rem", opacity: .3 }}>👨‍⚕️</span>
+                      </div>
+                    )}
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(transparent 55%,rgba(27,42,74,.6))", pointerEvents: "none" }} />
-                    {/* Experience badge */}
-                    <div style={{ position: "absolute", top: 12, right: 12, background: N, color: "#fff", ...serif2, fontSize: ".6rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: ".28rem .7rem" }}>
-                      {d.exp} yrs
-                    </div>
                     {/* Name overlay */}
                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: ".8rem 1.2rem" }}>
                       <p style={{ ...serif1, fontSize: "1rem", fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>{d.name}</p>
@@ -679,12 +679,8 @@ export default function LBNagarPage() {
                     <div style={{ position: "absolute", top: 5, left: 5 }}><CornerOrnament size={14} color={M} /></div>
                     <div style={{ position: "absolute", top: 5, right: 5 }}><CornerOrnament size={14} color={M} flip /></div>
                     <p style={{ ...serif2, fontSize: ".75rem", color: "#4A6080", lineHeight: 1.5, marginBottom: "1rem" }}>{d.qual}</p>
-                    <div style={{ paddingTop: ".8rem", borderTop: `1px solid #EDF0F5` }}>
-                      <span style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".14em", textTransform: "uppercase", color: M, display: "block", marginBottom: ".3rem" }}>Availability</span>
-                      <span style={{ ...serif2, fontSize: ".78rem", color: N }}>{d.avail}</span>
-                    </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: ".9rem" }}>
-                      <Link href="#appointment" style={{ ...serif1, fontSize: ".75rem", color: N, textDecoration: "none", fontStyle: "italic", borderBottom: `1px solid ${N}`, paddingBottom: 1 }}>Book →</Link>
+                      <Link href={`/doctors?doctor=${d.slug}`} style={{ ...serif1, fontSize: ".75rem", color: N, textDecoration: "none", fontStyle: "italic", borderBottom: `1px solid ${N}`, paddingBottom: 1 }}>View Profile →</Link>
                     </div>
                   </div>
                 </div>
@@ -697,7 +693,7 @@ export default function LBNagarPage() {
               <Link href="#" style={{ ...serif1, display: "inline-flex", alignItems: "center", gap: 10, color: N, textDecoration: "none", fontSize: ".92rem", fontStyle: "italic", border: `1.5px solid ${N}`, padding: ".8rem 2.5rem", transition: "all .3s" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = N; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; (e.currentTarget as HTMLAnchorElement).style.color = N; }}>
-                View All 44 Specialists
+                View All 12 Specialists
               </Link>
             </div>
           </Reveal>

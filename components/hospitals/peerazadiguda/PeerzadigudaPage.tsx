@@ -44,21 +44,32 @@ const AM = "#F59E0B";   // amber kept for stats bar + star ratings
 
 /* ── DATA ── */
 const DEPTS = [
-  { n:"Cardiology",   sub:"Heart & Vascular",   icon:"🫀", img:P.c1, clr:N,  txt:"Full cardiac care — Cath Lab, Angioplasty, TAVR, EP studies and 24/7 Cardiac ICU." },
-  { n:"Orthopaedics", sub:"Bone, Joint & Spine", icon:"🦴", img:P.c2, clr:M,  txt:"Robotic joint replacement, arthroscopy, sports medicine and complex spinal surgery." },
-  { n:"Neurology",    sub:"Brain & Nervous",     icon:"🧠", img:P.c3, clr:NL, txt:"Stroke unit, epilepsy monitoring, Parkinson's care and full neuro-rehabilitation." },
-  { n:"Gynaecology",  sub:"Women's Health",      icon:"👶", img:P.c4, clr:M,  txt:"High-risk OB, IVF fertility clinic, laparoscopy and Level III NICU." },
-  { n:"Oncology",     sub:"Cancer Care",         icon:"🔬", img:P.c5, clr:N,  txt:"Weekly tumour board, precision chemotherapy, immunotherapy and palliative care." },
-  { n:"Diagnostics",  sub:"Imaging & Lab",       icon:"🔭", img:P.c6, clr:ML, txt:"3T MRI, 256-slice CT, PET-CT, digital mammography and NABL lab — 1,200+ tests." },
+  { n:"Orthopedic",       sub:"Bone, Joint & Spine",        icon:"🦴", img:P.c2, clr:M,  txt:"Robotic joint replacement, arthroscopic surgery, fracture care and comprehensive trauma management." },
+  { n:"Cardiology",       sub:"Heart & Vascular",           icon:"🫀", img:P.c1, clr:N,  txt:"Interventional cardiology — cath lab, angioplasty and complete cardiac care." },
+  { n:"General Physician",sub:"Internal Medicine",          icon:"🩺", img:P.c4, clr:NL, txt:"Expert general medicine, diabetology, preventive care and critical care for complex conditions." },
+  { n:"Neurology",        sub:"Brain & Nervous System",     icon:"🧠", img:P.c3, clr:N,  txt:"Neuro and spine surgery, stroke care, neurological medicine and complete neuro-rehabilitation." },
+  { n:"General Surgery",  sub:"Surgical Care",              icon:"⚕️", img:P.c5, clr:M,  txt:"General, laser and laparoscopic surgery using minimally invasive techniques for faster recovery." },
+  { n:"Urology",          sub:"Urological Care",            icon:"🔬", img:P.c6, clr:N,  txt:"Complete urological care including kidney stones, prostate conditions and reconstructive procedures." },
+  { n:"Nephrology",       sub:"Kidney Care",                icon:"🫘", img:P.c1, clr:ML, txt:"Expert nephrology care for CKD, dialysis, kidney disease and electrolyte disorders." },
+  { n:"Physiotherapy",    sub:"Rehabilitation",             icon:"🏃", img:P.c2, clr:NL, txt:"Structured physiotherapy and rehabilitation for orthopaedic, neurological and post-surgical recovery." },
+  { n:"Plastic Surgery",  sub:"Reconstructive & Aesthetic", icon:"✨", img:P.c3, clr:M,  txt:"Plastic reconstructive and aesthetic surgery for trauma, burns and cosmetic enhancement." },
+  { n:"Anesthesia",       sub:"Anaesthesia & Critical Care",icon:"💉", img:P.c4, clr:N,  txt:"Expert anaesthesia and critical care management for surgical and ICU patients." },
 ];
 
 const DOCS = [
-  { name:"Dr. Ravi Shankar Reddy", role:"Cardiologist",        exp:"18 yrs", qual:"DM Cardiology · NIMS Hyderabad",      img:P.doc1, avail:"Mon–Sat · 10–2 PM",    acc:N },
-  { name:"Dr. Preethi Nagarajan",  role:"Orthopaedic Surgeon", exp:"15 yrs", qual:"MS Ortho · Fellowship Royal College",  img:P.doc2, avail:"Mon, Wed, Fri · 3–7 PM", acc:M },
-  { name:"Dr. Suresh Babu Konda",  role:"Neurologist",         exp:"13 yrs", qual:"DM Neurology · AIIMS New Delhi",       img:P.doc3, avail:"Tue, Thu, Sat · 9–1 PM", acc:N },
-  { name:"Dr. Sarvani Rao",        role:"Gynaecologist & IVF", exp:"16 yrs", qual:"MS OBG · FRCOG",                       img:P.doc4, avail:"Mon–Fri · 11–3 PM",      acc:M },
-  { name:"Dr. Amar Venugopal",     role:"Medical Oncologist",  exp:"12 yrs", qual:"DM Oncology · Tata Memorial",          img:P.doc5, avail:"Mon–Fri · 2–6 PM",       acc:N },
-  { name:"Dr. Hema Chandra Devi",  role:"Neonatologist",       exp:"11 yrs", qual:"DNB Paeds · NNF Fellowship",            img:P.doc6, avail:"Mon–Sat · 8–12 PM",      acc:M },
+  { name:"Dr. Karunakar Reddy",  role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual:"D. Ortho, DNB Ortho, MNAMS, FIJR",        slug:"karunakar-reddy",  img:"/Peeriziguda/DR.KARUNAKAR.png",     acc:M },
+  { name:"Dr. Eshwar Patel",     role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon", qual:"MS (Ortho), FIJR",                         slug:"eshwar-patel",     img:"/Peeriziguda/DR.ESHWARPATEL.png",   acc:N },
+  { name:"Dr. Sachin Bhatkar",   role:"Interventional Cardiologist",                              qual:"MD, DrNB (Cardiology)",                     slug:"sachin-bhatkar",   img:"/Peeriziguda/DR.SACHIN.png",        acc:M },
+  { name:"Dr. Raghu Prasad",     role:"General Physician & Diabetologist",                        qual:"DNB (General Medicine, Manipal)",           slug:"raghu-prasad",     img:"/Peeriziguda/DR.RAGHUPRASAD.png",   acc:N },
+  { name:"Dr. D. Nagendra Babu", role:"Neuro & Spine Surgery",                                   qual:"MS, MCh (Neuro Surgery)",                   slug:"nagendra-babu",    img:"/Peeriziguda/DR.NAGENDRA BABU.png", acc:M },
+  { name:"Dr. Naveen Kumar",     role:"General, Laser & Laparoscopic Surgeon",                    qual:"DNB (General Surgery)",                     slug:"naveen-kumar",     img:"/Peeriziguda/DR.NAVEEN KUMAR.png",  acc:N },
+  { name:"Dr. Vinayak Ingalalli",role:"Urologist",                                                qual:"MS, MCh",                                   slug:"vinayak-ingalalli", img:"",                                 acc:M },
+  { name:"Dr. G. Roja Sree",    role:"Nephrologist",                                              qual:"MD, DrNB (Nephrology)",                     slug:"roja-sree",        img:"/Peeriziguda/DR.GRojaSree.jpeg",    acc:N },
+  { name:"Dr. Praveen Kumar",    role:"Physiotherapist",                                          qual:"BPT, MPT (Ortho)",                          slug:"praveen-kumar",    img:"/Peeriziguda/DR.PRAVEEN.png",       acc:M },
+  { name:"Dr. Vineel Kolloju",   role:"Plastic Reconstructive & Aesthetic Surgeon",               qual:"MS, M.Ch (Plastic Surgery)",                slug:"vineel-kolloju",   img:"",                                  acc:N },
+  { name:"Dr. Rahul",            role:"Critical Care Specialist",                                 qual:"MD (Anesthesia & Critical Care)",           slug:"rahul",            img:"",                                  acc:M },
+  { name:"Dr. Ch. Kishan",       role:"Critical Care Specialist",                                 qual:"MD (Anesthesia & Critical Care)",           slug:"ch-kishan",        img:"",                                  acc:N },
+  { name:"Dr. Harsha",           role:"Critical Care Specialist",                                 qual:"MD (Anesthesia & Critical Care)",           slug:"harsha",           img:"",                                  acc:M },
 ];
 
 const TESTIS = [
@@ -243,9 +254,19 @@ export default function PeerzadigudaPage() {
       <Link href="/" style={{display:"flex",alignItems:"center",gap:11,textDecoration:"none"}}>
         {/* Logo: navy gradient square + magenta spinning border ring */}
         <div style={{position:"relative",width:42,height:42,flexShrink:0}}>
-          <div style={{position:"absolute",inset:0,borderRadius:10,background:`linear-gradient(135deg,${N},${NL})`,display:"flex",alignItems:"center",justifyContent:"center",animation:"pulse 3s ease infinite",boxShadow:`0 4px 12px rgba(27,42,74,.22)`}}>
-            <span style={{fontFamily:"'Fraunces',serif",fontStyle:"italic",fontSize:"1.3rem",color:"#fff",fontWeight:400}}>S</span>
-          </div>
+          
+            {/* 🔥 LOGO IMAGE */}
+  <img
+    src="/srikara-logo.png"   
+    alt="Srikara Hospitals"
+    style={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      borderRadius: 6,
+    }}
+  />
+          
           {/* Magenta accent dot */}
           <div style={{position:"absolute",bottom:2,right:2,width:9,height:9,borderRadius:"50%",background:M,border:"2px solid #fff"}}/>
         </div>
@@ -541,7 +562,7 @@ export default function PeerzadigudaPage() {
               Specialists who<br/><em style={{fontStyle:"italic",color:M}}>listen first.</em>
             </h2>
           </div>
-          <Link href="#" style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:".82rem",fontWeight:700,color:M,textDecoration:"none",borderBottom:`1.5px solid ${M}`,paddingBottom:2}}>All 32 Doctors →</Link>
+          <Link href="#" style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:".82rem",fontWeight:700,color:M,textDecoration:"none",borderBottom:`1.5px solid ${M}`,paddingBottom:2}}>All 13 Doctors →</Link>
         </div>
       }/>
 
@@ -551,24 +572,22 @@ export default function PeerzadigudaPage() {
             <div className="doc-card" style={{background:"#fff",borderRadius:16,border:`1px solid ${BD}`,boxShadow:"0 2px 12px rgba(0,0,0,.05)",overflow:"hidden",cursor:"pointer"}}>
               {/* Top bar — alternating navy/magenta per doctor */}
               <div style={{height:4,background:`linear-gradient(90deg,${d.acc},${d.acc===N?NL:ML})`}}/>
-              <div style={{height:230,overflow:"hidden",position:"relative"}}>
-                <img src={d.img} alt={d.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",display:"block"}}/>
+              <div style={{height:230,overflow:"hidden",position:"relative",background:"#EEF2FA"}}>
+                {d.img ? (
+                  <img src={d.img} alt={d.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",display:"block"}}/>
+                ) : (
+                  <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    <span style={{fontSize:"4rem",opacity:.3}}>👨‍⚕️</span>
+                  </div>
+                )}
                 <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,transparent 55%,rgba(15,30,53,.68) 100%)"}}/>
-                {/* Exp badge — uses doctor accent color */}
-                <span style={{position:"absolute",bottom:"1rem",left:"1rem",background:d.acc,color:"#fff",fontSize:".6rem",fontWeight:700,letterSpacing:".1em",textTransform:"uppercase",padding:".22rem .65rem",borderRadius:100}}>{d.exp}</span>
               </div>
               <div style={{padding:"1.3rem"}}>
                 <h3 style={{fontFamily:"'Fraunces',serif",fontStyle:"italic",fontSize:"1.05rem",fontWeight:400,color:N,marginBottom:".25rem",lineHeight:1.3}}>{d.name}</h3>
-                {/* Role — uses doctor accent color */}
                 <p style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:".75rem",fontWeight:700,color:d.acc,marginBottom:".4rem"}}>{d.role}</p>
                 <p style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:".72rem",color:TL,lineHeight:1.5,marginBottom:"1rem"}}>{d.qual}</p>
-                <div style={{paddingTop:".9rem",borderTop:`1px solid ${BD}`,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                  <div>
-                    <p style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:".58rem",fontWeight:700,letterSpacing:".12em",textTransform:"uppercase",color:TL,marginBottom:".2rem"}}>Schedule</p>
-                    <p style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:".72rem",fontWeight:600,color:N}}>{d.avail}</p>
-                  </div>
-                  {/* Book button — navy for odd, magenta for even */}
-                  <button className={d.acc===N?"btn-navy":"btn-mg"} onClick={()=>setBookOpen(true)} style={{fontSize:".68rem",padding:".38rem .95rem"}}>Book</button>
+                <div style={{paddingTop:".9rem",borderTop:`1px solid ${BD}`,display:"flex",alignItems:"center",justifyContent:"flex-end"}}>
+                  <Link href={`/doctors/${d.slug}`} className={d.acc===N?"btn-navy":"btn-mg"} style={{fontSize:".68rem",padding:".38rem .95rem"}}>View Profile →</Link>
                 </div>
               </div>
             </div>

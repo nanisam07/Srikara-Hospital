@@ -69,12 +69,16 @@ const SPECIALITIES = [
 ];
 
 const DOCTORS = [
-  { name:"Dr. Satya Prasad Rao", role:"Senior Cardiologist",            qual:"DM Cardiology · NIMS Hyderabad",    exp:"19", img:IMG.doc1, avail:"Mon–Sat · 10:00 AM – 2:00 PM",    accent:N },
-  { name:"Dr. Mamatha Goswami",  role:"Orthopaedic Surgeon",            qual:"MS Ortho, Fellowship UK",           exp:"16", img:IMG.doc2, avail:"Mon, Wed, Fri · 3:00–7:00 PM",    accent:M },
-  { name:"Dr. Srinivasa Rao",    role:"Neurologist",                    qual:"DM Neurology · AIIMS New Delhi",    exp:"14", img:IMG.doc3, avail:"Tue, Thu, Sat · 9:00 AM–1:00 PM",  accent:N },
-  { name:"Dr. Anita Sharma",     role:"Gynaecologist & IVF Specialist", qual:"MS OBG, FRCOG",                     exp:"17", img:IMG.doc4, avail:"Mon–Fri · 11:00 AM – 3:00 PM",    accent:M },
-  { name:"Dr. Kiran Babu",       role:"Surgical Gastroenterologist",    qual:"MCh GI Surgery · KEM Mumbai",       exp:"12", img:IMG.doc5, avail:"Mon–Fri · 2:00 PM – 6:00 PM",     accent:N },
-  { name:"Dr. Rekha Ponnala",    role:"Neonatologist",                  qual:"DNB Paeds, NNF Fellowship",         exp:"13", img:IMG.doc6, avail:"Mon–Sat · 8:00 AM – 12:00 PM",   accent:M },
+  { name:"Dr. Akhil Dadi",           role:"Robotic Joint Replacement Surgeon",                         qual:"MS (Ortho)",                               img:"/Akhildadi.jpg",                    avail:"Mon–Sat · OPD Hours",    accent:N ,   experience:"24+"  },
+  { name:"Dr. T.V. Suresh",          role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon",  qual:"D. Ortho, DNB Ortho",                      img:"/doctors/TVSURESH.png",             avail:"Mon–Sat · OPD Hours",    accent:M,    experience:"14+"  },
+  { name:"Dr. Kiran Kumar",          role:"Robotic Joint Replacement, Arthroscopic & Trauma Surgeon",  qual:"MS (Ortho)",                               img:"/doctors/DR.KIRAN.png",             avail:"Mon–Sat · OPD Hours",    accent:N,    experience:"20+"  },
+  { name:"Dr. Khushal Sharnagat",    role:"Interventional Cardiologist",                               qual:"MD, DNB (Cardiology)",                     img:"/doctors/DR.KUSHAL.png",            avail:"Mon–Sat · OPD Hours",    accent:M,    experience:"12+"  },
+  { name:"Dr. Sharat Chandra Reddy", role:"General Physician & Diabetologist",                         qual:"MBBS, DNB",                                img:"/doctors/DR.SHARATHCHANDRA.png",    avail:"Mon–Sat · OPD Hours",    accent:N,    experience:"13+"  },
+  { name:"Dr. Sandeep Raja",         role:"Neuro & Spine Surgery",                                     qual:"MS, MCh (Neuro Surgery)",                  img:"/doctors/DR.SANDEEP.png",           avail:"Mon–Sat · OPD Hours",    accent:M,    experience:"5+"  },
+  { name:"Dr. Nagaraju",             role:"General, Laser & Laparoscopic Surgeon",                     qual:"MS (GS)",                                  img:"/doctors/DR.NAGARAJU.png",          avail:"Mon–Sat · OPD Hours",    accent:N,    experience:"17+"  },
+  { name:"Dr. Shridhar Reddy",       role:"Urologist",                                                 qual:"MS, MCh (Urology)",                        img:"/doctors/DR.SREEDHAR.png",          avail:"Mon–Sat · OPD Hours",    accent:M,    experience:"21+"  },
+  { name:"Dr. Ramesh Tekula",        role:"Physiotherapist",                                           qual:"MPT (Ortho), MIAP",                        img:"/doctors/DR.RAMESH.png",            avail:"Mon–Sat · OPD Hours",    accent:N,    experience:"11+"  },
+  { name:"Dr. Suman Babu",          role:"Plastic Reconstructive & Aesthetic Surgeon",                 qual:"MS, MCh (Plastic Surgery)",                img:"/doctors/DR.SUMANBABU.png",         avail:"Mon–Sat · OPD Hours",    accent:M,    experience:"19+"  },
 ];
 
 const FACILITIES = [
@@ -312,22 +316,65 @@ export default function KompallyPage() {
         <div style={{ maxWidth:1400, margin:"0 auto", padding:"0 2.5rem", height:68, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
 
           {/* Logo — navy circle + magenta ring + magenta dot */}
-          <Link href="/" style={{ display:"flex", alignItems:"center", gap:12, textDecoration:"none" }}>
-            <div style={{ position:"relative", width:44, height:44, flexShrink:0 }}>
-              <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:`linear-gradient(135deg,${N},${NL})` }} />
-              <div style={{ position:"absolute", inset:-4, borderRadius:"50%", border:`2px solid ${M}55`, animation:"spin 12s linear infinite" }} />
-              <div style={{ position:"absolute", inset:0, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <span style={{ ...serif, fontSize:"1.2rem", color:"#fff", fontStyle:"italic" }}>S</span>
-              </div>
-              <div style={{ position:"absolute", bottom:1, right:1, width:9, height:9, borderRadius:"50%", background:M, border:"2px solid #fff" }} />
-            </div>
-            <div>
-              {/* "SRIKARA" in navy, "HOSPITALS" in magenta — matching the logo */}
-              <p style={{ ...serif, fontSize:"1.05rem", color:N, lineHeight:1.05, letterSpacing:".02em" }}>Srikara</p>
-              <p style={{ fontSize:".62rem", color:M, letterSpacing:".2em", textTransform:"uppercase", fontWeight:800, lineHeight:1 }}>Hospitals</p>
-              <p style={{ fontSize:".5rem", color:"#8A9CB4", letterSpacing:".12em", textTransform:"uppercase", marginTop:1 }}>Kompally Branch</p>
-            </div>
-          </Link>
+          <Link
+  href="/"
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: 12,
+    textDecoration: "none",
+  }}
+>
+  {/* 🔥 LOGO IMAGE */}
+  <img
+    src="/srikara-logo.png"   
+    alt="Srikara Hospitals"
+    style={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      borderRadius: 6,
+    }}
+  />
+
+  {/* 🔥 TEXT (UNCHANGED) */}
+  <div>
+    <p
+      style={{
+        ...serif,
+        fontSize: "1.05rem",
+        color: N,
+        lineHeight: 1.05,
+        letterSpacing: ".02em",
+      }}
+    >
+      Srikara
+    </p>
+    <p
+      style={{
+        fontSize: ".62rem",
+        color: M,
+        letterSpacing: ".2em",
+        textTransform: "uppercase",
+        fontWeight: 800,
+        lineHeight: 1,
+      }}
+    >
+      Hospitals
+    </p>
+    <p
+      style={{
+        fontSize: ".5rem",
+        color: "#8A9CB4",
+        letterSpacing: ".12em",
+        textTransform: "uppercase",
+        marginTop: 1,
+      }}
+    >
+      Kompally Branch
+    </p>
+  </div>
+</Link>
 
           {/* Desktop nav */}
           <div className="desk" style={{ display:"flex", alignItems:"center", gap:"2rem" }}>
@@ -616,7 +663,7 @@ export default function KompallyPage() {
                     <div style={{ position:"absolute", inset:0, background:`linear-gradient(180deg,transparent 55%,rgba(15,30,53,.6) 100%)` }} />
                     {/* Experience badge — matching doctor accent */}
                     <div style={{ position:"absolute", bottom:"1rem", left:"1rem" }}>
-                      <span style={{ background:d.accent, color:"#fff", fontSize:".6rem", fontWeight:700, letterSpacing:".1em", textTransform:"uppercase", padding:".25rem .7rem", borderRadius:100 }}>{d.exp} yrs exp</span>
+                      <span style={{ background:d.accent, color:"#fff", fontSize:".6rem", fontWeight:700, letterSpacing:".1em", textTransform:"uppercase", padding:".25rem .7rem", borderRadius:100 }}>{d.experience} yrs exp</span>
                     </div>
                   </div>
                   <div style={{ padding:"1.4rem" }}>

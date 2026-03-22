@@ -206,9 +206,16 @@ export default function MiyapurPage(){
       <nav style={{position:"sticky",top:0,zIndex:900,background:"#fff",borderBottom:`1px solid ${scrollY>60?"#e5e5ee":"#f0f0f8"}`,boxShadow:scrollY>60?"0 2px 16px rgba(27,42,74,.07)":"none",transition:"all .3s",padding:"0 2.5rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         {/* Logo */}
         <a href="/" style={{display:"flex",alignItems:"center",gap:12}}>
-          <div style={{width:42,height:42,borderRadius:"50%",background:`linear-gradient(135deg,${N},${NL})`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,boxShadow:`0 3px 12px rgba(27,42,74,.22)`}}>
-            <span style={{fontFamily:"'DM Serif Display',serif",fontSize:"1.05rem",color:"#fff"}}>S</span>
-          </div>
+           <img
+    src="/srikara-logo.png"  
+    alt="Srikara Hospitals"
+    style={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      borderRadius: 6,
+    }}
+  />
           <div>
             <div style={{fontFamily:"'DM Serif Display',serif",fontSize:"1rem",color:N,lineHeight:1.15}}>Srikara Hospitals</div>
             <div style={{fontSize:".57rem",color:M,letterSpacing:".18em",textTransform:"uppercase",fontWeight:700}}>Miyapur · Hyderabad</div>

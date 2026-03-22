@@ -227,11 +227,19 @@ export default function VijayawaPage() {
       <nav style={{ position: "sticky", top: 0, zIndex: 900, background: "rgba(250,252,254,.97)", backdropFilter: "blur(14px)", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2.5rem", height: 66 }}>
         <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
           {/* Logo mark — navy square with magenta inner glow */}
-          <div style={{ width: 38, height: 38, background: C.navy, borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Crimson Pro',serif", fontSize: "1.3rem", fontWeight: 600, color: "#fff", boxShadow: `inset 0 0 0 2px ${C.magenta}40` }}>S</div>
-          <div>
+           <img
+    src="/srikara-logo.png"   
+    alt="Srikara Hospitals"
+    style={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      borderRadius: 6,
+    }}
+  />
             <div style={{ fontSize: ".8rem", fontWeight: 700, color: C.navy, letterSpacing: ".04em" }}>Srikara Hospital</div>
             <div style={{ fontSize: ".58rem", color: C.magenta, letterSpacing: ".16em", textTransform: "uppercase" }}>Vijayawada Branch</div>
-          </div>
+          
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: "2.2rem" }}>
           {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l, h]) => (
