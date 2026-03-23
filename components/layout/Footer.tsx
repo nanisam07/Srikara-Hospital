@@ -3,620 +3,327 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-/*
-  SRIKARA PALETTE
-  Magenta   #C0145C
-  Navy      #1C2B4A
-  Blue-gray #4A6FA5
-  Off-white #F8F6F9
-*/
-
 const HOSPITAL_BRANCHES = [
-  { id: "RTC-X-ROADS", name: "RTC X Roads Branch",   address: "Main Road, Secunderabad",         phone: "040 4646 0000" },
-  { id: "MIYAPUR",      name: "Miyapur Branch",        address: "Miyapur X Roads, Hyderabad",      phone: "040 4747 0000" },
-  { id: "LB NAGAR",     name: "LB Nagar Branch",       address: "LB Nagar, Hyderabad",             phone: "040 66 000 108" },
-  { id: "VIJAYAWADA",   name: "Vijayawada Branch",     address: "MG Road, Vijayawada",             phone: "772 999 0003" },
-  { id: "ECIL",       name: "ECIL Branch",         address: "ECIL X Roads, Hyderabad",               phone: "040 41 108 108" },
-  { id: "KOMPALLY",     name: "Kompally Branch",       address: "Kompally, Secunderabad",         phone: "040 6818 0000" },
-  { id: "PEERZADIGUDA",    name: "Peerzadiguda Branch",      address: "Peerzadiguda, Hyderabad",         phone: "040 68 108 108" },
-  { id: "LAKDIKAPUL",     name: "Lakdikapul Branch",       address: "Lakdikapul, Hyderabad",           phone: "040 6969 0000" },
-  { id: "RAJAHMUNDRA",      name: "Rajahmundry Branch",        address: "Dwaraka Nagar, Khammam",        phone: "0883 6818 000" },
+  { id: "RTC",    name: "RTC X Roads Branch",  address: "Main Road, Secunderabad",    phone: "040 4646 0000" },
+  { id: "MIYAPUR",name: "Miyapur Branch",       address: "Miyapur X Roads, Hyderabad", phone: "040 4747 0000" },
+  { id: "LBNAGAR",name: "LB Nagar Branch",      address: "LB Nagar, Hyderabad",        phone: "040 66 000 108" },
+  { id: "VJYWDA", name: "Vijayawada Branch",    address: "MG Road, Vijayawada",        phone: "772 999 0003" },
+  { id: "ECIL",   name: "ECIL Branch",          address: "ECIL X Roads, Hyderabad",    phone: "040 41 108 108" },
+  { id: "KMPALY", name: "Kompally Branch",      address: "Kompally, Secunderabad",     phone: "040 6818 0000" },
+  { id: "PEERZ",  name: "Peerzadiguda Branch", address: "Peerzadiguda, Hyderabad",    phone: "040 68 108 108" },
+  { id: "LKDKPL", name: "Lakdikapul Branch",   address: "Lakdikapul, Hyderabad",      phone: "040 6969 0000" },
+  { id: "RJHMDR", name: "Rajahmundry Branch",  address: "Dwaraka Nagar, Khammam",     phone: "0883 6818 000" },
 ];
 
-const DEPT_COLUMNS = [
-  ["Cardiology", "Neurology", "Orthopaedics", "Oncology", "Urology"],
-  ["Gastroenterology", "Pulmonology", "Nephrology", "Dermatology", "Dental"],
-  ["Mother & Child", "Robotic Surgery", "Ophthalmology", "ENT", "Emergency"],
+const ALL_DEPTS = [
+  "Cardiology","Neurology","Orthopaedics","Oncology",
+  "Urology","Gastroenterology","Pulmonology","Nephrology",
+  "Dermatology","Dental","Mother & Child","Robotic Surgery",
+  "Ophthalmology","ENT","Emergency",
 ];
 
 const QUICK_ACTIONS = [
-  { label: "Book Appointment", icon: "⚡", href: "/doctors",   accent: true  },
-  { label: "Find Specialist",  icon: "🔬", href: "/doctors",   accent: false },
-  { label: "Emergency Care",   icon: "❤️", href: "tel:1800-123-4567", accent: false },
-  
+  { label: "Book Appointment", icon: "⚡", href: "/doctors",           accent: true  },
+  { label: "Find Specialist",  icon: "🔬", href: "/doctors",           accent: false },
+  { label: "Emergency Care",   icon: "❤️", href: "tel:1800-123-4567",  accent: false },
 ];
 
-
 export default function Footer() {
-  const [activeBranch, setActiveBranch] = useState("RTC-X-ROADS");
+  const [activeBranch, setActiveBranch] = useState("RTC");
+  const branch = HOSPITAL_BRANCHES.find((b) => b.id === activeBranch) ?? HOSPITAL_BRANCHES[0];
 
-  const branch =
-    HOSPITAL_BRANCHES.find((b) => b.id === activeBranch) ||
-    HOSPITAL_BRANCHES[0]; // fallback safety
   return (
     <>
-      {/* ═══════════════════════════════════════════
-          MAIN FOOTER BODY
-      ═══════════════════════════════════════════ */}
-      <footer
-        style={{
-          background: "#0f1a2e",
-          borderTop: "1px solid rgba(192,20,92,0.18)",
-        }}
-      >
-        {/* ── Top stripe: logo + tagline ── */}
-        <div
-          style={{
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-            padding: "36px 6vw",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1280,
-              margin: "0 auto",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: 20,
-            }}
-          >
-            {/* Logo */}
-            <Link href="/" style={{ display: "flex", alignItems: "center", gap: 14, textDecoration: "none" }}>
-              <div
-                style={{
-                  background: "#fff",
-                  borderRadius: 12,
-                  padding: "8px 16px",
-                  boxShadow: "0 2px 16px rgba(0,0,0,0.18)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  src="/srikara-logo.png"
-                  alt="Srikara Hospitals"
-                  width={140}
-                  height={36}
-                  style={{ height: 36, width: "auto", objectFit: "contain", display: "block" }}
-                  priority
-                />
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 800,
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                    color: "#C0145C",
-                  }}
-                >
-                  • NEXT-GEN CARE
-                </span>
-                <span
-                  style={{
-                    fontSize: 11,
-                    color: "rgba(255,255,255,0.38)",
-                    fontWeight: 400,
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  Serving Patients is Serving God
-                </span>
-              </div>
-            </Link>
+      <style>{`
+        /* ── animations ── */
+        @keyframes footerPulse {
+          0%,100%{ transform:scale(1);   opacity:0.9;  }
+          50%    { transform:scale(1.4); opacity:0.35; }
+        }
+        @keyframes footerMarquee {
+          from{ transform:translateX(0);    }
+          to  { transform:translateX(-50%); }
+        }
 
-            {/* Social icons + certifications */}
-            <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
-              {/* Cert badges */}
-              <div style={{ display: "flex", gap: 8 }}>
-                {["NABH CERTIFIED", "ISO 9001:2015"].map((cert) => (
-                  <span
-                    key={cert}
-                    style={{
-                      fontSize: 8,
-                      fontWeight: 800,
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      color: "rgba(255,255,255,0.55)",
-                      padding: "5px 12px",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      borderRadius: 6,
-                      background: "rgba(255,255,255,0.04)",
-                    }}
-                  >
-                    {cert}
-                  </span>
-                ))}
-              </div>
+        /* global reset inside footer */
+        .ftr-root, .ftr-root * { box-sizing:border-box; }
+        .ftr-root { overflow-x:hidden; width:100%; }
 
-              {/* Social icons */}
-              <div style={{ display: "flex", gap: 8 }}>
-                {[
-                  { icon: "f",  label: "Facebook" },
-                  { icon: "in", label: "LinkedIn" },
-                  { icon: "tw", label: "Twitter"  },
-                  { icon: "yt", label: "YouTube"  },
-                ].map((s) => (
-                  <button
-                    key={s.label}
-                    aria-label={s.label}
-                    style={{
-                      width: 34,
-                      height: 34,
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.06)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "rgba(255,255,255,0.42)",
-                      fontSize: 10,
-                      fontWeight: 800,
-                      textTransform: "uppercase",
-                      cursor: "pointer",
-                      transition: "all 0.22s",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = "rgba(192,20,92,0.2)";
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(192,20,92,0.45)";
-                      (e.currentTarget as HTMLButtonElement).style.color = "#f472b6";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)";
-                      (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.1)";
-                      (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.42)";
-                    }}
-                  >
-                    {s.icon}
-                  </button>
-                ))}
-              </div>
+        /* ── top stripe ── */
+        .ftr-top {
+          display:flex; align-items:center; justify-content:space-between;
+          flex-wrap:wrap; gap:14px;
+          padding:26px 5vw;
+          border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+        .ftr-top-right {
+          display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+        }
+        .ftr-certs { display:flex; gap:7px; flex-wrap:wrap; }
+        .ftr-socials { display:flex; gap:7px; }
+
+        /* ── body grid ── */
+        .ftr-body {
+          display:grid;
+          grid-template-columns:1fr 1fr 1fr;
+          gap:36px;
+          max-width:1280px;
+          margin:0 auto;
+          padding:42px 5vw;
+          width:100%;
+        }
+        .ftr-col { min-width:0; }
+
+        /* ── dept grid (inside col 2) ── */
+        .ftr-dept-grid {
+          display:grid;
+          grid-template-columns:1fr 1fr 1fr;
+          gap:5px 10px;
+        }
+        .ftr-dept-link {
+          font-size:12px; color:rgba(255,255,255,0.48); text-decoration:none;
+          font-weight:500; padding:3px 0; display:block;
+          white-space:normal; word-break:break-word; line-height:1.4;
+          transition:color 0.2s;
+        }
+        .ftr-dept-link:hover { color:#f472b6; }
+
+        /* ── branch tab strip ── */
+        .ftr-branches {
+          display:flex; gap:5px;
+          flex-wrap:wrap;
+          padding:9px 12px;
+          border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+
+        /* ── quick action card ── */
+        .ftr-qa {
+          display:flex; align-items:center; justify-content:space-between;
+          padding:11px 13px; border-radius:12px; text-decoration:none;
+          transition:all 0.22s; width:100%;
+        }
+        .ftr-qa:hover { filter:brightness(1.12); transform:translateX(3px); }
+
+        /* ── marquee ── */
+        .ftr-marquee-track {
+          display:flex; width:max-content;
+          animation:footerMarquee 28s linear infinite;
+        }
+
+        /* ── bottom bar ── */
+        .ftr-bottom {
+          display:flex; align-items:center; justify-content:space-between;
+          flex-wrap:wrap; gap:12px;
+          max-width:1280px; margin:0 auto;
+          padding:16px 5vw;
+        }
+        .ftr-legal { display:flex; gap:18px; flex-wrap:wrap; }
+
+        /* ══════════════════════════════
+           TABLET  768–1023px
+        ══════════════════════════════ */
+        @media (max-width:1023px) {
+          .ftr-body {
+            grid-template-columns:1fr 1fr;
+            gap:28px;
+          }
+          /* col-3 (quick actions) spans full width */
+          .ftr-col-qa {
+            grid-column:1 / -1;
+          }
+          /* on tablet, quick actions + emergency side by side */
+          .ftr-qa-inner {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+            align-items:start;
+          }
+          .ftr-dept-grid {
+            grid-template-columns:1fr 1fr;
+          }
+        }
+
+        /* ══════════════════════════════
+           MOBILE  <768px
+        ══════════════════════════════ */
+        @media (max-width:767px) {
+          .ftr-body {
+            grid-template-columns:1fr;
+            gap:24px;
+            padding:28px 4vw;
+          }
+          .ftr-col-qa { grid-column:auto; }
+          .ftr-qa-inner { display:block; }
+          .ftr-dept-grid {
+            grid-template-columns:1fr 1fr;
+            gap:5px 8px;
+          }
+          .ftr-top {
+            flex-direction:column;
+            align-items:flex-start;
+            padding:20px 4vw;
+          }
+          .ftr-bottom {
+            flex-direction:column;
+            align-items:flex-start;
+            padding:14px 4vw;
+          }
+          /* branch tabs: horizontal scroll so they don't wrap messily */
+          .ftr-branches {
+            flex-wrap:nowrap;
+            overflow-x:auto;
+            -webkit-overflow-scrolling:touch;
+            scrollbar-width:none;
+          }
+          .ftr-branches::-webkit-scrollbar { display:none; }
+          .ftr-legal { gap:12px; }
+          .ftr-emergency-box { margin-top:16px !important; }
+        }
+
+        @media (max-width:399px) {
+          .ftr-dept-grid { grid-template-columns:1fr; }
+          .ftr-dept-link { font-size:11px; }
+        }
+      `}</style>
+
+      <footer className="ftr-root" style={{ background:"#0f1a2e", borderTop:"1px solid rgba(192,20,92,0.18)" }}>
+
+        {/* ── Top stripe ── */}
+        <div className="ftr-top">
+          {/* Logo + tagline */}
+          <Link href="/" style={{ display:"flex", alignItems:"center", gap:12, textDecoration:"none", flexShrink:0 }}>
+            <div style={{ background:"#fff", borderRadius:11, padding:"6px 13px", display:"inline-flex", alignItems:"center", boxShadow:"0 2px 14px rgba(0,0,0,0.18)" }}>
+              <Image src="/srikara-logo.png" alt="Srikara Hospitals" width={118} height={30} style={{ height:30, width:"auto", objectFit:"contain", display:"block" }} priority />
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+              <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.22em", textTransform:"uppercase", color:"#C0145C" }}>• NEXT-GEN CARE</span>
+              <span style={{ fontSize:10, color:"rgba(255,255,255,0.36)", fontWeight:400 }}>Serving Patients is Serving God</span>
+            </div>
+          </Link>
+
+          {/* Certs + social */}
+          <div className="ftr-top-right">
+            <div className="ftr-certs">
+              {["NABH", "ISO 9001"].map((c) => (
+                <span key={c} style={{ fontSize:8, fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", color:"rgba(255,255,255,0.52)", padding:"4px 10px", border:"1px solid rgba(255,255,255,0.1)", borderRadius:6, background:"rgba(255,255,255,0.04)", whiteSpace:"nowrap" }}>{c}</span>
+              ))}
+            </div>
+            <div className="ftr-socials">
+              {[{ icon:"f", label:"Facebook" },{ icon:"in", label:"LinkedIn" },{ icon:"tw", label:"Twitter" },{ icon:"yt", label:"YouTube" }].map((s) => (
+                <button key={s.label} aria-label={s.label}
+                  style={{ width:32, height:32, borderRadius:"50%", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", color:"rgba(255,255,255,0.40)", fontSize:9, fontWeight:800, textTransform:"uppercase", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 0.2s" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background="rgba(192,20,92,0.2)"; e.currentTarget.style.color="#f472b6"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background="rgba(255,255,255,0.06)"; e.currentTarget.style.color="rgba(255,255,255,0.40)"; }}
+                >{s.icon}</button>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* ── Main 3-column content ── */}
-        <div
-          style={{
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "52px 6vw",
-            display: "grid",
-            gridTemplateColumns: "1.4fr 1.6fr 1fr",
-            gap: 52,
-            alignItems: "start",
-          }}
-        >
-          {/* ── COL 1: About + Hospital directory ── */}
-          <div>
-            <p
-              style={{
-                fontSize: 13,
-                color: "rgba(255,255,255,0.45)",
-                lineHeight: 1.85,
-                marginBottom: 28,
-              }}
-            >
-              We aren't just a hospital; we are a technology-driven healing
-              ecosystem. Pioneers in robotic orthopaedic surgery in South India.
-              9 hospitals across Telangana & Andhra Pradesh.
+        {/* ── Body ── */}
+        <div className="ftr-body">
+
+          {/* COL 1 — About + hospital directory */}
+          <div className="ftr-col">
+            <p style={{ fontSize:13, color:"rgba(255,255,255,0.40)", lineHeight:1.8, marginBottom:20 }}>
+              Technology-driven healing ecosystem. Pioneers in robotic orthopaedic surgery in South India — 9 hospitals across Telangana &amp; Andhra Pradesh.
             </p>
 
-            {/* Hospital directory widget */}
-            <div
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(192,20,92,0.18)",
-                borderRadius: 18,
-                overflow: "hidden",
-              }}
-            >
+            <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(192,20,92,0.18)", borderRadius:14, overflow:"hidden" }}>
               {/* Widget header */}
-              <div
-                style={{
-                  padding: "12px 16px",
-                  borderBottom: "1px solid rgba(255,255,255,0.06)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <span style={{ fontSize: 12 }}>📍</span>
-                <span
-                  style={{
-                    fontSize: 9,
-                    fontWeight: 800,
-                    letterSpacing: "0.24em",
-                    textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.45)",
-                  }}
-                >
-                  Instant Hospital Directory
-                </span>
+              <div style={{ padding:"9px 14px", borderBottom:"1px solid rgba(255,255,255,0.06)", display:"flex", alignItems:"center", gap:7 }}>
+                <span style={{ fontSize:11 }}>📍</span>
+                <span style={{ fontSize:8, fontWeight:800, letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.38)" }}>Hospital Directory</span>
               </div>
 
-              {/* Branch tabs */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: 4,
-                  padding: "10px 12px",
-                  flexWrap: "wrap",
-                  borderBottom: "1px solid rgba(255,255,255,0.06)",
-                }}
-              >
+              {/* Branch tab chips — scrollable on mobile */}
+              <div className="ftr-branches">
                 {HOSPITAL_BRANCHES.map((b) => (
-                  <button
-                    key={b.id}
-                    onClick={() => setActiveBranch(b.id)}
-                    style={{
-                      fontSize: 9,
-                      fontWeight: 800,
-                      letterSpacing: "0.16em",
-                      textTransform: "uppercase",
-                      padding: "5px 10px",
-                      borderRadius: 6,
-                      border: "none",
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                      background:
-                        activeBranch === b.id
-                          ? "#C0145C"
-                          : "rgba(255,255,255,0.06)",
-                      color:
-                        activeBranch === b.id
-                          ? "#fff"
-                          : "rgba(255,255,255,0.45)",
+                  <button key={b.id} onClick={() => setActiveBranch(b.id)}
+                    style={{ fontSize:8, fontWeight:800, letterSpacing:"0.1em", textTransform:"uppercase", padding:"5px 9px", borderRadius:6, border:"none", cursor:"pointer", flexShrink:0, transition:"all 0.18s",
+                      background: activeBranch === b.id ? "#C0145C" : "rgba(255,255,255,0.06)",
+                      color:      activeBranch === b.id ? "#fff"    : "rgba(255,255,255,0.40)",
                     }}
-                  >
-                    {b.id}
-                  </button>
+                  >{b.id}</button>
                 ))}
               </div>
 
-              {/* Active branch info */}
-              <div style={{ padding: "16px 16px 18px" }}>
-                <div
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 700,
-                    color: "#fff",
-                    marginBottom: 6,
-                    letterSpacing: "0.01em",
-                  }}
-                >
-                  {branch.name}
+              {/* Branch detail */}
+              <div style={{ padding:"13px 14px 15px" }}>
+                <div style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:5 }}>{branch.name}</div>
+                <div style={{ display:"flex", gap:6, marginBottom:11 }}>
+                  <span style={{ fontSize:10, opacity:0.45, flexShrink:0, marginTop:1 }}>📍</span>
+                  <span style={{ fontSize:11, color:"rgba(255,255,255,0.42)", lineHeight:1.5 }}>{branch.address}</span>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: 7,
-                    marginBottom: 14,
-                  }}
+                <a href={`tel:${branch.phone}`}
+                  style={{ display:"inline-flex", alignItems:"center", gap:7, fontSize:13, fontWeight:800, color:"#C0145C", textDecoration:"none", transition:"color 0.2s" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color="#f472b6")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color="#C0145C")}
                 >
-                  <span style={{ fontSize: 11, marginTop: 1, opacity: 0.6 }}>📍</span>
-                  <span
-                    style={{
-                      fontSize: 12,
-                      color: "rgba(255,255,255,0.50)",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {branch.address}
-                  </span>
-                </div>
-                <a
-                  href={`tel:${branch.phone}`}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                    fontSize: 16,
-                    fontWeight: 800,
-                    color: "#C0145C",
-                    textDecoration: "none",
-                    letterSpacing: "0.02em",
-                    transition: "color 0.2s",
-                  }}
-                  onMouseEnter={(e) =>
-                    ((e.currentTarget as HTMLAnchorElement).style.color = "#f472b6")
-                  }
-                  onMouseLeave={(e) =>
-                    ((e.currentTarget as HTMLAnchorElement).style.color = "#C0145C")
-                  }
-                >
-                  <span
-                    style={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: "50%",
-                      background: "rgba(192,20,92,0.15)",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 12,
-                    }}
-                  >
-                    📞
-                  </span>
+                  <span style={{ width:24, height:24, borderRadius:"50%", background:"rgba(192,20,92,0.14)", display:"inline-flex", alignItems:"center", justifyContent:"center", fontSize:10 }}>📞</span>
                   {branch.phone}
                 </a>
               </div>
             </div>
           </div>
 
-          {/* ── COL 2: Departments grid ── */}
-          <div>
-            <h4
-              style={{
-                fontSize: 9,
-                fontWeight: 800,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "#C0145C",
-                marginBottom: 22,
-              }}
-            >
-              Our Specialties
-            </h4>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "8px 16px",
-              }}
-            >
-              {DEPT_COLUMNS.map((col, ci) =>
-                col.map((dept) => (
-                  <Link
-                    key={dept}
-                    href={`/departments/${dept.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "")}`}
-                    style={{
-                      fontSize: 12,
-                      color: "rgba(255,255,255,0.50)",
-                      textDecoration: "none",
-                      fontWeight: 500,
-                      padding: "4px 0",
-                      transition: "color 0.2s",
-                      display: "block",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    onMouseEnter={(e) =>
-                      ((e.currentTarget as HTMLAnchorElement).style.color = "#f472b6")
-                    }
-                    onMouseLeave={(e) =>
-                      ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.50)")
-                    }
-                  >
-                    {dept}
-                  </Link>
-                ))
-              )}
-            </div>
-
-            {/* View all depts */}
-            <Link
-              href="/departments"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                marginTop: 20,
-                fontSize: 11,
-                fontWeight: 800,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "#4A6FA5",
-                textDecoration: "none",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.color = "#f472b6")
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLAnchorElement).style.color = "#4A6FA5")
-              }
-            >
-              View All 42 Departments →
-            </Link>
-          </div>
-
-          {/* ── COL 3: Quick actions ── */}
-          <div>
-            <h4
-              style={{
-                fontSize: 9,
-                fontWeight: 800,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "#C0145C",
-                marginBottom: 22,
-              }}
-            >
-              Quick Access
-            </h4>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {QUICK_ACTIONS.map((action) => (
-                <Link
-                  key={action.label}
-                  href={action.href}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "13px 16px",
-                    borderRadius: 14,
-                    border: `1px solid ${action.accent ? "rgba(192,20,92,0.35)" : "rgba(255,255,255,0.08)"}`,
-                    background: action.accent
-                      ? "linear-gradient(135deg, rgba(192,20,92,0.15), rgba(192,20,92,0.05))"
-                      : "rgba(255,255,255,0.03)",
-                    textDecoration: "none",
-                    transition: "all 0.22s",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(192,20,92,0.5)";
-                    (e.currentTarget as HTMLAnchorElement).style.background = "rgba(192,20,92,0.12)";
-                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateX(3px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.borderColor = action.accent
-                      ? "rgba(192,20,92,0.35)"
-                      : "rgba(255,255,255,0.08)";
-                    (e.currentTarget as HTMLAnchorElement).style.background = action.accent
-                      ? "linear-gradient(135deg, rgba(192,20,92,0.15), rgba(192,20,92,0.05))"
-                      : "rgba(255,255,255,0.03)";
-                    (e.currentTarget as HTMLAnchorElement).style.transform = "translateX(0)";
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 16 }}>{action.icon}</span>
-                    <span
-                      style={{
-                        fontSize: 12,
-                        fontWeight: 700,
-                        color: action.accent ? "#f472b6" : "rgba(255,255,255,0.72)",
-                        letterSpacing: "0.02em",
-                      }}
-                    >
-                      {action.label}
-                    </span>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: 14,
-                      color: action.accent ? "#C0145C" : "rgba(255,255,255,0.25)",
-                    }}
-                  >
-                    ↗
-                  </span>
-                </Link>
+          {/* COL 2 — Departments */}
+          <div className="ftr-col">
+            <h4 style={{ fontSize:9, fontWeight:800, letterSpacing:"0.3em", textTransform:"uppercase", color:"#C0145C", marginBottom:16 }}>Our Specialties</h4>
+            <div className="ftr-dept-grid">
+              {ALL_DEPTS.map((d) => (
+                <Link key={d} href={`/departments/${d.toLowerCase().replace(/\s+/g,"-").replace(/&/g,"")}`} className="ftr-dept-link">{d}</Link>
               ))}
             </div>
+            <Link href="/departments"
+              style={{ display:"inline-flex", alignItems:"center", gap:5, marginTop:16, fontSize:10, fontWeight:800, letterSpacing:"0.12em", textTransform:"uppercase", color:"#4A6FA5", textDecoration:"none", transition:"color 0.2s" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color="#f472b6")}
+              onMouseLeave={(e) => (e.currentTarget.style.color="#4A6FA5")}
+            >View All 42 Departments →</Link>
+          </div>
 
-            {/* Emergency number big */}
-            <div
-              style={{
-                marginTop: 22,
-                padding: "16px 18px",
-                borderRadius: 14,
-                background: "rgba(192,20,92,0.08)",
-                border: "1px solid rgba(192,20,92,0.2)",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 9,
-                  fontWeight: 800,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.35)",
-                  marginBottom: 6,
-                }}
-              >
-                24/7 Emergency Helpline
+          {/* COL 3 — Quick actions */}
+          <div className="ftr-col ftr-col-qa">
+            <div className="ftr-qa-inner">
+              {/* Quick actions list */}
+              <div>
+                <h4 style={{ fontSize:9, fontWeight:800, letterSpacing:"0.3em", textTransform:"uppercase", color:"#C0145C", marginBottom:14 }}>Quick Access</h4>
+                <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+                  {QUICK_ACTIONS.map((a) => (
+                    <Link key={a.label} href={a.href} className="ftr-qa"
+                      style={{ border:`1px solid ${a.accent ? "rgba(192,20,92,0.35)" : "rgba(255,255,255,0.08)"}`, background: a.accent ? "linear-gradient(135deg,rgba(192,20,92,0.15),rgba(192,20,92,0.05))" : "rgba(255,255,255,0.03)" }}
+                    >
+                      <div style={{ display:"flex", alignItems:"center", gap:9 }}>
+                        <span style={{ fontSize:14 }}>{a.icon}</span>
+                        <span style={{ fontSize:12, fontWeight:700, color: a.accent ? "#f472b6" : "rgba(255,255,255,0.72)" }}>{a.label}</span>
+                      </div>
+                      <span style={{ fontSize:13, color: a.accent ? "#C0145C" : "rgba(255,255,255,0.22)" }}>↗</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
-              <a
-                href="tel:1800-123-4567"
-                style={{
-                  fontSize: 18,
-                  fontWeight: 900,
-                  color: "#C0145C",
-                  textDecoration: "none",
-                  letterSpacing: "0.04em",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <span
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: "#C0145C",
-                    animation: "footerPulse 1.5s infinite",
-                    flexShrink: 0,
-                  }}
-                />
-                1800-123-4567
-              </a>
+
+              {/* Emergency number box */}
+              <div className="ftr-emergency-box" style={{ marginTop:16, padding:"14px 16px", borderRadius:12, background:"rgba(192,20,92,0.08)", border:"1px solid rgba(192,20,92,0.2)" }}>
+                <div style={{ fontSize:8, fontWeight:800, letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.30)", marginBottom:7 }}>24/7 Emergency Helpline</div>
+                <a href="tel:1800-123-4567" style={{ fontSize:16, fontWeight:900, color:"#C0145C", textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
+                  <span style={{ width:8, height:8, borderRadius:"50%", background:"#C0145C", animation:"footerPulse 1.5s infinite", flexShrink:0 }} />
+                  1800-123-4567
+                </a>
+              </div>
             </div>
           </div>
+
         </div>
 
-        {/* ── Departments marquee strip ── */}
-        <div
-          style={{
-            borderTop: "1px solid rgba(255,255,255,0.05)",
-            borderBottom: "1px solid rgba(255,255,255,0.05)",
-            padding: "10px 0",
-            overflow: "hidden",
-            background: "rgba(255,255,255,0.02)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              width: "max-content",
-              animation: "footerMarquee 28s linear infinite",
-            }}
-          >
-            {[...Array(2)].map((_, ri) =>
-              [
-                "CARDIOLOGY",
-                "ORTHOPEDICS",
-                "NEUROLOGY",
-                "GASTROENTEROLOGY",
-                "UROLOGY",
-                "ONCOLOGY",
-                "EMERGENCY",
-                "ROBOTIC SURGERY",
-                "PULMONOLOGY",
-                "NEPHROLOGY",
-              ].map((dept) => (
-                <span
-                  key={`${ri}-${dept}`}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 14,
-                    marginRight: 36,
-                    fontSize: 9,
-                    fontWeight: 800,
-                    letterSpacing: "0.26em",
-                    color: "rgba(255,255,255,0.22)",
-                    whiteSpace: "nowrap",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {dept}
-                  <span
-                    style={{
-                      width: 3,
-                      height: 3,
-                      borderRadius: "50%",
-                      background: "#C0145C",
-                      opacity: 0.6,
-                      flexShrink: 0,
-                    }}
-                  />
+        {/* ── Marquee ── */}
+        <div style={{ borderTop:"1px solid rgba(255,255,255,0.05)", borderBottom:"1px solid rgba(255,255,255,0.05)", padding:"9px 0", overflow:"hidden", background:"rgba(255,255,255,0.02)" }}>
+          <div className="ftr-marquee-track">
+            {[...Array(2)].map((_,ri) =>
+              ["CARDIOLOGY","ORTHOPEDICS","NEUROLOGY","GASTROENTEROLOGY","UROLOGY","ONCOLOGY","EMERGENCY","ROBOTIC SURGERY","PULMONOLOGY","NEPHROLOGY"].map((d) => (
+                <span key={`${ri}-${d}`} style={{ display:"inline-flex", alignItems:"center", gap:12, marginRight:32, fontSize:9, fontWeight:800, letterSpacing:"0.24em", color:"rgba(255,255,255,0.18)", whiteSpace:"nowrap", textTransform:"uppercase" }}>
+                  {d}
+                  <span style={{ width:3, height:3, borderRadius:"50%", background:"#C0145C", opacity:0.5, flexShrink:0 }} />
                 </span>
               ))
             )}
@@ -624,89 +331,25 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div
-          style={{
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "20px 6vw",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 14,
-          }}
-        >
-          <p
-            style={{
-              fontSize: 11,
-              color: "rgba(255,255,255,0.25)",
-              letterSpacing: "0.04em",
-            }}
-          >
-            © {new Date().getFullYear()} Srikara Hospitals. All rights reserved. &nbsp;·&nbsp; NABH Accredited &nbsp;·&nbsp; ISO 9001:2015
-          </p>
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-            {["Privacy Policy", "Terms of Service", "Sitemap", "Cookies"].map((l) => (
-              <Link
-                key={l}
-                href="#"
-                style={{
-                  fontSize: 10,
-                  color: "rgba(255,255,255,0.22)",
-                  textDecoration: "none",
-                  letterSpacing: "0.06em",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.65)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.22)")
-                }
-              >
-                {l}
-              </Link>
-            ))}
+        <div style={{ borderTop:"1px solid rgba(255,255,255,0.04)" }}>
+          <div className="ftr-bottom">
+            <p style={{ fontSize:10, color:"rgba(255,255,255,0.20)", letterSpacing:"0.03em" }}>
+              © {new Date().getFullYear()} Srikara Hospitals. All rights reserved. · NABH · ISO 9001:2015
+            </p>
+            <div className="ftr-legal">
+              {["Privacy Policy","Terms of Service","Sitemap","Cookies"].map((l) => (
+                <Link key={l} href="#"
+                  style={{ fontSize:10, color:"rgba(255,255,255,0.20)", textDecoration:"none", letterSpacing:"0.05em", transition:"color 0.2s", whiteSpace:"nowrap" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color="rgba(255,255,255,0.65)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color="rgba(255,255,255,0.20)")}
+                >{l}</Link>
+              ))}
+            </div>
+            <p style={{ fontSize:9, color:"rgba(255,255,255,0.12)", letterSpacing:"0.08em" }}>CRAFTING WELLNESS</p>
           </div>
-          <p
-            style={{
-              fontSize: 10,
-              color: "rgba(255,255,255,0.15)",
-              letterSpacing: "0.06em",
-            }}
-          >
-            CRAFTING WELLNESS
-          </p>
         </div>
+
       </footer>
-        
-        {/* Keyframes injected here (runs once) */}
-        <style>{`
-          @keyframes footerPulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50%       { transform: scale(1.4); opacity: 0.35; }
-          }
-          @keyframes footerMarquee {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-          }
-            @media (max-width:1024px){
-
-          .footer-grid{
-              grid-template-columns:1fr 1fr !important;
-              gap:30px !important;
-            }
-          }
-
-            @media (max-width:768px){
-
-            .footer-grid{
-            grid-template-columns:1fr !important;
-            }
-
-            }
-        `}</style>
-      
     </>
   );
 }

@@ -84,10 +84,8 @@ const FACILITIES = [
   { tag: "REHAB",   name: "Rehabilitation & Wellness",  desc: "Physiotherapy, occupational therapy, speech-language pathology and post-cardiac rehabilitation.",                     img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80" },
 ];
 
-// ── Correct 9 Srikara branches ──
 const BRANCHES = ["RTC X Roads","Miyapur","Lakdikapul","Kompally","LB Nagar","Peerzadiguda","Rajahmundry","ECIL","Vijayawada"];
-
-const TICKERS = ["Robotic Joint Replacement","Cardiac Cath Lab","3T MRI Suite","NICU Level III","24/7 Blood Bank","Cancer Tumour Board","Stroke Unit","Fertility Clinic","NABH Accredited","Bariatric Surgery"];
+const TICKERS  = ["Robotic Joint Replacement","Cardiac Cath Lab","3T MRI Suite","NICU Level III","24/7 Blood Bank","Cancer Tumour Board","Stroke Unit","Fertility Clinic","NABH Accredited","Bariatric Surgery"];
 
 // ─── REVEAL HOOK ─────────────────────────────────────────────────────────────
 function useReveal(threshold = 0.07) {
@@ -115,24 +113,21 @@ function Reveal({ children, delay = 0, style = {} }: { children: React.ReactNode
 }
 
 // ─── COLOUR TOKENS ────────────────────────────────────────────────────────────
-// Brand: navy #1B2A4A (SRIKARA) + magenta #B8246E (HOSPITALS)
 const C = {
-  white:  "#FAFCFE",
-  off:    "#F4F6FB",
-  panel:  "#E8EDF7",
-  border: "#CDD5E5",
-  mid:    "#6A7E9A",
-  text:   "#0D1B2E",
-  muted:  "#3D5570",
-  // brand
-  navy:   "#1B2A4A",   // primary  — replaces blue  #0B4F8C
-  navyL:  "#2E4A7A",   // lighter  — replaces sky   #1565C0
-  navyD:  "#0F1E35",   // darker
-  magenta:"#B8246E",   // accent   — replaces teal  #00838F
-  magentaD:"#8A1A52",  // deeper magenta
-  // semantics (unchanged)
-  green:  "#2E7D32",
-  red:    "#C62828",
+  white:    "#FAFCFE",
+  off:      "#F4F6FB",
+  panel:    "#E8EDF7",
+  border:   "#CDD5E5",
+  mid:      "#6A7E9A",
+  text:     "#0D1B2E",
+  muted:    "#3D5570",
+  navy:     "#1B2A4A",
+  navyL:    "#2E4A7A",
+  navyD:    "#0F1E35",
+  magenta:  "#B8246E",
+  magentaD: "#8A1A52",
+  green:    "#2E7D32",
+  red:      "#C62828",
 };
 
 const globalStyle = `
@@ -154,6 +149,113 @@ const globalStyle = `
   .edot{animation:pulse 1.2s ease infinite;}
   .live-ticker{animation:marquee 30s linear infinite;}
   input::placeholder{color:rgba(255,255,255,.35);}
+
+  /* ─── RESPONSIVE ─────────────────────────────── */
+
+  /* Emergency bar */
+  @media(max-width:768px){
+    .emg-bar { flex-direction:column !important; gap:.4rem !important; padding:.55rem 1.25rem !important; text-align:center; }
+    .emg-addr { display:none !important; }
+  }
+
+  /* Navbar */
+  .desk-nav-links { display:flex; }
+  .mob-hamburger  { display:none; }
+  @media(max-width:768px){
+    .desk-nav-links { display:none !important; }
+    .mob-hamburger  { display:flex !important; }
+    .nav-wrap       { padding:0 1.25rem !important; height:58px !important; }
+  }
+
+  /* Mobile menu drawer */
+  .mob-drawer { display:none; }
+  @media(max-width:768px){
+    .mob-drawer { display:flex; flex-direction:column; gap:1.1rem; background:#FAFCFE; border-top:1px solid #CDD5E5; padding:1.4rem 1.25rem; animation:fadeUp .22s ease; }
+  }
+
+  /* Hero */
+  @media(max-width:768px){
+    .hero-section   { flex-direction:column !important; min-height:auto !important; }
+    .hero-left      { flex:none !important; width:100% !important; padding:4rem 1.25rem 2.5rem !important; }
+    .hero-mosaic    { display:none !important; }
+    .hero-badges    { flex-wrap:wrap !important; }
+  }
+  @media(min-width:769px) and (max-width:1024px){
+    .hero-left  { padding:4rem 2rem 3.5rem !important; }
+    .hero-mosaic{ grid-template-columns:1fr 1fr !important; grid-template-rows:auto auto !important; }
+  }
+
+  /* Stats bar */
+  @media(max-width:768px){
+    .stats-bar { grid-template-columns:1fr 1fr !important; }
+    .stats-bar > div { border-bottom:1px solid rgba(255,255,255,.1); }
+  }
+
+  /* Gallery strip */
+  @media(max-width:768px){
+    .gallery-strip { display:none !important; }
+  }
+  @media(min-width:769px) and (max-width:1024px){
+    .gallery-strip { grid-template-columns:1fr 1fr !important; height:auto !important; }
+    .gallery-strip > div:last-child { display:none !important; }
+  }
+
+  /* Specialities tabs */
+  @media(max-width:768px){
+    .spec-wrapper   { flex-direction:column !important; }
+    .spec-tabs      { width:100% !important; flex-direction:row !important; overflow-x:auto !important; border-right:none !important; border-bottom:1px solid #CDD5E5 !important; }
+    .spec-tabs button { flex-shrink:0 !important; border-left:none !important; border-bottom:none !important; border-right:1px solid #CDD5E5 !important; padding:.9rem 1rem !important; }
+    .spec-panel     { flex-direction:column !important; }
+    .spec-img       { width:100% !important; height:200px !important; }
+    .spec-content   { padding:1.5rem !important; }
+  }
+
+  /* Doctors grid */
+  @media(max-width:768px){
+    .doctors-grid { grid-template-columns:1fr !important; }
+  }
+  @media(min-width:769px) and (max-width:1024px){
+    .doctors-grid { grid-template-columns:1fr 1fr !important; }
+  }
+
+  /* Testimonial */
+  @media(max-width:768px){
+    .testi-card { padding:2rem 1.25rem !important; }
+  }
+
+  /* Facilities grid */
+  @media(max-width:768px){
+    .fac-grid { grid-template-columns:1fr !important; }
+  }
+  @media(min-width:769px) and (max-width:1024px){
+    .fac-grid { grid-template-columns:1fr 1fr !important; }
+  }
+
+  /* Appointment form */
+  @media(max-width:768px){
+    .appt-section  { padding:4rem 1.25rem !important; }
+    .appt-row      { grid-template-columns:1fr !important; }
+  }
+
+  /* Contact */
+  @media(max-width:768px){
+    .contact-wrap  { flex-direction:column !important; gap:3rem !important; padding:4rem 1.25rem !important; }
+    .contact-left  { flex:none !important; width:100% !important; }
+    .branches-grid { grid-template-columns:1fr 1fr !important; }
+  }
+  @media(max-width:480px){
+    .branches-grid { grid-template-columns:1fr !important; }
+  }
+
+  /* Footer */
+  @media(max-width:768px){
+    .footer-inner { flex-direction:column !important; align-items:flex-start !important; gap:1rem !important; padding:1.5rem 1.25rem !important; }
+  }
+
+  /* Section padding */
+  @media(max-width:768px){
+    .sec-pad { padding:4rem 1.25rem !important; }
+  }
 `;
 
 // ─── IMAGE WRAPPER ────────────────────────────────────────────────────────────
@@ -194,11 +296,12 @@ function SectionHeader({ label, title, right }: { label: string; title: string; 
 
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 export default function VijayawaPage() {
-  const [activeSpec,   setActiveSpec]   = useState(0);
-  const [activeTesti,  setActiveTesti]  = useState(0);
+  const [activeSpec,  setActiveSpec]  = useState(0);
+  const [activeTesti, setActiveTesti] = useState(0);
+  const [menuOpen,    setMenuOpen]    = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", dept: "", date: "", msg: "" });
   const [sent, setSent] = useState(false);
-  const [hoveredDoc,   setHoveredDoc]   = useState<number | null>(null);
+  const [hoveredDoc, setHoveredDoc] = useState<number | null>(null);
 
   useEffect(() => {
     const t = setInterval(() => setActiveTesti(p => (p + 1) % TESTIMONIALS.length), 5500);
@@ -213,58 +316,73 @@ export default function VijayawaPage() {
     <>
       <style>{globalStyle}</style>
 
-      {/* ── Emergency Bar — red (semantic, unchanged) ── */}
-      <div style={{ background: C.red, color: "#fff", padding: ".42rem 2.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: ".72rem", letterSpacing: ".1em", textTransform: "uppercase", position: "relative", zIndex: 1000 }}>
+      {/* ── Emergency Bar ── */}
+      <div className="emg-bar" style={{ background: C.red, color: "#fff", padding: ".42rem 2.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: ".72rem", letterSpacing: ".1em", textTransform: "uppercase", position: "relative", zIndex: 1000 }}>
         <div style={{ display: "flex", alignItems: "center", gap: ".8rem" }}>
           <div className="edot" style={{ width: 7, height: 7, borderRadius: "50%", background: "#FFCDD2", flexShrink: 0 }} />
-          <span>24/7 Emergency Line —&nbsp;</span>
+          <span>24/7 Emergency —&nbsp;</span>
           <a href="tel:08662490100" style={{ color: "#fff", fontWeight: 700 }}>0866-2490-100</a>
         </div>
-        <span>Plot 14-B, MG Road, Vijayawada – 520 010</span>
+        <span className="emg-addr">Plot 14-B, MG Road, Vijayawada – 520 010</span>
       </div>
 
       {/* ── Navbar ── */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 900, background: "rgba(250,252,254,.97)", backdropFilter: "blur(14px)", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2.5rem", height: 66 }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-          {/* Logo mark — navy square with magenta inner glow */}
-           <img
-    src="/srikara-logo.png"   
-    alt="Srikara Hospitals"
-    style={{
-      width: 44,
-      height: 44,
-      objectFit: "contain",
-      borderRadius: 6,
-    }}
-  />
-            <div style={{ fontSize: ".8rem", fontWeight: 700, color: C.navy, letterSpacing: ".04em" }}>Srikara Hospital</div>
-            <div style={{ fontSize: ".58rem", color: C.magenta, letterSpacing: ".16em", textTransform: "uppercase" }}>Vijayawada Branch</div>
-          
-        </a>
-        <div style={{ display: "flex", alignItems: "center", gap: "2.2rem" }}>
-          {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l, h]) => (
-            <a key={l} href={h} style={{ fontSize: ".72rem", color: C.muted, letterSpacing: ".06em", fontWeight: 500, textDecoration: "none", transition: "color .2s" }}
-              onMouseEnter={e => e.currentTarget.style.color = C.navy}
-              onMouseLeave={e => e.currentTarget.style.color = C.muted}>{l}</a>
-          ))}
-          <a href="#appointment" style={{ background: C.navy, color: "#fff", padding: ".5rem 1.4rem", borderRadius: 3, fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textDecoration: "none", transition: "background .2s", boxShadow: `0 3px 10px rgba(27,42,74,.25)` }}
-            onMouseEnter={e => e.currentTarget.style.background = C.navyD}
-            onMouseLeave={e => e.currentTarget.style.background = C.navy}>
-            Book Now
+      <nav style={{ position: "sticky", top: 0, zIndex: 900, background: "rgba(250,252,254,.97)", backdropFilter: "blur(14px)", borderBottom: `1px solid ${C.border}` }}>
+        <div className="nav-wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2.5rem", height: 66 }}>
+          <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
+            <img src="/srikara-logo.png" alt="Srikara Hospitals" style={{ width: 44, height: 44, objectFit: "contain", borderRadius: 6 }} />
+            <div>
+              <div style={{ fontSize: ".8rem", fontWeight: 700, color: C.navy, letterSpacing: ".04em" }}>Srikara Hospital</div>
+              <div style={{ fontSize: ".58rem", color: C.magenta, letterSpacing: ".16em", textTransform: "uppercase" }}>Vijayawada Branch</div>
+            </div>
           </a>
+
+          {/* Desktop links */}
+          <div className="desk-nav-links" style={{ alignItems: "center", gap: "2.2rem" }}>
+            {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l, h]) => (
+              <a key={l} href={h} style={{ fontSize: ".72rem", color: C.muted, letterSpacing: ".06em", fontWeight: 500, textDecoration: "none", transition: "color .2s" }}
+                onMouseEnter={e => e.currentTarget.style.color = C.navy}
+                onMouseLeave={e => e.currentTarget.style.color = C.muted}>{l}</a>
+            ))}
+            <a href="#appointment" style={{ background: C.navy, color: "#fff", padding: ".5rem 1.4rem", borderRadius: 3, fontSize: ".72rem", fontWeight: 600, letterSpacing: ".08em", textDecoration: "none", transition: "background .2s", boxShadow: `0 3px 10px rgba(27,42,74,.25)` }}
+              onMouseEnter={e => e.currentTarget.style.background = C.navyD}
+              onMouseLeave={e => e.currentTarget.style.background = C.navy}>
+              Book Now
+            </a>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button className="mob-hamburger" style={{ background: "none", border: "none", cursor: "pointer", flexDirection: "column", gap: 5, padding: 8 }} onClick={() => setMenuOpen(!menuOpen)}>
+            {[0,1,2].map(i => (
+              <span key={i} style={{ width: 24, height: 1.5, background: C.navy, display: "block", transition: "all .3s",
+                transform: menuOpen && i===0 ? "rotate(45deg) translateY(6px)" : menuOpen && i===2 ? "rotate(-45deg) translateY(-6px)" : menuOpen && i===1 ? "scaleX(0)" : "none" }} />
+            ))}
+          </button>
         </div>
+
+        {/* Mobile drawer */}
+        {menuOpen && (
+          <div className="mob-drawer">
+            {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l, h]) => (
+              <a key={l} href={h} onClick={() => setMenuOpen(false)} style={{ fontSize: ".9rem", color: C.text, textDecoration: "none", letterSpacing: ".06em", paddingBottom: ".9rem", borderBottom: `1px solid ${C.border}` }}>{l}</a>
+            ))}
+            <a href="#appointment" onClick={() => setMenuOpen(false)} style={{ background: C.navy, color: "#fff", padding: ".8rem 1.5rem", textAlign: "center", textDecoration: "none", fontSize: ".8rem", fontWeight: 600, letterSpacing: ".1em", textTransform: "uppercase", borderRadius: 3 }}>
+              Book Appointment
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* ══════════════════════════════════════════
-          HERO — identical layout, brand colors
+          HERO
           ══════════════════════════════════════════ */}
-      <section id="hero" style={{ display: "flex", minHeight: "88vh", background: C.white, position: "relative", overflow: "hidden" }}>
+      <section id="hero" className="hero-section" style={{ display: "flex", minHeight: "88vh", background: C.white, position: "relative", overflow: "hidden" }}>
 
         {/* Left content */}
-        <div style={{ flex: "0 0 52%", padding: "5.5rem 3.5rem 5rem", position: "relative", zIndex: 2, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          {/* Blueprint grid — navy tint */}
+        <div className="hero-left" style={{ flex: "0 0 52%", padding: "5.5rem 3.5rem 5rem", position: "relative", zIndex: 2, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          {/* Blueprint grid */}
           <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(rgba(27,42,74,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(27,42,74,.03) 1px,transparent 1px)`, backgroundSize: "48px 48px", pointerEvents: "none" }} />
-          {/* Left accent stripe — navy→magenta gradient */}
+          {/* Accent stripe */}
           <div style={{ position: "absolute", top: 0, left: 0, width: 4, height: "100%", background: `linear-gradient(180deg,${C.navy},${C.magenta})` }} />
 
           <div className="a1" style={{ display: "inline-flex", alignItems: "center", gap: ".7rem", background: `rgba(27,42,74,.07)`, border: `1px solid rgba(27,42,74,.14)`, borderRadius: 2, padding: ".35rem 1rem", marginBottom: "1.8rem", fontSize: ".62rem", letterSpacing: ".2em", textTransform: "uppercase", color: C.navy, fontWeight: 600, width: "fit-content" }}>
@@ -276,7 +394,6 @@ export default function VijayawaPage() {
             Srikara<br />Hospital<br /><em><strong style={{ color: C.navy }}>Vijayawada</strong></em>
           </h1>
 
-          {/* Accent bar — navy */}
           <div className="a2" style={{ width: 56, height: 3, background: C.navy, marginBottom: "1.7rem" }} />
 
           <p className="a3" style={{ fontSize: ".93rem", color: C.muted, lineHeight: 1.85, maxWidth: 460, marginBottom: "2.5rem" }}>
@@ -296,19 +413,17 @@ export default function VijayawaPage() {
             </a>
           </div>
 
-          <div className="a5" style={{ display: "flex", flexWrap: "wrap", gap: ".6rem", marginTop: "2rem", paddingTop: "2rem", borderTop: `1px solid ${C.border}` }}>
+          <div className="a5 hero-badges" style={{ display: "flex", flexWrap: "wrap", gap: ".6rem", marginTop: "2rem", paddingTop: "2rem", borderTop: `1px solid ${C.border}` }}>
             {["NABH", "ISO 9001", "NABL Lab", "100+ Insurers", "Est. 2014"].map(c => (
               <span key={c} style={{ fontSize: ".58rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 600, background: C.off, border: `1px solid ${C.border}`, color: C.mid, padding: ".28rem .85rem", borderRadius: 2 }}>{c}</span>
             ))}
           </div>
         </div>
 
-        {/* Right — Image Mosaic (identical layout) */}
-        <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1.2fr 1fr", gridTemplateRows: "1.3fr 1fr", gap: 3, background: "#dce8f0" }}>
-          {/* Big main */}
+        {/* Right — Image Mosaic (hidden on mobile) */}
+        <div className="hero-mosaic" style={{ flex: 1, display: "grid", gridTemplateColumns: "1.2fr 1fr", gridTemplateRows: "1.3fr 1fr", gap: 3, background: "#dce8f0" }}>
           <div style={{ gridRow: "1/3", position: "relative" }}>
             <Img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&q=80" alt="ICU Care" style={{ height: "100%" }} />
-            {/* Stat card — navy border-left accent */}
             <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem", background: "rgba(255,255,255,.95)", backdropFilter: "blur(8px)", borderLeft: `3px solid ${C.navy}`, padding: ".75rem 1.1rem", boxShadow: "0 4px 20px rgba(0,0,0,.14)" }}>
               <div style={{ fontFamily: "'Crimson Pro',serif", fontSize: "1.5rem", fontWeight: 600, color: C.navy, lineHeight: 1 }}>280<sup style={{ fontSize: ".9rem" }}>+</sup></div>
               <div style={{ fontSize: ".58rem", letterSpacing: ".12em", textTransform: "uppercase", color: C.muted, marginTop: ".15rem" }}>Hospital Beds</div>
@@ -319,8 +434,8 @@ export default function VijayawaPage() {
         </div>
       </section>
 
-      {/* ── Stats Bar — navy background ── */}
-      <div style={{ background: C.navy, display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
+      {/* ── Stats Bar ── */}
+      <div className="stats-bar" style={{ background: C.navy, display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
         {[["10+","Years in Vijayawada"],["36+","Specialist Doctors"],["55k+","Patients Treated"],["280+","Hospital Beds"]].map(([v, l]) => (
           <div key={l} style={{ padding: "1.6rem 2rem", borderRight: "1px solid rgba(255,255,255,.1)" }}>
             <div style={{ fontFamily: "'Crimson Pro',serif", fontSize: "2.5rem", fontWeight: 600, color: "#fff", lineHeight: 1 }}>{v}</div>
@@ -329,7 +444,7 @@ export default function VijayawaPage() {
         ))}
       </div>
 
-      {/* ── Ticker — off-white, navy dots, magenta scroll ── */}
+      {/* ── Ticker ── */}
       <div style={{ background: C.off, borderBottom: `1px solid ${C.border}`, padding: ".65rem 0", overflow: "hidden", whiteSpace: "nowrap" }}>
         <div className="live-ticker" style={{ display: "inline-flex", gap: "3rem" }}>
           {[...TICKERS, ...TICKERS, ...TICKERS].map((t, i) => (
@@ -340,10 +455,10 @@ export default function VijayawaPage() {
         </div>
       </div>
 
-      {/* ── Gallery Strip — identical structure ── */}
+      {/* ── Gallery Strip (hidden on mobile) ── */}
       <div style={{ padding: "4rem 2.5rem 0", maxWidth: 1280, margin: "0 auto" }}>
         <Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 3, height: 360 }}>
+          <div className="gallery-strip" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 3, height: 360 }}>
             <div style={{ position: "relative" }}>
               <Img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=900&q=80" alt="Operation Theatre" style={{ height: "100%" }} caption="Advanced Operation Theatre" />
             </div>
@@ -356,15 +471,15 @@ export default function VijayawaPage() {
       </div>
 
       {/* ══════════════════════════════════════════
-          SPECIALITIES — identical tab layout
+          SPECIALITIES
           ══════════════════════════════════════════ */}
-      <section id="specialities" style={{ background: C.white, padding: "6rem 2.5rem" }}>
+      <section id="specialities" className="sec-pad" style={{ background: C.white, padding: "6rem 2.5rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <SectionHeader label="6 Departments" title={`Our <em style="font-style:italic;color:${C.navy};">Specialities</em>`} />
           <Reveal>
-            <div style={{ display: "flex", border: `1px solid ${C.border}`, borderRadius: 4, overflow: "hidden" }}>
-              {/* Tabs — navy active state */}
-              <div style={{ width: 210, flexShrink: 0, borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column" }}>
+            <div className="spec-wrapper" style={{ display: "flex", border: `1px solid ${C.border}`, borderRadius: 4, overflow: "hidden" }}>
+              {/* Tabs */}
+              <div className="spec-tabs" style={{ width: 210, flexShrink: 0, borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column" }}>
                 {SPECIALITIES.map((s, i) => (
                   <button key={s.id} onClick={() => setActiveSpec(i)}
                     style={{ border: "none", background: activeSpec===i ? `rgba(27,42,74,.06)` : "transparent", borderLeft: `3px solid ${activeSpec===i ? C.navy : "transparent"}`, borderBottom: `1px solid ${C.border}`, padding: "1.2rem 1.4rem", textAlign: "left", cursor: "pointer", transition: "all .25s" }}>
@@ -374,13 +489,11 @@ export default function VijayawaPage() {
                 ))}
               </div>
               {/* Panel */}
-              <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
-                <div style={{ flex: 1, padding: "3rem", position: "relative", overflow: "hidden", background: C.white }}>
-                  {/* Giant watermark number — navy */}
+              <div className="spec-panel" style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+                <div className="spec-content" style={{ flex: 1, padding: "3rem", position: "relative", overflow: "hidden", background: C.white }}>
                   <div style={{ position: "absolute", top: -30, right: -10, fontFamily: "'Crimson Pro',serif", fontSize: "14rem", fontWeight: 600, color: `rgba(27,42,74,.04)`, lineHeight: 1, pointerEvents: "none", userSelect: "none" }}>{SPECIALITIES[activeSpec].id}</div>
                   <div style={{ fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: C.mid, marginBottom: "1rem" }}>{SPECIALITIES[activeSpec].sub}</div>
                   <h3 style={{ fontFamily: "'Crimson Pro',serif", fontSize: "clamp(1.8rem,3vw,3rem)", fontWeight: 400, color: C.text, marginBottom: ".8rem", lineHeight: 1 }}>{SPECIALITIES[activeSpec].name}</h3>
-                  {/* Accent line — navy */}
                   <div style={{ width: 40, height: 2, background: C.navy, marginBottom: "1.2rem" }} />
                   <p style={{ fontSize: ".88rem", color: C.muted, lineHeight: 1.85, maxWidth: 420, marginBottom: "2rem" }}>{SPECIALITIES[activeSpec].desc}</p>
                   <a href="#appointment" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", border: `1.5px solid ${C.navy}`, color: C.navy, padding: ".65rem 1.6rem", fontSize: ".72rem", fontWeight: 600, letterSpacing: ".1em", borderRadius: 3, textDecoration: "none", transition: "all .2s" }}
@@ -389,7 +502,7 @@ export default function VijayawaPage() {
                     Book Consultation →
                   </a>
                 </div>
-                <div style={{ width: 300, flexShrink: 0 }}>
+                <div className="spec-img" style={{ width: 300, flexShrink: 0 }}>
                   <Img key={activeSpec} src={SPECIALITIES[activeSpec].img} alt={SPECIALITIES[activeSpec].name} style={{ height: "100%" }} />
                 </div>
               </div>
@@ -399,13 +512,13 @@ export default function VijayawaPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          DOCTORS — identical grid, navy accents
+          DOCTORS
           ══════════════════════════════════════════ */}
-      <section id="doctors" style={{ background: C.off, padding: "6rem 2.5rem" }}>
+      <section id="doctors" className="sec-pad" style={{ background: C.off, padding: "6rem 2.5rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <SectionHeader label="Our Physicians" title={`Expert <em style="font-style:italic;color:${C.navy};">Medical Team</em>`}
             right={<a href="#" style={{ fontSize: ".7rem", letterSpacing: ".12em", textTransform: "uppercase", color: C.navyL, borderBottom: `1px solid rgba(46,74,122,.3)`, paddingBottom: 2, textDecoration: "none" }}>All 36 Specialists →</a>} />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: C.border }}>
+          <div className="doctors-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: C.border }}>
             {DOCTORS.map((d, i) => (
               <Reveal key={d.name} delay={i * 60}>
                 <div
@@ -420,14 +533,12 @@ export default function VijayawaPage() {
                   <div style={{ height: 220, position: "relative" }}>
                     <Img src={d.img} alt={d.name} style={{ height: "100%" }} />
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(transparent 50%,rgba(15,30,53,.55))", pointerEvents: "none" }} />
-                    {/* Exp badge — navy */}
                     <div style={{ position: "absolute", top: 12, right: 12, background: C.navy, color: "#fff", fontSize: ".58rem", letterSpacing: ".14em", textTransform: "uppercase", padding: ".28rem .7rem", fontWeight: 600 }}>
                       {d.exp}
                     </div>
                   </div>
                   <div style={{ padding: "1.4rem 1.6rem" }}>
                     <div style={{ fontFamily: "'Crimson Pro',serif", fontSize: "1.1rem", fontWeight: 600, color: C.text, marginBottom: ".25rem", lineHeight: 1.3 }}>{d.name}</div>
-                    {/* Role — magenta */}
                     <div style={{ fontSize: ".68rem", fontWeight: 700, letterSpacing: ".06em", color: C.magenta, marginBottom: ".4rem" }}>{d.role}</div>
                     <div style={{ fontSize: ".7rem", color: C.muted, lineHeight: 1.5, marginBottom: ".9rem" }}>{d.qual}</div>
                     <div style={{ fontSize: ".62rem", color: C.mid, paddingTop: ".8rem", borderTop: `1px solid ${C.border}` }}>{d.avail}</div>
@@ -445,9 +556,9 @@ export default function VijayawaPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          TESTIMONIALS — identical layout, navy accents
+          TESTIMONIALS
           ══════════════════════════════════════════ */}
-      <section style={{ background: C.off, padding: "6rem 2.5rem" }}>
+      <section className="sec-pad" style={{ background: C.off, padding: "6rem 2.5rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "3rem" }}>
             <Reveal>
@@ -462,8 +573,7 @@ export default function VijayawaPage() {
             </Reveal>
           </div>
           <Reveal>
-            <div style={{ maxWidth: 820, margin: "0 auto", background: C.white, border: `1px solid ${C.border}`, padding: "3.5rem", position: "relative", boxShadow: `0 2px 24px rgba(27,42,74,.07)` }}>
-              {/* Dept label badge — navy */}
+            <div className="testi-card" style={{ maxWidth: 820, margin: "0 auto", background: C.white, border: `1px solid ${C.border}`, padding: "3.5rem", position: "relative", boxShadow: `0 2px 24px rgba(27,42,74,.07)` }}>
               <div style={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)", background: C.navy, color: "#fff", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, padding: ".28rem 1.2rem", borderRadius: 2, whiteSpace: "nowrap" }}>
                 {TESTIMONIALS[activeTesti].dept}
               </div>
@@ -480,7 +590,6 @@ export default function VijayawaPage() {
                 <div style={{ width: 32, height: 1, background: C.border }} />
               </div>
             </div>
-            {/* Progress dots — navy active, magenta hover */}
             <div style={{ display: "flex", justifyContent: "center", gap: ".5rem", marginTop: "2rem" }}>
               {TESTIMONIALS.map((_, i) => (
                 <button key={i} onClick={() => setActiveTesti(i)}
@@ -492,12 +601,12 @@ export default function VijayawaPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          FACILITIES — identical grid + FacCard
+          FACILITIES
           ══════════════════════════════════════════ */}
-      <section id="facilities" style={{ background: C.white, padding: "6rem 2.5rem" }}>
+      <section id="facilities" className="sec-pad" style={{ background: C.white, padding: "6rem 2.5rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <SectionHeader label="Infrastructure" title={`World-Class <em style="font-style:italic;color:${C.navy};">Facilities</em>`} />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: C.border }}>
+          <div className="fac-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: C.border }}>
             {FACILITIES.map((f, i) => (
               <Reveal key={f.name} delay={i * 55}>
                 <FacCard f={f} />
@@ -508,9 +617,9 @@ export default function VijayawaPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          APPOINTMENT — navy background (unchanged feel)
+          APPOINTMENT
           ══════════════════════════════════════════ */}
-      <section id="appointment" style={{ background: C.navy, padding: "6rem 2.5rem" }}>
+      <section id="appointment" className="appt-section" style={{ background: C.navy, padding: "6rem 2.5rem" }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <Reveal>
             <div style={{ marginBottom: "2.5rem" }}>
@@ -525,7 +634,7 @@ export default function VijayawaPage() {
           </Reveal>
           <Reveal delay={100}>
             <form onSubmit={handleSubmit}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(255,255,255,.1)", marginBottom: 1 }}>
+              <div className="appt-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(255,255,255,.1)", marginBottom: 1 }}>
                 {[{ l: "Full Name", k: "name", t: "text", ph: "Your full name" }, { l: "Mobile Number", k: "phone", t: "tel", ph: "+91 98765 43210" }].map(f => (
                   <div key={f.k} style={{ background: "rgba(255,255,255,.06)", padding: "1.6rem 1.8rem" }}>
                     <label style={{ fontSize: ".58rem", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(255,255,255,.6)", display: "block", marginBottom: ".7rem" }}>{f.l}</label>
@@ -536,7 +645,7 @@ export default function VijayawaPage() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(255,255,255,.1)", marginBottom: 1 }}>
+              <div className="appt-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(255,255,255,.1)", marginBottom: 1 }}>
                 <div style={{ background: "rgba(255,255,255,.06)", padding: "1.6rem 1.8rem" }}>
                   <label style={{ fontSize: ".58rem", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(255,255,255,.6)", display: "block", marginBottom: ".7rem" }}>Department</label>
                   <select value={form.dept} onChange={e => setForm(p => ({ ...p, dept: e.target.value }))}
@@ -558,7 +667,6 @@ export default function VijayawaPage() {
                 <input type="text" placeholder="Briefly describe your concern..." value={form.msg} onChange={e => setForm(p => ({ ...p, msg: e.target.value }))}
                   style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,.18)", color: "#fff", fontSize: "1rem", padding: ".5rem 0", outline: "none", fontFamily: "'Plus Jakarta Sans',sans-serif" }} />
               </div>
-              {/* Submit button — white fill on navy, magenta on success */}
               <button type="submit" style={{ width: "100%", background: sent ? "#2E7D32" : "#fff", color: sent ? "#fff" : C.navy, border: "none", padding: "1.4rem", fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: ".82rem", fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", cursor: "pointer", transition: "all .3s" }}>
                 {sent ? "✓  Appointment Received — We'll Confirm Shortly" : "Confirm Appointment →"}
               </button>
@@ -568,12 +676,12 @@ export default function VijayawaPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          CONTACT + BRANCHES — identical layout
+          CONTACT + BRANCHES
           ══════════════════════════════════════════ */}
-      <section id="contact" style={{ padding: "6rem 2.5rem", background: C.white }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", gap: "5rem", flexWrap: "wrap" }}>
-          {/* Left — contact details */}
-          <div style={{ flex: "0 0 38%", minWidth: 260 }}>
+      <section id="contact" style={{ background: C.white }}>
+        <div className="contact-wrap" style={{ maxWidth: 1280, margin: "0 auto", display: "flex", gap: "5rem", flexWrap: "wrap", padding: "6rem 2.5rem" }}>
+          {/* Left */}
+          <div className="contact-left" style={{ flex: "0 0 38%", minWidth: 260 }}>
             <Reveal>
               <div style={{ display: "flex", alignItems: "center", gap: ".8rem", fontSize: ".62rem", letterSpacing: ".22em", textTransform: "uppercase", color: C.navyL, fontWeight: 600, marginBottom: "1.5rem" }}>
                 <span style={{ width: 24, height: 2, background: C.navyL, display: "block" }} />Vijayawada Branch
@@ -582,11 +690,11 @@ export default function VijayawaPage() {
                 Find Us<br /><em style={{ fontStyle: "italic", color: C.navy }}>Anytime</em>
               </h2>
               {[
-                { l: "Address",         v: "Plot 14-B, MG Road\nVijayawada – 520 010, AP", col: C.navy  },
-                { l: "Emergency 24/7",  v: "0866-2490-100",                                  col: C.red   },
-                { l: "Appointments",    v: "0866-2490-200",                                  col: C.navy  },
-                { l: "Email",           v: "vijayawada@srikarahospitals.in",                 col: C.navyL },
-                { l: "OPD Hours",       v: "Mon – Sat  ·  8:00 AM – 8:00 PM",               col: C.green },
+                { l: "Address",        v: "Plot 14-B, MG Road\nVijayawada – 520 010, AP", col: C.navy  },
+                { l: "Emergency 24/7", v: "0866-2490-100",                                  col: C.red   },
+                { l: "Appointments",   v: "0866-2490-200",                                  col: C.navy  },
+                { l: "Email",          v: "vijayawada@srikarahospitals.in",                 col: C.navyL },
+                { l: "OPD Hours",      v: "Mon – Sat  ·  8:00 AM – 8:00 PM",               col: C.green },
               ].map((c, i, arr) => (
                 <div key={c.l} style={{ display: "flex", borderBottom: i < arr.length - 1 ? `1px solid ${C.border}` : "none" }}>
                   <div style={{ width: 3, background: c.col, opacity: .8, flexShrink: 0, marginRight: "1.2rem", borderRadius: 2 }} />
@@ -599,7 +707,7 @@ export default function VijayawaPage() {
             </Reveal>
           </div>
 
-          {/* Right — branches grid */}
+          {/* Right — branches */}
           <div style={{ flex: 1 }}>
             <Reveal>
               <div style={{ display: "flex", alignItems: "center", gap: ".8rem", fontSize: ".62rem", letterSpacing: ".22em", textTransform: "uppercase", color: C.navyL, fontWeight: 600, marginBottom: "1.5rem" }}>
@@ -608,7 +716,7 @@ export default function VijayawaPage() {
               <h2 style={{ fontFamily: "'Crimson Pro',serif", fontSize: "clamp(1.8rem,3vw,3rem)", fontWeight: 300, color: C.text, marginBottom: "2.5rem", lineHeight: 1 }}>
                 Srikara<br /><em style={{ fontStyle: "italic", color: C.navy }}>Branches</em>
               </h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: C.border }}>
+              <div className="branches-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: C.border }}>
                 {BRANCHES.map(b => (
                   <a key={b} href={`/hospitals/${b.toLowerCase().replace(/ /g, "-")}`}
                     style={{
@@ -635,12 +743,11 @@ export default function VijayawaPage() {
         </div>
       </section>
 
-      {/* ── Footer — dark navy ── */}
+      {/* ── Footer ── */}
       <footer style={{ background: C.text, borderTop: `3px solid ${C.navy}` }}>
-        {/* Magenta top accent line */}
         <div style={{ height: 2, background: `linear-gradient(90deg,${C.navy},${C.magenta},transparent)` }} />
         <div style={{ padding: "1.8rem 2.5rem" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+          <div className="footer-inner" style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 28, height: 28, background: `linear-gradient(135deg,${C.navy},${C.magenta})`, borderRadius: 3, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Crimson Pro',serif", fontSize: "1rem", fontWeight: 600, color: "#fff" }}>S</div>
               <span style={{ fontSize: ".62rem", color: "rgba(255,255,255,.35)", letterSpacing: ".08em" }}>
@@ -676,11 +783,9 @@ function FacCard({ f }: { f: typeof FACILITIES[number] }) {
       <div style={{ height: 160, overflow: "hidden", background: "#dce8f0", position: "relative" }}>
         <img src={f.img} alt={f.name} loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform .55s ease", transform: hov ? "scale(1.04)" : "scale(1)" }} />
-        {/* Magenta top accent on hover */}
         {hov && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,#1B2A4A,#B8246E)` }} />}
       </div>
       <div style={{ padding: "1.5rem" }}>
-        {/* Tag badge — navy border on hover */}
         <span style={{ fontSize: ".58rem", letterSpacing: ".16em", textTransform: "uppercase", border: `1px solid ${hov ? "#1B2A4A55" : "#CDD5E5"}`, color: hov ? "#1B2A4A" : "#6A7E9A", padding: ".22rem .7rem", borderRadius: 2, display: "inline-block", marginBottom: ".9rem", transition: "all .3s" }}>{f.tag}</span>
         <div style={{ fontFamily: "'Crimson Pro',serif", fontSize: "1rem", fontWeight: 600, color: "#0D1B2E", lineHeight: 1.35, marginBottom: ".6rem" }}>{f.name}</div>
         <div style={{ fontSize: ".76rem", color: "#3D5570", lineHeight: 1.75 }}>{f.desc}</div>

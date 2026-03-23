@@ -268,20 +268,24 @@ export default function LBNagarPage() {
         ::-webkit-scrollbar{width:5px;}
         ::-webkit-scrollbar-track{background:#EDF0F5;}
         ::-webkit-scrollbar-thumb{background:#B8246E;border-radius:0;}
+
         @keyframes fadeUp{from{opacity:0;transform:translateY(36px);}to{opacity:1;transform:translateY(0);}}
         @keyframes shimmer{0%,100%{opacity:.6;}50%{opacity:1;}}
         @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
         @keyframes scaleIn{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
         @keyframes imgReveal{from{opacity:0;transform:scale(1.06);}to{opacity:1;transform:scale(1);}}
+
         .ha1{animation:fadeUp .9s ease .1s both;}
         .ha2{animation:fadeUp .9s ease .3s both;}
         .ha3{animation:fadeUp .9s ease .5s both;}
         .ha4{animation:fadeUp .9s ease .7s both;}
         .ha5{animation:fadeUp .9s ease .9s both;}
+
         .deco-frame{position:relative;}
         .deco-frame::before,.deco-frame::after{content:'';position:absolute;pointer-events:none;}
         .deco-frame::before{inset:8px;border:1px solid rgba(27,42,74,.18);}
         .deco-frame::after{inset:14px;border:.5px dashed rgba(184,36,110,.15);}
+
         .spec-tab{transition:all .3s ease;cursor:pointer;}
         .spec-tab:hover{background:#F5F7FA !important;}
         .doc-hover{transition:all .35s ease;}
@@ -289,34 +293,107 @@ export default function LBNagarPage() {
         .fac-card{transition:all .3s ease;cursor:pointer;}
         .fac-card:hover .fac-img{transform:scale(1.05);}
         .fac-img{transition:transform .5s ease;}
+
         .deco-input{width:100%;background:transparent;border:none;border-bottom:1px solid #D5DCE8;color:#0F1621;font-family:'Crimson Pro',serif;font-size:1.1rem;padding:.5rem 0;outline:none;transition:border-color .3s;}
         .deco-input:focus{border-bottom-color:#1B2A4A;}
         .deco-input::placeholder{color:#D5DCE8;font-style:italic;}
         .deco-input option{background:#fff;color:#0F1621;}
+
         img{display:block;}
+
+        /* ── MOBILE RESPONSIVE ── */
         @media(max-width:768px){
+          /* Utilities */
           .desk{display:none !important;}
           .mob-ham{display:flex !important;}
-          .hero-grid{grid-template-columns:1fr !important;}
-          .spec-layout{flex-direction:column !important;}
-          .doc-grid{grid-template-columns:1fr 1fr !important;}
-          .fac-grid{grid-template-columns:1fr !important;}
-          .appt-inner{grid-template-columns:1fr !important;}
-          .contact-grid{grid-template-columns:1fr !important;}
-          .mosaic-grid{grid-template-columns:1fr 1fr !important;grid-template-rows:auto !important;}
-          .mosaic-main{grid-row:auto !important;}
-          .section-pad{padding:4rem 1.5rem !important;}
-          .hero-title{font-size:clamp(3rem,9vw,5rem) !important;}
           .wm{display:none !important;}
-          .hero-pad{padding:7rem 1.5rem 4rem !important;}
+
+          /* Top strip */
+          .top-strip{flex-direction:column !important;align-items:flex-start !important;gap:.6rem !important;padding:.6rem 1.2rem !important;}
+          .top-strip-left{flex-direction:column !important;gap:.4rem !important;}
+
+          /* Navbar */
+          .nav-inner{padding:0 1.2rem !important;height:60px !important;}
+
+          /* Hero */
+          .hero-section{min-height:auto !important;padding-bottom:2rem !important;}
+          .hero-photo-right{display:none !important;}
+          .hero-radial{display:none !important;}
+          .hero-content{padding:5rem 1.5rem 3rem !important;max-width:100% !important;}
+          .hero-title{font-size:clamp(2.6rem,9vw,4rem) !important;}
+          .hero-eyebrow{flex-wrap:wrap !important;gap:.5rem !important;}
+          .hero-eyebrow .eyebrow-line{display:none !important;}
+          .hero-ctas{flex-direction:column !important;gap:.8rem !important;}
+          .hero-ctas a{text-align:center !important;justify-content:center !important;}
+          .hero-tags{gap:.5rem !important;}
+
+          /* Section padding */
+          .section-pad{padding:3.5rem 1.2rem !important;}
+
+          /* Marquee */
+          .marquee-wrap{padding:.65rem 0 !important;}
+
+          /* Campus mosaic */
+          .mosaic-grid{
+            grid-template-columns:1fr 1fr !important;
+            grid-template-rows:200px 140px 140px !important;
+          }
+          .mosaic-main{grid-column:1 / -1 !important;grid-row:1 !important;}
+
+          /* Quick services */
+          .quick-grid{grid-template-columns:1fr 1fr !important;gap:.8rem !important;padding:1.5rem 1.2rem !important;}
+
+          /* Specialities */
+          .spec-layout{flex-direction:column !important;}
+          .spec-tab-list{width:100% !important;border-right:none !important;border-bottom:1px solid #D5DCE8 !important;display:flex !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;}
+          .spec-tab{border-left:none !important;border-bottom:3px solid transparent !important;padding:1rem 1.2rem !important;white-space:nowrap !important;flex-shrink:0 !important;}
+          .spec-tab.active-tab{border-bottom-color:#1B2A4A !important;border-left:none !important;}
+          .spec-detail{flex-direction:column !important;}
+          .spec-text-side{padding:2rem 1.5rem !important;}
+          .spec-img-side{width:100% !important;height:220px !important;}
+          .spec-img-side img{height:220px !important;}
+
+          /* Doctors */
+          .doc-grid{grid-template-columns:1fr 1fr !important;gap:1rem !important;}
+
+          /* Testimonials */
+          .testi-wrap{flex-direction:column !important;min-height:auto !important;}
+          .testi-photo-side{height:220px !important;flex:none !important;width:100% !important;}
+          .testi-text-side{padding:2.5rem 1.5rem !important;}
+
+          /* Facilities */
+          .fac-grid{grid-template-columns:1fr !important;gap:1.2rem !important;}
+
+          /* Appointment */
+          .appt-section{padding:3.5rem 1.2rem !important;}
+          .appt-inner{grid-template-columns:1fr !important;}
+          .appt-cell{border-right:none !important;padding:1.5rem 1rem !important;}
+
+          /* Contact */
+          .contact-section{padding:3.5rem 1.2rem !important;}
+          .contact-grid{grid-template-columns:1fr !important;gap:2.5rem !important;}
+          .branch-grid{grid-template-columns:1fr 1fr !important;}
+
+          /* Footer */
+          .footer-inner{flex-direction:column !important;gap:1.2rem !important;padding:1.5rem 1.2rem !important;}
+          .footer-links{gap:1.2rem !important;}
+
+          /* Doctor card - single col on very small */
+        }
+
+        @media(max-width:420px){
+          .doc-grid{grid-template-columns:1fr !important;}
+          .quick-grid{grid-template-columns:1fr !important;}
+          .branch-grid{grid-template-columns:1fr !important;}
+          .hero-title{font-size:2.4rem !important;}
         }
       `}</style>
 
       {/* ── TOP INFO STRIP ── */}
-      <div style={{ background: N, padding: "7px 3rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem", position: "relative", zIndex: 600 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+      <div className="top-strip" style={{ background: N, padding: "7px 3rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem", position: "relative", zIndex: 600 }}>
+        <div className="top-strip-left" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
           <span style={{ fontSize: ".65rem", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(255,255,255,.6)", ...serif2 }}>Srikara Hospital · LB Nagar Branch</span>
-          <span style={{ width: 1, height: 14, background: "rgba(255,255,255,.2)", display: "block" }} />
+          <span className="desk" style={{ width: 1, height: 14, background: "rgba(255,255,255,.2)", display: "block" }} />
           <a href="tel:040-2429-6100" style={{ fontSize: ".7rem", color: M, fontWeight: 700, textDecoration: "none", letterSpacing: ".1em", ...serif2 }}>Emergency: 040-2429-6100</a>
         </div>
         <Link href="/" style={{ fontSize: ".62rem", color: "rgba(255,255,255,.45)", textDecoration: "none", letterSpacing: ".15em", textTransform: "uppercase", ...serif2 }}>← Main Website</Link>
@@ -325,24 +402,14 @@ export default function LBNagarPage() {
       {/* ── NAVBAR ── */}
       <nav style={{ position: "sticky", top: 0, zIndex: 500, background: scrolled ? "rgba(255,255,255,.97)" : "#fff", backdropFilter: scrolled ? "blur(16px)" : "none", borderBottom: `1px solid ${scrolled ? "rgba(27,42,74,.14)" : "rgba(27,42,74,.07)"}`, boxShadow: scrolled ? "0 2px 32px rgba(27,42,74,.07)" : "none", transition: "all .4s ease" }}>
         <div style={{ height: 3, background: `linear-gradient(90deg,${N},${M},${N})` }} />
-        <div className="section-pad" style={{ maxWidth: 1400, margin: "0 auto", padding: "0 3rem", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="nav-inner" style={{ maxWidth: 1400, margin: "0 auto", padding: "0 3rem", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 14, textDecoration: "none" }}>
             <div style={{ width: 44, height: 44, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <svg width="44" height="44" viewBox="0 0 44 44">
-                <polygon points="22,4 40,13 40,31 22,40 4,31 4,13" fill="none" stroke={N} strokeWidth="1.5" />
-                <polygon points="22,9 35,15.5 35,28.5 22,35 9,28.5 9,15.5" fill="none" stroke={M} strokeWidth=".75" opacity=".55" />
-              </svg>
-              {/* 🔥 LOGO IMAGE */}
-  <img
-    src="/srikara-logo.png"   
-    alt="Srikara Hospitals"
-    style={{
-      width: 44,
-      height: 44,
-      objectFit: "contain",
-      borderRadius: 6,
-    }}
-  />
+              <img
+                src="/srikara-logo.png"
+                alt="Srikara Hospitals"
+                style={{ width: 44, height: 44, objectFit: "contain", borderRadius: 6 }}
+              />
             </div>
             <div>
               <p style={{ ...serif1, fontSize: "1.1rem", fontWeight: 700, color: N, lineHeight: 1.1, letterSpacing: ".02em" }}>Srikara Hospital</p>
@@ -376,9 +443,9 @@ export default function LBNagarPage() {
       </nav>
 
       {/* ══════════════════════════════════════════
-          HERO — white with right-side hospital photo
+          HERO
           ══════════════════════════════════════════ */}
-      <section style={{ background: "#fff", position: "relative", overflow: "hidden", minHeight: "92vh", display: "flex", alignItems: "center" }}>
+      <section className="hero-section" style={{ background: "#fff", position: "relative", overflow: "hidden", minHeight: "92vh", display: "flex", alignItems: "center" }}>
 
         {/* Art Deco bg pattern */}
         <div style={{ position: "absolute", inset: 0, opacity: .04, pointerEvents: "none" }}>
@@ -392,13 +459,11 @@ export default function LBNagarPage() {
           </svg>
         </div>
 
-        {/* Right-side hospital photo */}
-        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "48%", overflow: "hidden" }}>
+        {/* Right-side hospital photo — hidden on mobile via CSS */}
+        <div className="hero-photo-right" style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "48%", overflow: "hidden" }}>
           <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=85" alt="Srikara Hospital LB Nagar"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-          {/* Gradient fade left so text reads cleanly */}
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#fff 0%,rgba(255,255,255,.4) 35%,transparent 65%)", pointerEvents: "none" }} />
-          {/* Bottom dark fade */}
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,transparent 60%,rgba(255,255,255,.6))", pointerEvents: "none" }} />
 
           {/* Floating accreditation badge on photo */}
@@ -419,25 +484,25 @@ export default function LBNagarPage() {
           </div>
         </div>
 
-        {/* White radial fade over photo for text legibility */}
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 30% 50%,#fff 25%,transparent 68%)", pointerEvents: "none", zIndex: 1 }} />
+        {/* White radial fade */}
+        <div className="hero-radial" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 30% 50%,#fff 25%,transparent 68%)", pointerEvents: "none", zIndex: 1 }} />
 
         {/* Watermark */}
         <div className="wm desk" style={{ position: "absolute", right: "5%", top: "50%", transform: "translateY(-50%)", ...serif1, fontSize: "20vw", fontWeight: 700, color: "rgba(27,42,74,.03)", lineHeight: .9, letterSpacing: ".05em", pointerEvents: "none", userSelect: "none", whiteSpace: "nowrap", zIndex: 1 }}>LB NAGAR</div>
 
         {/* Content */}
-        <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1400, margin: "0 auto", padding: "6rem 3rem 5rem" }} className="hero-pad">
+        <div className="hero-content" style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1400, margin: "0 auto", padding: "6rem 3rem 5rem" }}>
           <div className="desk" style={{ position: "absolute", top: "4rem", left: "3rem" }}><CornerOrnament color={N} /></div>
 
           {/* Eyebrow */}
-          <div className="ha1" style={{ display: "flex", alignItems: "center", gap: "1.2rem", marginBottom: "2rem" }}>
-            <div style={{ width: 48, height: 1, background: M }} />
+          <div className="ha1 hero-eyebrow" style={{ display: "flex", alignItems: "center", gap: "1.2rem", marginBottom: "2rem" }}>
+            <div className="eyebrow-line" style={{ width: 48, height: 1, background: M }} />
             <span style={{ ...serif2, fontSize: ".68rem", letterSpacing: ".28em", textTransform: "uppercase", color: M }}>Est. 2007 · LB Nagar, Hyderabad</span>
-            <div style={{ width: 48, height: 1, background: M }} />
+            <div className="eyebrow-line" style={{ width: 48, height: 1, background: M }} />
           </div>
 
-          {/* Hero text — left 52% */}
-          <div style={{ maxWidth: "50%" }} className="hero-grid">
+          {/* Hero text */}
+          <div style={{ maxWidth: "50%" }} className="hero-text-block">
             <h1 className="ha2 hero-title" style={{ ...serif1, fontSize: "clamp(3.5rem,6.5vw,7.5rem)", fontWeight: 700, color: N, lineHeight: .92, marginBottom: ".5rem", letterSpacing: "-.01em" }}>Caring for</h1>
             <h1 className="ha2 hero-title" style={{ ...serif1, fontSize: "clamp(3.5rem,6.5vw,7.5rem)", fontWeight: 400, fontStyle: "italic", color: "#0F1621", lineHeight: .92, marginBottom: ".5rem" }}>generations</h1>
             <h1 className="ha2 hero-title" style={{ ...serif1, fontSize: "clamp(3.5rem,6.5vw,7.5rem)", fontWeight: 700, color: N, lineHeight: .92, marginBottom: "2.5rem" }}>of families.</h1>
@@ -448,7 +513,7 @@ export default function LBNagarPage() {
               For seventeen years, Srikara LB Nagar has stood as South-East Hyderabad's most trusted centre for compassionate, expert healthcare — where every patient is treated with the dignity and attention they deserve.
             </p>
 
-            <div className="ha4" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <div className="ha4 hero-ctas" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <Link href="#appointment" style={{ ...serif1, display: "inline-flex", alignItems: "center", gap: 10, background: N, color: "#fff", padding: ".95rem 2.4rem", textDecoration: "none", fontSize: ".88rem", fontStyle: "italic", letterSpacing: ".06em", transition: "all .3s", boxShadow: `4px 4px 0 ${M}` }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = ND; (e.currentTarget as HTMLAnchorElement).style.boxShadow = `6px 6px 0 ${M}`; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = N; (e.currentTarget as HTMLAnchorElement).style.boxShadow = `4px 4px 0 ${M}`; }}>
@@ -461,7 +526,7 @@ export default function LBNagarPage() {
               </a>
             </div>
 
-            <div className="ha5" style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginTop: "2.5rem", paddingTop: "2rem" }}>
+            <div className="ha5 hero-tags" style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginTop: "2.5rem", paddingTop: "2rem" }}>
               {["NABH Accredited","ISO 9001:2015","NABL Lab","100+ Insurers"].map(tag => (
                 <span key={tag} style={{ ...serif2, fontSize: ".62rem", letterSpacing: ".14em", textTransform: "uppercase", color: M, border: `1px solid ${M}40`, padding: ".3rem .8rem" }}>{tag}</span>
               ))}
@@ -475,8 +540,26 @@ export default function LBNagarPage() {
         </div>
       </section>
 
+      {/* Mobile emergency card — visible only on mobile */}
+      <div style={{ display: "none" }} className="mob-emrg">
+        <div style={{ background: "#fff", padding: "1rem 1.2rem", margin: "0 1.2rem", marginTop: "-1rem", boxShadow: "0 6px 24px rgba(0,0,0,.1)", border: `1px solid rgba(184,36,110,.2)`, position: "relative", zIndex: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: ".5rem", marginBottom: ".3rem" }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+            <span style={{ ...serif2, fontSize: ".6rem", color: "#22c55e", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>Emergency Active 24/7</span>
+          </div>
+          <p style={{ ...serif1, fontSize: "1rem", color: N }}>040-2429-6100</p>
+        </div>
+      </div>
+
+      <style>{`
+        @media(max-width:768px){
+          .mob-emrg{display:block !important;}
+          .hero-text-block{max-width:100% !important;}
+        }
+      `}</style>
+
       {/* ── MARQUEE ── */}
-      <div style={{ background: N, padding: ".8rem 0", overflow: "hidden", whiteSpace: "nowrap", position: "relative", zIndex: 2 }}>
+      <div className="marquee-wrap" style={{ background: N, padding: ".8rem 0", overflow: "hidden", whiteSpace: "nowrap", position: "relative", zIndex: 2 }}>
         <div style={{ display: "inline-flex", gap: "3rem", animation: "marquee 35s linear infinite" }}>
           {Array(3).fill(["Advanced Cardiac Care","Joint Replacement Surgery","Stroke Neurology","High-Risk Obstetrics","Oncology & Tumour Board","Bariatric Surgery","Neonatal ICU","NABH Accredited","24/7 Emergency","Digital Diagnostics","Fertility & IVF","Physiotherapy & Rehab"]).flat().map((t,i) => (
             <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "1rem", ...serif2, fontSize: ".68rem", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(255,255,255,.72)" }}>
@@ -488,14 +571,14 @@ export default function LBNagarPage() {
       </div>
 
       {/* ══════════════════════════════════════════
-          PHOTO MOSAIC — campus gallery
+          PHOTO MOSAIC
           ══════════════════════════════════════════ */}
-      <section style={{ background: "#fff", padding: "5rem 3rem 0" }}>
+      <section style={{ background: "#fff", padding: "5rem 3rem 0" }} className="section-pad" id="campus">
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <Reveal>
-            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "2rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
               <span style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".22em", textTransform: "uppercase", color: M }}>Our Campus</span>
-              <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg,#D5DCE8,transparent)" }} />
+              <div style={{ flex: 1, minWidth: 40, height: 1, background: "linear-gradient(90deg,#D5DCE8,transparent)" }} />
               <span style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: "#D5DCE8" }}>LB Nagar · Hyderabad</span>
             </div>
           </Reveal>
@@ -511,7 +594,6 @@ export default function LBNagarPage() {
                 <div style={{ position: "absolute", bottom: 20, left: 20 }}>
                   <span style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(255,255,255,.75)", border: `1px solid ${M}55`, padding: ".25rem .8rem" }}>Main Building</span>
                 </div>
-                {/* Art Deco number watermark */}
                 <div style={{ position: "absolute", top: 14, left: 18, ...serif1, fontSize: "5rem", fontWeight: 700, color: `${M}20`, lineHeight: 1, userSelect: "none" }}>01</div>
               </div>
               {/* 4 smaller photos */}
@@ -540,8 +622,8 @@ export default function LBNagarPage() {
       {/* ══════════════════════════════════════════
           QUICK SERVICES BAR
           ══════════════════════════════════════════ */}
-      <section style={{ background: "#F5F7FA", borderTop: "1px solid #EDF0F5", borderBottom: "1px solid #EDF0F5", padding: "2.2rem 3rem", marginTop: "4px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1.2rem" }}>
+      <section style={{ background: "#F5F7FA", borderTop: "1px solid #EDF0F5", borderBottom: "1px solid #EDF0F5", marginTop: "4px" }}>
+        <div className="quick-grid" style={{ maxWidth: 1400, margin: "0 auto", padding: "2.2rem 3rem", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1.2rem" }}>
           {[
             { icon: "🩺", title: "OPD Consultation", sub: "Book with a specialist", href: "#appointment" },
             { icon: "🚑", title: "Emergency Care",    sub: "040-2429-6100 · 24/7",  href: "tel:040-2429-6100" },
@@ -563,7 +645,7 @@ export default function LBNagarPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          SPECIALITIES — tab layout with dept image
+          SPECIALITIES
           ══════════════════════════════════════════ */}
       <section id="specialities" className="section-pad" style={{ background: "#fff", padding: "7rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
@@ -578,10 +660,10 @@ export default function LBNagarPage() {
 
           <div className="spec-layout" style={{ display: "flex", border: `1px solid #D5DCE8` }}>
             {/* Tab list */}
-            <div style={{ width: 260, flexShrink: 0, borderRight: `1px solid #D5DCE8` }}>
+            <div className="spec-tab-list" style={{ width: 260, flexShrink: 0, borderRight: `1px solid #D5DCE8` }}>
               {SPECIALITIES.map((s, i) => (
                 <Reveal key={s.name} delay={i * 50}>
-                  <div className="spec-tab" onClick={() => setActiveSpec(i)}
+                  <div className={`spec-tab${activeSpec===i?" active-tab":""}`} onClick={() => setActiveSpec(i)}
                     style={{ padding: "1.4rem 1.5rem", background: activeSpec===i ? "#F5F7FA" : "#fff", borderLeft: activeSpec===i ? `3px solid ${N}` : "3px solid transparent", borderBottom: "1px solid #EDF0F5" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: ".8rem" }}>
                       <span style={{ ...serif1, fontSize: ".7rem", color: activeSpec===i ? M : "#D5DCE8", fontStyle: "italic", fontWeight: 600, transition: "color .25s" }}>{s.roman}</span>
@@ -592,12 +674,12 @@ export default function LBNagarPage() {
               ))}
             </div>
 
-            {/* Detail panel — with department image */}
-            <div style={{ flex: 1, display: "flex", background: "#F5F7FA", overflow: "hidden" }}>
+            {/* Detail panel */}
+            <div className="spec-detail" style={{ flex: 1, display: "flex", background: "#F5F7FA", overflow: "hidden" }}>
               {/* Text side */}
-              <div style={{ flex: 1, padding: "3rem 3rem", position: "relative" }}>
-                <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem" }}><CornerOrnament size={24} color={M} /></div>
-                <div style={{ position: "absolute", top: "1.5rem", right: "1.5rem" }}><CornerOrnament size={24} color={M} flip /></div>
+              <div className="spec-text-side" style={{ flex: 1, padding: "3rem 3rem", position: "relative" }}>
+                <div className="desk" style={{ position: "absolute", top: "1.5rem", left: "1.5rem" }}><CornerOrnament size={24} color={M} /></div>
+                <div className="desk" style={{ position: "absolute", top: "1.5rem", right: "1.5rem" }}><CornerOrnament size={24} color={M} flip /></div>
                 <div style={{ animation: "scaleIn .4s ease" }} key={activeSpec}>
                   <span style={{ ...serif2, fontSize: ".62rem", letterSpacing: ".2em", textTransform: "uppercase", color: M, display: "block", marginBottom: ".8rem" }}>{SPECIALITIES[activeSpec].tag}</span>
                   <h3 style={{ ...serif1, fontSize: "clamp(1.8rem,3vw,3rem)", fontWeight: 700, color: N, lineHeight: 1.1, marginBottom: "1rem" }}>{SPECIALITIES[activeSpec].name}</h3>
@@ -619,11 +701,10 @@ export default function LBNagarPage() {
                 </div>
               </div>
               {/* Department photo right panel */}
-              <div style={{ width: "36%", flexShrink: 0, position: "relative", overflow: "hidden" }}>
+              <div className="spec-img-side" style={{ width: "36%", flexShrink: 0, position: "relative", overflow: "hidden" }}>
                 <img key={activeSpec} src={SPECIALITIES[activeSpec].img} alt={SPECIALITIES[activeSpec].name} loading="lazy"
                   style={{ width: "100%", height: "100%", objectFit: "cover", animation: "imgReveal .5s ease" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,#F5F7FA 0%,transparent 30%)", pointerEvents: "none" }} />
-                {/* Dept label on photo */}
                 <div style={{ position: "absolute", bottom: 20, right: 16 }}>
                   <span style={{ ...serif2, fontSize: ".58rem", letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(255,255,255,.8)", background: `${N}90`, padding: ".22rem .7rem" }}>{SPECIALITIES[activeSpec].tag}</span>
                 </div>
@@ -634,7 +715,7 @@ export default function LBNagarPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          DOCTORS — with real photos
+          DOCTORS
           ══════════════════════════════════════════ */}
       <section id="doctors" className="section-pad" style={{ background: "#F5F7FA", padding: "7rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
@@ -676,8 +757,8 @@ export default function LBNagarPage() {
 
                   {/* Card body */}
                   <div style={{ margin: ".8rem", padding: "1rem 1.2rem", border: `1px solid #EDF0F5`, position: "relative" }}>
-                    <div style={{ position: "absolute", top: 5, left: 5 }}><CornerOrnament size={14} color={M} /></div>
-                    <div style={{ position: "absolute", top: 5, right: 5 }}><CornerOrnament size={14} color={M} flip /></div>
+                    <div className="desk" style={{ position: "absolute", top: 5, left: 5 }}><CornerOrnament size={14} color={M} /></div>
+                    <div className="desk" style={{ position: "absolute", top: 5, right: 5 }}><CornerOrnament size={14} color={M} flip /></div>
                     <p style={{ ...serif2, fontSize: ".75rem", color: "#4A6080", lineHeight: 1.5, marginBottom: "1rem" }}>{d.qual}</p>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: ".9rem" }}>
                       <Link href={`/doctors?doctor=${d.slug}`} style={{ ...serif1, fontSize: ".75rem", color: N, textDecoration: "none", fontStyle: "italic", borderBottom: `1px solid ${N}`, paddingBottom: 1 }}>View Profile →</Link>
@@ -701,7 +782,7 @@ export default function LBNagarPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          TESTIMONIALS — navy with photo panel
+          TESTIMONIALS
           ══════════════════════════════════════════ */}
       <section style={{ background: N, position: "relative", overflow: "hidden" }}>
         {/* Art Deco pattern */}
@@ -711,9 +792,9 @@ export default function LBNagarPage() {
             <rect width="100%" height="100%" fill="url(#tp)" /></svg>
         </div>
 
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", minHeight: 500, position: "relative", zIndex: 1 }}>
-          {/* Left — photo changes with testimonial */}
-          <div style={{ flex: "0 0 42%", position: "relative", overflow: "hidden" }}>
+        <div className="testi-wrap" style={{ maxWidth: 1400, margin: "0 auto", display: "flex", minHeight: 500, position: "relative", zIndex: 1 }}>
+          {/* Left — photo */}
+          <div className="testi-photo-side" style={{ flex: "0 0 42%", position: "relative", overflow: "hidden" }}>
             {TESTIMONIALS.map((t, i) => (
               <div key={i} style={{ position: "absolute", inset: 0, opacity: i === activeTest ? 1 : 0, transition: "opacity .8s ease" }}>
                 <img src={t.img} alt={t.dept} loading="lazy"
@@ -730,7 +811,7 @@ export default function LBNagarPage() {
           </div>
 
           {/* Right — text */}
-          <div style={{ flex: 1, padding: "5rem 4rem 5rem 3rem", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div className="testi-text-side" style={{ flex: 1, padding: "5rem 4rem 5rem 3rem", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <Reveal>
               <span style={{ ...serif2, fontSize: ".65rem", letterSpacing: ".28em", textTransform: "uppercase", color: M, display: "block", marginBottom: "1rem" }}>Patient Voices</span>
               <h2 style={{ ...serif1, fontSize: "clamp(2rem,3.5vw,3.5rem)", fontWeight: 700, color: "#fff", marginBottom: "1rem" }}>Stories of Healing</h2>
@@ -741,8 +822,8 @@ export default function LBNagarPage() {
                   <div key={i} style={{ position: i===activeTest ? "relative" : "absolute", top: 0, left: 0, right: 0, opacity: i===activeTest ? 1 : 0, transform: i===activeTest ? "none" : "translateY(12px)", transition: "all .7s ease", pointerEvents: i===activeTest ? "auto" : "none" }}>
                     <div style={{ border: `1px solid rgba(184,36,110,.3)`, padding: "2.5rem", position: "relative" }}>
                       <div style={{ position: "absolute", inset: 8, border: `1px solid rgba(184,36,110,.12)`, pointerEvents: "none" }} />
-                      <div style={{ position: "absolute", top: "1.2rem", left: "1.2rem" }}><CornerOrnament size={18} color={M} /></div>
-                      <div style={{ position: "absolute", top: "1.2rem", right: "1.2rem" }}><CornerOrnament size={18} color={M} flip /></div>
+                      <div className="desk" style={{ position: "absolute", top: "1.2rem", left: "1.2rem" }}><CornerOrnament size={18} color={M} /></div>
+                      <div className="desk" style={{ position: "absolute", top: "1.2rem", right: "1.2rem" }}><CornerOrnament size={18} color={M} flip /></div>
                       <p style={{ ...serif1, fontSize: "clamp(1.05rem,1.8vw,1.4rem)", fontStyle: "italic", color: "rgba(255,255,255,.9)", lineHeight: 1.7, marginBottom: "2rem" }}>"{t.text}"</p>
                       <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
                         <div style={{ width: 1, height: 28, background: `${M}60` }} />
@@ -769,7 +850,7 @@ export default function LBNagarPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          FACILITIES — with image thumbnails
+          FACILITIES
           ══════════════════════════════════════════ */}
       <section id="facilities" className="section-pad" style={{ background: "#fff", padding: "7rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
@@ -791,7 +872,6 @@ export default function LBNagarPage() {
                     <img src={f.img} alt={f.name} loading="lazy" className="fac-img"
                       style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(transparent 40%,rgba(27,42,74,.55))", pointerEvents: "none" }} />
-                    {/* Gradient top rule */}
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,${N},${M})` }} />
                     <div style={{ position: "absolute", bottom: 12, left: 14 }}>
                       <span style={{ ...serif2, fontSize: ".58rem", letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(255,255,255,.8)", background: `${N}80`, padding: ".18rem .6rem" }}>{f.icon} {f.name.split(" ").slice(-1)[0]}</span>
@@ -815,7 +895,7 @@ export default function LBNagarPage() {
       {/* ══════════════════════════════════════════
           APPOINTMENT
           ══════════════════════════════════════════ */}
-      <section id="appointment" className="section-pad" style={{ background: "#F5F7FA", padding: "7rem 3rem", position: "relative", overflow: "hidden" }}>
+      <section id="appointment" className="appt-section section-pad" style={{ background: "#F5F7FA", padding: "7rem 3rem", position: "relative", overflow: "hidden" }}>
         <div className="desk" style={{ position: "absolute", top: "3rem",    left: "3rem"  }}><CornerOrnament size={48} color={N} /></div>
         <div className="desk" style={{ position: "absolute", top: "3rem",    right: "3rem" }}><CornerOrnament size={48} color={N} flip /></div>
         <div className="desk" style={{ position: "absolute", bottom: "3rem", left: "3rem"  }}><CornerOrnament size={48} color={N} flip /></div>
@@ -839,14 +919,14 @@ export default function LBNagarPage() {
                   { label: "Your Full Name", key: "name",  type: "text", ph: "As per your records"  },
                   { label: "Mobile Number",  key: "phone", type: "tel",  ph: "+91 98765 43210"       },
                 ].map((f, idx) => (
-                  <div key={f.key} style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid #EDF0F5", borderRight: idx===0 ? "1px solid #EDF0F5" : "none" }}>
+                  <div key={f.key} className="appt-cell" style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid #EDF0F5", borderRight: idx===0 ? "1px solid #EDF0F5" : "none" }}>
                     <label style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".2em", textTransform: "uppercase", color: M, display: "block", marginBottom: ".8rem" }}>{f.label}</label>
                     <input type={f.type} placeholder={f.ph} value={form[f.key as keyof typeof form]}
                       onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
                       className="deco-input" style={{ fontFamily: "'Crimson Pro',serif" }} />
                   </div>
                 ))}
-                <div style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid #EDF0F5", borderRight: "1px solid #EDF0F5" }}>
+                <div className="appt-cell" style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid #EDF0F5", borderRight: "1px solid #EDF0F5" }}>
                   <label style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".2em", textTransform: "uppercase", color: M, display: "block", marginBottom: ".8rem" }}>Department</label>
                   <select value={form.dept} onChange={e => setForm(p => ({ ...p, dept: e.target.value }))} className="deco-input">
                     <option value="">Select department</option>
@@ -855,12 +935,12 @@ export default function LBNagarPage() {
                     <option>Paediatrics</option>
                   </select>
                 </div>
-                <div style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid #EDF0F5" }}>
+                <div className="appt-cell" style={{ padding: "2rem 2rem 1.5rem", borderBottom: "1px solid #EDF0F5" }}>
                   <label style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".2em", textTransform: "uppercase", color: M, display: "block", marginBottom: ".8rem" }}>Preferred Date</label>
                   <input type="date" value={form.date} onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
                     min={new Date().toISOString().split("T")[0]} className="deco-input" />
                 </div>
-                <div style={{ padding: "2rem 2rem 1.5rem", gridColumn: "1 / -1" }}>
+                <div className="appt-cell" style={{ padding: "2rem 2rem 1.5rem", gridColumn: "1 / -1" }}>
                   <label style={{ ...serif2, fontSize: ".6rem", letterSpacing: ".2em", textTransform: "uppercase", color: M, display: "block", marginBottom: ".8rem" }}>Reason for Visit</label>
                   <input type="text" placeholder="Briefly describe your concern" value={form.reason}
                     onChange={e => setForm(p => ({ ...p, reason: e.target.value }))} className="deco-input" />
@@ -877,7 +957,7 @@ export default function LBNagarPage() {
       {/* ══════════════════════════════════════════
           CONTACT
           ══════════════════════════════════════════ */}
-      <section id="contact" className="section-pad" style={{ background: "#fff", padding: "6rem 3rem", borderTop: "1px solid #EDF0F5" }}>
+      <section id="contact" className="contact-section section-pad" style={{ background: "#fff", padding: "6rem 3rem", borderTop: "1px solid #EDF0F5" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <Reveal>
             <div style={{ textAlign: "center", marginBottom: "4rem" }}>
@@ -944,19 +1024,17 @@ export default function LBNagarPage() {
       {/* ── FOOTER ── */}
       <footer style={{ background: N }}>
         <div style={{ height: 3, background: `linear-gradient(90deg,${ND},${M},${ND})` }} />
-        <div style={{ padding: "2rem 3rem" }}>
-          <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-              <svg width="28" height="28" viewBox="0 0 44 44"><polygon points="22,4 40,13 40,31 22,40 4,31 4,13" fill="none" stroke="#fff" strokeWidth="1.5" opacity=".6" /></svg>
-              <span style={{ ...serif2, fontSize: ".7rem", color: "rgba(255,255,255,.45)", letterSpacing: ".08em" }}>
-                © {new Date().getFullYear()} Srikara Hospital – LB Nagar · Part of Srikara Hospital Group, Hyderabad
-              </span>
-            </div>
-            <div style={{ display: "flex", gap: "2rem" }}>
-              {["Privacy Policy","Terms of Use","Sitemap"].map(l => (
-                <Link key={l} href="#" style={{ ...serif2, fontSize: ".65rem", color: "rgba(255,255,255,.3)", textDecoration: "none", letterSpacing: ".1em" }}>{l}</Link>
-              ))}
-            </div>
+        <div className="footer-inner" style={{ padding: "2rem 3rem", maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <svg width="28" height="28" viewBox="0 0 44 44"><polygon points="22,4 40,13 40,31 22,40 4,31 4,13" fill="none" stroke="#fff" strokeWidth="1.5" opacity=".6" /></svg>
+            <span style={{ ...serif2, fontSize: ".7rem", color: "rgba(255,255,255,.45)", letterSpacing: ".08em" }}>
+              © {new Date().getFullYear()} Srikara Hospital – LB Nagar · Part of Srikara Hospital Group, Hyderabad
+            </span>
+          </div>
+          <div className="footer-links" style={{ display: "flex", gap: "2rem" }}>
+            {["Privacy Policy","Terms of Use","Sitemap"].map(l => (
+              <Link key={l} href="#" style={{ ...serif2, fontSize: ".65rem", color: "rgba(255,255,255,.3)", textDecoration: "none", letterSpacing: ".1em" }}>{l}</Link>
+            ))}
           </div>
         </div>
       </footer>

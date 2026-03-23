@@ -48,10 +48,10 @@ const TICKERS  = ["Robotic Surgery","Level III NICU","PET-CT Imaging","Cardiac C
 const ACCREDS  = ["NABH Accredited","ISO 9001:2015","NABL Laboratory","100+ Insurance Partners","ECMO Centre"];
 
 // Brand colours
-const N  = "#1B2A4A";   // navy
-const NL = "#2E4A7A";   // navy light
-const M  = "#B8246E";   // magenta
-const ML = "#D4408A";   // magenta light
+const N  = "#1B2A4A";
+const NL = "#2E4A7A";
+const M  = "#B8246E";
+const ML = "#D4408A";
 
 const G = `
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
@@ -73,6 +73,75 @@ a{text-decoration:none;}
 .ticker{animation:marquee 40s linear infinite;}
 input,select{font-family:'DM Sans',sans-serif;}
 input::placeholder{color:rgba(26,26,46,.3);}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  /* Top bar */
+  .top-bar{flex-direction:column !important;align-items:flex-start !important;padding:.5rem 1.2rem !important;gap:.3rem !important;}
+  .top-bar-left{flex-wrap:wrap !important;gap:.5rem !important;}
+  .top-bar-sep{display:none !important;}
+  .top-bar-opd{display:none !important;}
+  .top-bar-addr{display:none !important;}
+
+  /* Nav */
+  .nav-bar{padding:0 1.2rem !important;height:60px !important;}
+  .nav-links-desk{display:none !important;}
+  .nav-mob-ham{display:flex !important;}
+
+  /* Hero */
+  .hero-section{flex-direction:column !important;min-height:auto !important;}
+  .hero-left{flex:none !important;width:100% !important;padding:4.5rem 1.5rem 2.5rem !important;}
+  .hero-right{display:none !important;}
+  .hero-mob-emrg{display:block !important;}
+  .hero-stats{gap:1.5rem !important;flex-wrap:wrap !important;}
+
+  /* Quick services */
+  .quick-grid{grid-template-columns:1fr 1fr !important;gap:.8rem !important;padding:1.5rem 1.2rem !important;}
+
+  /* Specialities grid */
+  .spec-grid{grid-template-columns:1fr 1fr !important;gap:.9rem !important;}
+
+  /* Why us + testimonials */
+  .why-testi-wrap{flex-direction:column !important;}
+  .why-left{flex:none !important;width:100% !important;padding:3rem 1.5rem !important;}
+  .why-right{flex:none !important;width:100% !important;padding:3rem 1.5rem !important;}
+  .why-watermark{display:none !important;}
+
+  /* Doctors */
+  .doc-grid{grid-template-columns:1fr 1fr !important;gap:1rem !important;}
+
+  /* Appointment */
+  .appt-inner{grid-template-columns:1fr !important;gap:3rem !important;}
+
+  /* Appointment form grid */
+  .form-name-phone{grid-template-columns:1fr !important;}
+
+  /* Facilities */
+  .fac-grid{grid-template-columns:1fr !important;gap:1rem !important;}
+
+  /* Accreditations */
+  .accred-bar{flex-direction:column !important;align-items:flex-start !important;padding:1.2rem !important;}
+
+  /* Contact */
+  .contact-grid{grid-template-columns:1fr !important;gap:2.5rem !important;}
+  .contact-detail-grid{grid-template-columns:1fr 1fr !important;}
+  .branches-grid{grid-template-columns:1fr 1fr !important;}
+
+  /* Footer */
+  .footer-inner{flex-direction:column !important;gap:1.2rem !important;padding:1.8rem 1.2rem !important;}
+  .footer-links{gap:1.2rem !important;}
+
+  /* Section padding */
+  .sec-pad{padding:3.5rem 1.2rem !important;}
+}
+
+@media(max-width:420px){
+  .spec-grid{grid-template-columns:1fr !important;}
+  .doc-grid{grid-template-columns:1fr !important;}
+  .quick-grid{grid-template-columns:1fr !important;}
+  .contact-detail-grid{grid-template-columns:1fr !important;}
+  .branches-grid{grid-template-columns:1fr !important;}
+}
 `;
 
 function useReveal(){
@@ -95,7 +164,6 @@ function Reveal({children,delay=0,style={}}:{children:React.ReactNode;delay?:num
   );
 }
 
-// ── SUB-COMPONENTS ──────────────────────────────────────────────────────────
 function SectionLabel({children}:{children:React.ReactNode}){
   return <div style={{fontSize:".62rem",color:M,fontWeight:700,letterSpacing:".18em",textTransform:"uppercase",marginBottom:".8rem",display:"flex",alignItems:"center",gap:".6rem"}}>
     <span style={{width:20,height:2,background:M,display:"inline-block",borderRadius:1}}/>
@@ -164,9 +232,9 @@ function FacCard({f}:{f:(typeof FACILITIES)[0]}){
   );
 }
 
-// ── PAGE ────────────────────────────────────────────────────────────────────
 export default function MiyapurPage(){
   const[scrollY,setScrollY]=useState(0);
+  const[menuOpen,setMenuOpen]=useState(false);
   const[activeSpec,setActiveSpec]=useState(0);
   const[activeTesti,setActiveTesti]=useState(0);
   const[form,setForm]=useState({name:"",phone:"",dept:"",date:""});
@@ -190,66 +258,81 @@ export default function MiyapurPage(){
       <style>{G}</style>
 
       {/* ── TOP BAR ── */}
-      <div style={{background:N,color:"#fff",padding:".4rem 2.5rem",display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:".68rem"}}>
-        <div style={{display:"flex",alignItems:"center",gap:"1.5rem"}}>
+      <div className="top-bar" style={{background:N,color:"#fff",padding:".4rem 2.5rem",display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:".68rem"}}>
+        <div className="top-bar-left" style={{display:"flex",alignItems:"center",gap:"1.5rem"}}>
           <span style={{display:"flex",alignItems:"center",gap:".5rem"}}>
             <span style={{width:6,height:6,borderRadius:"50%",background:"#4ade80",display:"inline-block",animation:"pulse 1.5s ease infinite"}}/>
             24/7 Emergency: <a href="tel:04035678900" style={{color:M,fontWeight:700,marginLeft:4}}>040-3567-8900</a>
           </span>
-          <span style={{opacity:.4}}>|</span>
-          <span style={{opacity:.65}}>OPD: Mon–Sat · 8 AM – 8 PM</span>
+          <span className="top-bar-sep" style={{opacity:.4}}>|</span>
+          <span className="top-bar-opd" style={{opacity:.65}}>OPD: Mon–Sat · 8 AM – 8 PM</span>
         </div>
-        <span style={{opacity:.55,fontSize:".64rem"}}>📍 Plot 8-A, Miyapur X Roads, Hyderabad – 500049</span>
+        <span className="top-bar-addr" style={{opacity:.55,fontSize:".64rem"}}>📍 Plot 8-A, Miyapur X Roads, Hyderabad – 500049</span>
       </div>
 
       {/* ── NAV ── */}
-      <nav style={{position:"sticky",top:0,zIndex:900,background:"#fff",borderBottom:`1px solid ${scrollY>60?"#e5e5ee":"#f0f0f8"}`,boxShadow:scrollY>60?"0 2px 16px rgba(27,42,74,.07)":"none",transition:"all .3s",padding:"0 2.5rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        {/* Logo */}
-        <a href="/" style={{display:"flex",alignItems:"center",gap:12}}>
-           <img
-    src="/srikara-logo.png"  
-    alt="Srikara Hospitals"
-    style={{
-      width: 44,
-      height: 44,
-      objectFit: "contain",
-      borderRadius: 6,
-    }}
-  />
-          <div>
-            <div style={{fontFamily:"'DM Serif Display',serif",fontSize:"1rem",color:N,lineHeight:1.15}}>Srikara Hospitals</div>
-            <div style={{fontSize:".57rem",color:M,letterSpacing:".18em",textTransform:"uppercase",fontWeight:700}}>Miyapur · Hyderabad</div>
+      <nav style={{position:"sticky",top:0,zIndex:900,background:"#fff",borderBottom:`1px solid ${scrollY>60?"#e5e5ee":"#f0f0f8"}`,boxShadow:scrollY>60?"0 2px 16px rgba(27,42,74,.07)":"none",transition:"all .3s"}}>
+        <div className="nav-bar" style={{padding:"0 2.5rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          {/* Logo */}
+          <a href="/" style={{display:"flex",alignItems:"center",gap:12}}>
+            <img src="/srikara-logo.png" alt="Srikara Hospitals" style={{width:44,height:44,objectFit:"contain",borderRadius:6}}/>
+            <div>
+              <div style={{fontFamily:"'DM Serif Display',serif",fontSize:"1rem",color:N,lineHeight:1.15}}>Srikara Hospitals</div>
+              <div style={{fontSize:".57rem",color:M,letterSpacing:".18em",textTransform:"uppercase",fontWeight:700}}>Miyapur · Hyderabad</div>
+            </div>
+          </a>
+          {/* Desktop Links */}
+          <div className="nav-links-desk" style={{display:"flex",alignItems:"center",gap:"2rem"}}>
+            {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l,h])=>(
+              <a key={l} href={h} style={{fontSize:".8rem",color:"#5a5a7a",fontWeight:500,transition:"color .2s"}}
+                onMouseEnter={e=>e.currentTarget.style.color=N}
+                onMouseLeave={e=>e.currentTarget.style.color="#5a5a7a"}>{l}</a>
+            ))}
+            <a href="tel:04035678900"
+              style={{display:"flex",alignItems:"center",gap:".4rem",fontSize:".78rem",color:N,fontWeight:600,border:`1.5px solid ${N}30`,padding:".42rem 1rem",borderRadius:4,transition:"all .2s"}}
+              onMouseEnter={e=>{e.currentTarget.style.background=N;e.currentTarget.style.color="#fff";}}
+              onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=N;}}>
+              📞 Call Us
+            </a>
+            <a href="#appointment"
+              style={{fontSize:".8rem",fontWeight:600,background:M,color:"#fff",padding:".5rem 1.3rem",borderRadius:4,letterSpacing:".03em",transition:"background .2s",boxShadow:`0 3px 12px rgba(184,36,110,.28)`}}
+              onMouseEnter={e=>e.currentTarget.style.background=ML}
+              onMouseLeave={e=>e.currentTarget.style.background=M}>
+              Book Appointment
+            </a>
           </div>
-        </a>
-        {/* Links */}
-        <div style={{display:"flex",alignItems:"center",gap:"2rem"}}>
-          {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l,h])=>(
-            <a key={l} href={h} style={{fontSize:".8rem",color:"#5a5a7a",fontWeight:500,transition:"color .2s"}}
-              onMouseEnter={e=>e.currentTarget.style.color=N}
-              onMouseLeave={e=>e.currentTarget.style.color="#5a5a7a"}>{l}</a>
-          ))}
-          <a href="tel:04035678900"
-            style={{display:"flex",alignItems:"center",gap:".4rem",fontSize:".78rem",color:N,fontWeight:600,border:`1.5px solid ${N}30`,padding:".42rem 1rem",borderRadius:4,transition:"all .2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background=N;e.currentTarget.style.color="#fff";}}
-            onMouseLeave={e=>{e.currentTarget.style.background="transparent";e.currentTarget.style.color=N;}}>
-            📞 Call Us
-          </a>
-          <a href="#appointment"
-            style={{fontSize:".8rem",fontWeight:600,background:M,color:"#fff",padding:".5rem 1.3rem",borderRadius:4,letterSpacing:".03em",transition:"background .2s",boxShadow:`0 3px 12px rgba(184,36,110,.28)`}}
-            onMouseEnter={e=>e.currentTarget.style.background=ML}
-            onMouseLeave={e=>e.currentTarget.style.background=M}>
-            Book Appointment
-          </a>
+          {/* Mobile hamburger */}
+          <button className="nav-mob-ham" onClick={()=>setMenuOpen(!menuOpen)}
+            style={{display:"none",flexDirection:"column",gap:5,background:"none",border:`1px solid #e0e0ee`,padding:".4rem .6rem",cursor:"pointer",borderRadius:4}}>
+            {[0,1,2].map(i=><span key={i} style={{width:22,height:1.5,background:N,display:"block"}}/>)}
+          </button>
         </div>
+        {/* Mobile menu */}
+        {menuOpen&&(
+          <div style={{background:"#fff",borderTop:"1px solid #f0f0f8",padding:"1.2rem 1.5rem",display:"flex",flexDirection:"column",gap:"1rem"}}>
+            {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l,h])=>(
+              <a key={l} href={h} onClick={()=>setMenuOpen(false)}
+                style={{fontSize:".9rem",color:N,fontWeight:500,paddingBottom:".8rem",borderBottom:"1px solid #f0f0f8"}}>
+                {l}
+              </a>
+            ))}
+            <a href="tel:04035678900" style={{fontSize:".88rem",color:N,fontWeight:600,display:"flex",alignItems:"center",gap:".5rem",paddingBottom:".8rem",borderBottom:"1px solid #f0f0f8"}}>
+              📞 040-3567-8900
+            </a>
+            <a href="#appointment" onClick={()=>setMenuOpen(false)}
+              style={{background:M,color:"#fff",padding:".75rem",borderRadius:6,fontSize:".85rem",fontWeight:600,textAlign:"center",letterSpacing:".03em"}}>
+              Book Appointment
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* ══════════════════════════════════════════
-          HERO — Light, photo right
+          HERO
           ══════════════════════════════════════════ */}
-      <section style={{background:"#fff",display:"flex",minHeight:"88vh",overflow:"hidden",position:"relative"}}>
-
+      <section className="hero-section" style={{background:"#fff",display:"flex",minHeight:"88vh",overflow:"hidden",position:"relative"}}>
         {/* Left content */}
-        <div style={{flex:"0 0 52%",padding:"5.5rem 3rem 4rem 3.5rem",display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",zIndex:2}}>
+        <div className="hero-left" style={{flex:"0 0 52%",padding:"5.5rem 3rem 4rem 3.5rem",display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",zIndex:2}}>
           <div className="a1" style={{display:"inline-flex",alignItems:"center",gap:".6rem",background:`${N}0d`,border:`1px solid ${N}20`,padding:".35rem 1rem",borderRadius:100,width:"fit-content",marginBottom:"1.8rem"}}>
             <span style={{width:6,height:6,borderRadius:"50%",background:M,display:"inline-block"}}/>
             <span style={{fontSize:".62rem",color:N,fontWeight:700,letterSpacing:".12em",textTransform:"uppercase"}}>NABH Accredited · Est. 2012</span>
@@ -279,7 +362,7 @@ export default function MiyapurPage(){
           </div>
 
           {/* Stats */}
-          <div className="a5" style={{display:"flex",gap:"2.5rem",paddingTop:"2rem",borderTop:"1px solid #eee",flexWrap:"wrap"}}>
+          <div className="a5 hero-stats" style={{display:"flex",gap:"2.5rem",paddingTop:"2rem",borderTop:"1px solid #eee",flexWrap:"wrap"}}>
             {STATS.map(s=>(
               <div key={s.label}>
                 <div style={{fontFamily:"'DM Serif Display',serif",fontSize:"2rem",color:N,lineHeight:1}}>{s.val}</div>
@@ -289,8 +372,8 @@ export default function MiyapurPage(){
           </div>
         </div>
 
-        {/* Right photo */}
-        <div style={{flex:1,position:"relative",overflow:"hidden"}}>
+        {/* Right photo — hidden on mobile */}
+        <div className="hero-right" style={{flex:1,position:"relative",overflow:"hidden"}}>
           <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1000&q=85" alt="Srikara Miyapur"
             style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
           <div style={{position:"absolute",inset:0,background:"linear-gradient(90deg,#fff 0%,transparent 18%)",pointerEvents:"none"}}/>
@@ -311,6 +394,22 @@ export default function MiyapurPage(){
         </div>
       </section>
 
+      {/* Mobile emergency card — shown only on mobile */}
+      <div className="hero-mob-emrg" style={{display:"none",background:"#fff",margin:"0 1.2rem",marginTop:"-1px",padding:"1rem 1.2rem",boxShadow:"0 6px 20px rgba(0,0,0,.09)",borderRadius:"0 0 12px 12px",border:`1px solid ${M}20`,borderTop:"none"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:".6rem"}}>
+          <div style={{display:"flex",alignItems:"center",gap:".5rem"}}>
+            <span style={{width:7,height:7,borderRadius:"50%",background:"#22c55e",display:"inline-block"}}/>
+            <span style={{fontSize:".62rem",color:"#22c55e",fontWeight:700,letterSpacing:".1em",textTransform:"uppercase"}}>Emergency Active 24/7</span>
+          </div>
+          <a href="tel:04035678900" style={{fontFamily:"'DM Serif Display',serif",fontSize:"1.1rem",color:N,fontWeight:700}}>040-3567-8900</a>
+        </div>
+        <div style={{display:"flex",gap:".5rem",flexWrap:"wrap",marginTop:".6rem"}}>
+          {["NABH Accredited","NABL Lab"].map(t=>(
+            <span key={t} style={{fontSize:".6rem",fontWeight:600,color:N,background:`${N}0d`,border:`1px solid ${N}20`,padding:".2rem .7rem",borderRadius:100}}>{t}</span>
+          ))}
+        </div>
+      </div>
+
       {/* ── TICKER ── */}
       <div style={{background:N,padding:".62rem 0",overflow:"hidden",whiteSpace:"nowrap"}}>
         <div className="ticker" style={{display:"inline-flex",gap:"3rem"}}>
@@ -324,8 +423,8 @@ export default function MiyapurPage(){
       </div>
 
       {/* ── QUICK SERVICES ── */}
-      <section style={{background:"#f8f9ff",borderBottom:"1px solid #eaeaf5",padding:"2.2rem 2.5rem"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1.2rem"}}>
+      <section style={{background:"#f8f9ff",borderBottom:"1px solid #eaeaf5"}}>
+        <div className="quick-grid" style={{maxWidth:1200,margin:"0 auto",padding:"2.2rem 2.5rem",display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1.2rem"}}>
           {[
             {icon:"🩺",title:"OPD Consultation",sub:"Book with specialist",href:"#appointment"},
             {icon:"🚑",title:"Emergency",sub:"040-3567-8900 · 24/7",href:"tel:04035678900"},
@@ -349,7 +448,7 @@ export default function MiyapurPage(){
       {/* ══════════════════════════════════════════
           DEPARTMENTS
           ══════════════════════════════════════════ */}
-      <section id="specialities" style={{background:"#fff",padding:"5rem 2.5rem"}}>
+      <section id="specialities" className="sec-pad" style={{background:"#fff",padding:"5rem 2.5rem"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <Reveal>
             <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:"2.5rem",flexWrap:"wrap",gap:"1rem"}}>
@@ -360,7 +459,7 @@ export default function MiyapurPage(){
               <a href="#" style={{fontSize:".75rem",color:M,fontWeight:600,borderBottom:`1px solid ${M}`,paddingBottom:2}}>View All →</a>
             </div>
           </Reveal>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1rem"}}>
+          <div className="spec-grid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1rem"}}>
             {SPECIALITIES.map((s,i)=>(
               <Reveal key={s.id} delay={i*45}>
                 <SpecCard s={s} active={activeSpec===i} onClick={()=>setActiveSpec(i)}/>
@@ -371,13 +470,13 @@ export default function MiyapurPage(){
       </section>
 
       {/* ══════════════════════════════════════════
-          WHY US + TESTIMONIALS — Split
+          WHY US + TESTIMONIALS
           ══════════════════════════════════════════ */}
       <section style={{background:N,overflow:"hidden"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"flex",minHeight:480}}>
+        <div className="why-testi-wrap" style={{maxWidth:1200,margin:"0 auto",display:"flex",minHeight:480}}>
           {/* Left navy */}
-          <div style={{flex:"0 0 50%",padding:"5rem 3.5rem",position:"relative",overflow:"hidden"}}>
-            <div style={{position:"absolute",right:-20,top:"50%",transform:"translateY(-50%)",fontFamily:"'DM Serif Display',serif",fontSize:"16rem",color:"rgba(255,255,255,.03)",lineHeight:1,userSelect:"none",pointerEvents:"none"}}>12</div>
+          <div className="why-left" style={{flex:"0 0 50%",padding:"5rem 3.5rem",position:"relative",overflow:"hidden"}}>
+            <div className="why-watermark" style={{position:"absolute",right:-20,top:"50%",transform:"translateY(-50%)",fontFamily:"'DM Serif Display',serif",fontSize:"16rem",color:"rgba(255,255,255,.03)",lineHeight:1,userSelect:"none",pointerEvents:"none"}}>12</div>
             <Reveal>
               <SectionLabel>Trusted Since 2012</SectionLabel>
               <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(1.8rem,3vw,2.8rem)",color:"#fff",lineHeight:1.15,marginBottom:"1.3rem"}}>
@@ -401,8 +500,8 @@ export default function MiyapurPage(){
               ))}
             </Reveal>
           </div>
-          {/* Right testimonial — white bg */}
-          <div style={{flex:1,background:"#f8f9ff",padding:"5rem 3.5rem",display:"flex",flexDirection:"column",justifyContent:"center"}}>
+          {/* Right testimonial */}
+          <div className="why-right" style={{flex:1,background:"#f8f9ff",padding:"5rem 3.5rem",display:"flex",flexDirection:"column",justifyContent:"center"}}>
             <Reveal>
               <SectionLabel>Patient Stories</SectionLabel>
               <div style={{position:"relative",minHeight:230}}>
@@ -436,7 +535,7 @@ export default function MiyapurPage(){
       {/* ══════════════════════════════════════════
           DOCTORS
           ══════════════════════════════════════════ */}
-      <section id="doctors" style={{background:"#f8f9ff",padding:"5rem 2.5rem"}}>
+      <section id="doctors" className="sec-pad" style={{background:"#f8f9ff",padding:"5rem 2.5rem"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <Reveal>
             <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:"2.5rem",flexWrap:"wrap",gap:"1rem"}}>
@@ -447,7 +546,7 @@ export default function MiyapurPage(){
               <a href="#" style={{fontSize:".75rem",color:M,fontWeight:600,borderBottom:`1px solid ${M}`,paddingBottom:2}}>All 42 Specialists →</a>
             </div>
           </Reveal>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1.5rem"}}>
+          <div className="doc-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1.5rem"}}>
             {DOCTORS.map((d,i)=>(
               <Reveal key={d.name} delay={i*55}>
                 <DoctorCard d={d}/>
@@ -460,86 +559,88 @@ export default function MiyapurPage(){
       {/* ══════════════════════════════════════════
           APPOINTMENT
           ══════════════════════════════════════════ */}
-      <section id="appointment" style={{background:"#fff",padding:"5rem 2.5rem",borderTop:"1px solid #eaeaf5"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"center"}}>
-          {/* Left info */}
-          <Reveal>
-            <SectionLabel>Schedule a Visit</SectionLabel>
-            <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(2rem,3vw,2.8rem)",color:N,marginBottom:"1.3rem"}}>Book an Appointment</h2>
-            <p style={{fontSize:".9rem",color:"#5a5a7a",lineHeight:1.8,marginBottom:"2rem",fontWeight:300}}>
-              Our team confirms your slot within 30 minutes. Walk-ins welcome — but a booking guarantees your time with the right specialist.
-            </p>
-            <div style={{display:"flex",flexDirection:"column",gap:".9rem"}}>
-              {[
-                {icon:"📞",label:"Appointments",val:"040-3567-8800"},
-                {icon:"🚨",label:"Emergency (24/7)",val:"040-3567-8900",urgent:true},
-                {icon:"📧",label:"Email",val:"miyapur@srikarahospitals.in"},
-                {icon:"🕐",label:"OPD Hours",val:"Mon–Sat  ·  8:00 AM – 8:00 PM"},
-              ].map(c=>(
-                <div key={c.label} style={{display:"flex",gap:".9rem",alignItems:"center",padding:".9rem 1rem",background:"#f8f9ff",borderRadius:8,border:"1px solid #eaeaf5"}}>
-                  <span style={{fontSize:"1.1rem",flexShrink:0}}>{c.icon}</span>
-                  <div>
-                    <div style={{fontSize:".58rem",color:"#aaa",letterSpacing:".1em",textTransform:"uppercase",marginBottom:".2rem"}}>{c.label}</div>
-                    <div style={{fontSize:".85rem",fontWeight:600,color:(c as any).urgent?"#ef4444":N}}>{c.val}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-          {/* Right form */}
-          <Reveal delay={100}>
-            <div style={{background:"#fff",border:"1px solid #eaeaf5",borderRadius:16,padding:"2.5rem",boxShadow:"0 8px 36px rgba(27,42,74,.07)"}}>
-              <h3 style={{fontFamily:"'DM Serif Display',serif",fontSize:"1.45rem",color:N,marginBottom:".4rem"}}>Request an Appointment</h3>
-              <p style={{fontSize:".75rem",color:"#aaa",marginBottom:"1.8rem"}}>We'll confirm your slot within 30 minutes</p>
-              <form onSubmit={submit}>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".9rem",marginBottom:".9rem"}}>
-                  {[
-                    {l:"Full Name *",k:"name",t:"text",ph:"Your full name"},
-                    {l:"Mobile Number *",k:"phone",t:"tel",ph:"+91 98765 43210"},
-                  ].map(f=>(
-                    <div key={f.k}>
-                      <label style={{fontSize:".6rem",fontWeight:700,color:"#4a4a6a",letterSpacing:".08em",textTransform:"uppercase",display:"block",marginBottom:".4rem"}}>{f.l}</label>
-                      <input type={f.t} placeholder={f.ph} required value={form[f.k as keyof typeof form]}
-                        onChange={e=>setForm(p=>({...p,[f.k]:e.target.value}))}
-                        style={{width:"100%",border:"1.5px solid #dde",borderRadius:6,padding:".68rem .9rem",fontSize:".86rem",color:N,outline:"none",transition:"border-color .2s",background:"#fdfdff"}}
-                        onFocus={e=>e.currentTarget.style.borderColor=M}
-                        onBlur={e=>e.currentTarget.style.borderColor="#dde"}/>
+      <section id="appointment" className="sec-pad" style={{background:"#fff",padding:"5rem 2.5rem",borderTop:"1px solid #eaeaf5"}}>
+        <div style={{maxWidth:1200,margin:"0 auto"}}>
+          <div className="appt-inner" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"center"}}>
+            {/* Left info */}
+            <Reveal>
+              <SectionLabel>Schedule a Visit</SectionLabel>
+              <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(2rem,3vw,2.8rem)",color:N,marginBottom:"1.3rem"}}>Book an Appointment</h2>
+              <p style={{fontSize:".9rem",color:"#5a5a7a",lineHeight:1.8,marginBottom:"2rem",fontWeight:300}}>
+                Our team confirms your slot within 30 minutes. Walk-ins welcome — but a booking guarantees your time with the right specialist.
+              </p>
+              <div style={{display:"flex",flexDirection:"column",gap:".9rem"}}>
+                {[
+                  {icon:"📞",label:"Appointments",val:"040-3567-8800"},
+                  {icon:"🚨",label:"Emergency (24/7)",val:"040-3567-8900",urgent:true},
+                  {icon:"📧",label:"Email",val:"miyapur@srikarahospitals.in"},
+                  {icon:"🕐",label:"OPD Hours",val:"Mon–Sat  ·  8:00 AM – 8:00 PM"},
+                ].map(c=>(
+                  <div key={c.label} style={{display:"flex",gap:".9rem",alignItems:"center",padding:".9rem 1rem",background:"#f8f9ff",borderRadius:8,border:"1px solid #eaeaf5"}}>
+                    <span style={{fontSize:"1.1rem",flexShrink:0}}>{c.icon}</span>
+                    <div>
+                      <div style={{fontSize:".58rem",color:"#aaa",letterSpacing:".1em",textTransform:"uppercase",marginBottom:".2rem"}}>{c.label}</div>
+                      <div style={{fontSize:".85rem",fontWeight:600,color:(c as any).urgent?"#ef4444":N}}>{c.val}</div>
                     </div>
-                  ))}
-                </div>
-                <div style={{marginBottom:".9rem"}}>
-                  <label style={{fontSize:".6rem",fontWeight:700,color:"#4a4a6a",letterSpacing:".08em",textTransform:"uppercase",display:"block",marginBottom:".4rem"}}>Department</label>
-                  <select value={form.dept} onChange={e=>setForm(p=>({...p,dept:e.target.value}))}
-                    style={{width:"100%",border:"1.5px solid #dde",borderRadius:6,padding:".68rem .9rem",fontSize:".86rem",color:form.dept?N:"#aaa",outline:"none",background:"#fdfdff",cursor:"pointer"}}
-                    onFocus={e=>e.currentTarget.style.borderColor=M}
-                    onBlur={e=>e.currentTarget.style.borderColor="#dde"}>
-                    <option value="">Select a department</option>
-                    {SPECIALITIES.map(s=><option key={s.name}>{s.name}</option>)}
-                    <option>General Medicine</option>
-                  </select>
-                </div>
-                <div style={{marginBottom:"1.4rem"}}>
-                  <label style={{fontSize:".6rem",fontWeight:700,color:"#4a4a6a",letterSpacing:".08em",textTransform:"uppercase",display:"block",marginBottom:".4rem"}}>Preferred Date</label>
-                  <input type="date" min={new Date().toISOString().split("T")[0]} value={form.date}
-                    onChange={e=>setForm(p=>({...p,date:e.target.value}))}
-                    style={{width:"100%",border:"1.5px solid #dde",borderRadius:6,padding:".68rem .9rem",fontSize:".86rem",color:N,outline:"none",background:"#fdfdff"}}
-                    onFocus={e=>e.currentTarget.style.borderColor=M}
-                    onBlur={e=>e.currentTarget.style.borderColor="#dde"}/>
-                </div>
-                <button type="submit"
-                  style={{width:"100%",background:sent?"#22c55e":M,color:"#fff",border:"none",borderRadius:8,padding:".95rem",fontSize:".86rem",fontWeight:700,letterSpacing:".05em",cursor:"pointer",transition:"all .35s",boxShadow:sent?"0 4px 14px rgba(34,197,94,.3)":`0 4px 14px rgba(184,36,110,.28)`}}>
-                  {sent?"✓ Appointment Request Received!":"Confirm Appointment →"}
-                </button>
-              </form>
-            </div>
-          </Reveal>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+            {/* Right form */}
+            <Reveal delay={100}>
+              <div style={{background:"#fff",border:"1px solid #eaeaf5",borderRadius:16,padding:"2.5rem",boxShadow:"0 8px 36px rgba(27,42,74,.07)"}}>
+                <h3 style={{fontFamily:"'DM Serif Display',serif",fontSize:"1.45rem",color:N,marginBottom:".4rem"}}>Request an Appointment</h3>
+                <p style={{fontSize:".75rem",color:"#aaa",marginBottom:"1.8rem"}}>We'll confirm your slot within 30 minutes</p>
+                <form onSubmit={submit}>
+                  <div className="form-name-phone" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".9rem",marginBottom:".9rem"}}>
+                    {[
+                      {l:"Full Name *",k:"name",t:"text",ph:"Your full name"},
+                      {l:"Mobile Number *",k:"phone",t:"tel",ph:"+91 98765 43210"},
+                    ].map(f=>(
+                      <div key={f.k}>
+                        <label style={{fontSize:".6rem",fontWeight:700,color:"#4a4a6a",letterSpacing:".08em",textTransform:"uppercase",display:"block",marginBottom:".4rem"}}>{f.l}</label>
+                        <input type={f.t} placeholder={f.ph} required value={form[f.k as keyof typeof form]}
+                          onChange={e=>setForm(p=>({...p,[f.k]:e.target.value}))}
+                          style={{width:"100%",border:"1.5px solid #dde",borderRadius:6,padding:".68rem .9rem",fontSize:".86rem",color:N,outline:"none",transition:"border-color .2s",background:"#fdfdff"}}
+                          onFocus={e=>e.currentTarget.style.borderColor=M}
+                          onBlur={e=>e.currentTarget.style.borderColor="#dde"}/>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{marginBottom:".9rem"}}>
+                    <label style={{fontSize:".6rem",fontWeight:700,color:"#4a4a6a",letterSpacing:".08em",textTransform:"uppercase",display:"block",marginBottom:".4rem"}}>Department</label>
+                    <select value={form.dept} onChange={e=>setForm(p=>({...p,dept:e.target.value}))}
+                      style={{width:"100%",border:"1.5px solid #dde",borderRadius:6,padding:".68rem .9rem",fontSize:".86rem",color:form.dept?N:"#aaa",outline:"none",background:"#fdfdff",cursor:"pointer"}}
+                      onFocus={e=>e.currentTarget.style.borderColor=M}
+                      onBlur={e=>e.currentTarget.style.borderColor="#dde"}>
+                      <option value="">Select a department</option>
+                      {SPECIALITIES.map(s=><option key={s.name}>{s.name}</option>)}
+                      <option>General Medicine</option>
+                    </select>
+                  </div>
+                  <div style={{marginBottom:"1.4rem"}}>
+                    <label style={{fontSize:".6rem",fontWeight:700,color:"#4a4a6a",letterSpacing:".08em",textTransform:"uppercase",display:"block",marginBottom:".4rem"}}>Preferred Date</label>
+                    <input type="date" min={new Date().toISOString().split("T")[0]} value={form.date}
+                      onChange={e=>setForm(p=>({...p,date:e.target.value}))}
+                      style={{width:"100%",border:"1.5px solid #dde",borderRadius:6,padding:".68rem .9rem",fontSize:".86rem",color:N,outline:"none",background:"#fdfdff"}}
+                      onFocus={e=>e.currentTarget.style.borderColor=M}
+                      onBlur={e=>e.currentTarget.style.borderColor="#dde"}/>
+                  </div>
+                  <button type="submit"
+                    style={{width:"100%",background:sent?"#22c55e":M,color:"#fff",border:"none",borderRadius:8,padding:".95rem",fontSize:".86rem",fontWeight:700,letterSpacing:".05em",cursor:"pointer",transition:"all .35s",boxShadow:sent?"0 4px 14px rgba(34,197,94,.3)":`0 4px 14px rgba(184,36,110,.28)`}}>
+                    {sent?"✓ Appointment Request Received!":"Confirm Appointment →"}
+                  </button>
+                </form>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════
           FACILITIES
           ══════════════════════════════════════════ */}
-      <section id="facilities" style={{background:"#f8f9ff",padding:"5rem 2.5rem"}}>
+      <section id="facilities" className="sec-pad" style={{background:"#f8f9ff",padding:"5rem 2.5rem"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <Reveal>
             <div style={{textAlign:"center",marginBottom:"2.8rem"}}>
@@ -547,7 +648,7 @@ export default function MiyapurPage(){
               <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(2rem,3vw,2.8rem)",color:N}}>World-Class Facilities</h2>
             </div>
           </Reveal>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1.3rem"}}>
+          <div className="fac-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1.3rem"}}>
             {FACILITIES.map((f,i)=>(
               <Reveal key={f.name} delay={i*50}>
                 <FacCard f={f}/>
@@ -558,8 +659,8 @@ export default function MiyapurPage(){
       </section>
 
       {/* ── ACCREDITATIONS ── */}
-      <section style={{background:"#fff",borderTop:"1px solid #eaeaf5",borderBottom:"1px solid #eaeaf5",padding:"1.8rem 2.5rem"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:"1.2rem"}}>
+      <section style={{background:"#fff",borderTop:"1px solid #eaeaf5",borderBottom:"1px solid #eaeaf5"}}>
+        <div className="accred-bar" style={{maxWidth:1200,margin:"0 auto",padding:"1.8rem 2.5rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:"1.2rem"}}>
           <div style={{fontSize:".62rem",color:"#aaa",letterSpacing:".14em",textTransform:"uppercase",fontWeight:600}}>Accreditations & Certifications</div>
           <div style={{display:"flex",gap:".8rem",flexWrap:"wrap"}}>
             {ACCREDS.map(a=>(
@@ -572,58 +673,60 @@ export default function MiyapurPage(){
       {/* ══════════════════════════════════════════
           CONTACT + BRANCHES
           ══════════════════════════════════════════ */}
-      <section id="contact" style={{background:"#f8f9ff",padding:"5rem 2.5rem"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem"}}>
-          <Reveal>
-            <SectionLabel>Find Us</SectionLabel>
-            <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(1.8rem,2.8vw,2.5rem)",color:N,marginBottom:"1.5rem"}}>Miyapur Branch</h2>
-            {/* Map placeholder */}
-            <div style={{height:190,background:`linear-gradient(135deg,${N}12,${M}08)`,borderRadius:12,marginBottom:"1.3rem",display:"flex",alignItems:"center",justifyContent:"center",border:"1px solid #e0e0ef"}}>
-              <div style={{textAlign:"center"}}>
-                <div style={{fontSize:"2rem",marginBottom:".4rem"}}>📍</div>
-                <div style={{fontSize:".78rem",color:N,fontWeight:600}}>Plot 8-A, Miyapur X Roads</div>
-                <div style={{fontSize:".68rem",color:"#888",marginTop:2}}>Miyapur, Hyderabad – 500049</div>
-              </div>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".9rem"}}>
-              {[
-                {l:"Emergency",v:"040-3567-8900",c:"#ef4444"},
-                {l:"Appointments",v:"040-3567-8800",c:M},
-                {l:"Email",v:"miyapur@srikara.in",c:N},
-                {l:"OPD Hours",v:"Mon–Sat · 8AM–8PM",c:N},
-              ].map(c=>(
-                <div key={c.l} style={{background:"#fff",border:"1px solid #eaeaf5",borderRadius:8,padding:".85rem 1rem",borderTop:`3px solid ${c.c}`}}>
-                  <div style={{fontSize:".58rem",color:"#bbb",letterSpacing:".1em",textTransform:"uppercase",marginBottom:".25rem"}}>{c.l}</div>
-                  <div style={{fontSize:".8rem",fontWeight:700,color:c.c}}>{c.v}</div>
+      <section id="contact" className="sec-pad" style={{background:"#f8f9ff",padding:"5rem 2.5rem"}}>
+        <div style={{maxWidth:1200,margin:"0 auto"}}>
+          <div className="contact-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem"}}>
+            <Reveal>
+              <SectionLabel>Find Us</SectionLabel>
+              <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(1.8rem,2.8vw,2.5rem)",color:N,marginBottom:"1.5rem"}}>Miyapur Branch</h2>
+              {/* Map placeholder */}
+              <div style={{height:190,background:`linear-gradient(135deg,${N}12,${M}08)`,borderRadius:12,marginBottom:"1.3rem",display:"flex",alignItems:"center",justifyContent:"center",border:"1px solid #e0e0ef"}}>
+                <div style={{textAlign:"center"}}>
+                  <div style={{fontSize:"2rem",marginBottom:".4rem"}}>📍</div>
+                  <div style={{fontSize:".78rem",color:N,fontWeight:600}}>Plot 8-A, Miyapur X Roads</div>
+                  <div style={{fontSize:".68rem",color:"#888",marginTop:2}}>Miyapur, Hyderabad – 500049</div>
                 </div>
-              ))}
-            </div>
-          </Reveal>
-          <Reveal delay={100}>
-            <SectionLabel>Srikara Network</SectionLabel>
-            <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(1.8rem,2.8vw,2.5rem)",color:N,marginBottom:"1.5rem"}}>Our Other Branches</h2>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".7rem"}}>
-              {BRANCHES.map(b=>(
-                <a key={b} href={`/hospitals/${b.toLowerCase().replace(/ /g,"-")}`}
-                  style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:".85rem 1.1rem",borderRadius:8,background:b==="Miyapur"?`${M}10`:"#fff",border:`1px solid ${b==="Miyapur"?M+"45":"#eaeaf5"}`,fontWeight:b==="Miyapur"?700:400,color:b==="Miyapur"?M:"#4a4a6a",fontSize:".8rem",transition:"all .2s"}}
-                  onMouseEnter={e=>{if(b!=="Miyapur"){e.currentTarget.style.borderColor=`${M}45`;e.currentTarget.style.color=N;}}}
-                  onMouseLeave={e=>{if(b!=="Miyapur"){e.currentTarget.style.borderColor="#eaeaf5";e.currentTarget.style.color="#4a4a6a";}}}>
-                  <span>{b==="Miyapur"?"★ ":""}{b}</span>
-                  <span style={{fontSize:".68rem",color:M,opacity:.65}}>→</span>
-                </a>
-              ))}
-            </div>
-            <a href="/hospitals" style={{display:"inline-flex",alignItems:"center",gap:".4rem",marginTop:"1.3rem",fontSize:".7rem",color:"#aaa",borderBottom:"1px solid #ccc",paddingBottom:2}}>
-              ← All Srikara Locations
-            </a>
-          </Reveal>
+              </div>
+              <div className="contact-detail-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".9rem"}}>
+                {[
+                  {l:"Emergency",v:"040-3567-8900",c:"#ef4444"},
+                  {l:"Appointments",v:"040-3567-8800",c:M},
+                  {l:"Email",v:"miyapur@srikara.in",c:N},
+                  {l:"OPD Hours",v:"Mon–Sat · 8AM–8PM",c:N},
+                ].map(c=>(
+                  <div key={c.l} style={{background:"#fff",border:"1px solid #eaeaf5",borderRadius:8,padding:".85rem 1rem",borderTop:`3px solid ${c.c}`}}>
+                    <div style={{fontSize:".58rem",color:"#bbb",letterSpacing:".1em",textTransform:"uppercase",marginBottom:".25rem"}}>{c.l}</div>
+                    <div style={{fontSize:".8rem",fontWeight:700,color:c.c}}>{c.v}</div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+            <Reveal delay={100}>
+              <SectionLabel>Srikara Network</SectionLabel>
+              <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:"clamp(1.8rem,2.8vw,2.5rem)",color:N,marginBottom:"1.5rem"}}>Our Other Branches</h2>
+              <div className="branches-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:".7rem"}}>
+                {BRANCHES.map(b=>(
+                  <a key={b} href={`/hospitals/${b.toLowerCase().replace(/ /g,"-")}`}
+                    style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:".85rem 1.1rem",borderRadius:8,background:b==="Miyapur"?`${M}10`:"#fff",border:`1px solid ${b==="Miyapur"?M+"45":"#eaeaf5"}`,fontWeight:b==="Miyapur"?700:400,color:b==="Miyapur"?M:"#4a4a6a",fontSize:".8rem",transition:"all .2s"}}
+                    onMouseEnter={e=>{if(b!=="Miyapur"){e.currentTarget.style.borderColor=`${M}45`;e.currentTarget.style.color=N;}}}
+                    onMouseLeave={e=>{if(b!=="Miyapur"){e.currentTarget.style.borderColor="#eaeaf5";e.currentTarget.style.color="#4a4a6a";}}}>
+                    <span>{b==="Miyapur"?"★ ":""}{b}</span>
+                    <span style={{fontSize:".68rem",color:M,opacity:.65}}>→</span>
+                  </a>
+                ))}
+              </div>
+              <a href="/hospitals" style={{display:"inline-flex",alignItems:"center",gap:".4rem",marginTop:"1.3rem",fontSize:".7rem",color:"#aaa",borderBottom:"1px solid #ccc",paddingBottom:2}}>
+                ← All Srikara Locations
+              </a>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
       <footer style={{background:N}}>
         <div style={{height:3,background:`linear-gradient(90deg,${M},${ML},transparent)`}}/>
-        <div style={{maxWidth:1200,margin:"0 auto",padding:"2.2rem 2.5rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:"1.5rem"}}>
+        <div className="footer-inner" style={{maxWidth:1200,margin:"0 auto",padding:"2.2rem 2.5rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:"1.5rem"}}>
           <div style={{display:"flex",alignItems:"center",gap:".9rem"}}>
             <div style={{width:32,height:32,borderRadius:"50%",background:`linear-gradient(135deg,${NL},${M})`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
               <span style={{fontFamily:"'DM Serif Display',serif",color:"#fff",fontSize:".88rem"}}>S</span>
@@ -633,7 +736,7 @@ export default function MiyapurPage(){
               <div style={{fontSize:".6rem",color:"rgba(255,255,255,.4)",marginTop:2}}>© {new Date().getFullYear()} Srikara Hospital Group · All rights reserved</div>
             </div>
           </div>
-          <div style={{display:"flex",gap:"2rem"}}>
+          <div className="footer-links" style={{display:"flex",gap:"2rem"}}>
             {["Privacy Policy","Terms of Use","Sitemap"].map(l=>(
               <a key={l} href="#" style={{fontSize:".65rem",color:"rgba(255,255,255,.32)",letterSpacing:".06em"}}
                 onMouseEnter={e=>e.currentTarget.style.color=M}

@@ -19,8 +19,6 @@ const MID   = "#4A5E80";
 const LT    = "#8898B8";
 const GOLD  = "#F0A500";
 
-/* ─── IMAGES — every page gets different images ─────────────── */
-// HOME page images
 const HOME_IMG = {
   hero:    "https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1600&q=85",
   about1:  "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=900&q=85",
@@ -36,7 +34,6 @@ const HOME_IMG = {
   emrg:    "https://images.unsplash.com/photo-1587745416684-47953f16f02f?w=900&q=85",
 };
 
-// DEPARTMENTS page images (completely different)
 const DEPT_IMG = {
   cardio:  "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=800&q=85",
   ortho:   "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=800&q=85",
@@ -48,7 +45,6 @@ const DEPT_IMG = {
   diag:    "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=800&q=85",
 };
 
-// DOCTORS page images (completely different faces/styles)
 const DOC_IMG = {
   d1: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=600&q=85",
   d2: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&q=85",
@@ -59,7 +55,6 @@ const DOC_IMG = {
   bg: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1400&q=75",
 };
 
-/* ─── DATA ─────────────────────────────────────────────────── */
 type Page = "home" | "departments" | "doctors";
 
 const BRANCHES = [
@@ -118,7 +113,6 @@ const TESTIS = [
 
 const SLOTS = ["9:00 AM","10:00 AM","11:00 AM","12:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"];
 
-/* ─── HELPERS ─────────────────────────────────────────────── */
 function useVis(t = 0.08) {
   const r = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
@@ -148,10 +142,8 @@ function Cnt({ to, suf, go }: { to: number; suf: string; go: boolean }) {
   return <>{v}{suf}</>;
 }
 
-/* ─── SRIKARA LOGO SVG ─────────────────────────────────────── */
 const Logo = ({ h = 46 }: { h?: number }) => (
   <svg height={h} viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
-    {/* Flower */}
     <g transform="translate(4,4)">
       {[0,45,90,135,180,225,270,315].map((deg, i) => (
         <g key={i} transform={`rotate(${deg},35,35)`}>
@@ -161,16 +153,12 @@ const Logo = ({ h = 46 }: { h?: number }) => (
       ))}
       <circle cx="35" cy="35" r="5.5" fill={WH}/>
     </g>
-    {/* SRIKARA */}
     <text x="84" y="54" fontFamily="'Arial Black',Arial,sans-serif" fontWeight="900" fontSize="34" fill={NAVY} letterSpacing="-0.5">SRIKARA</text>
-    {/* Leaf between SR and IKARA */}
     <ellipse cx="105" cy="44" rx="4.5" ry="11" fill={PINK} opacity=".95" transform="rotate(-8,105,44)"/>
-    {/* HOSPITALS */}
     <text x="84" y="74" fontFamily="'Arial Black',Arial,sans-serif" fontWeight="900" fontSize="20" fill={PINK} letterSpacing="2.5">HOSPITALS</text>
   </svg>
 );
 
-/* ─── MAIN ──────────────────────────────────────────────────── */
 export default function Rajahmundry() {
   const [page,      setPage]      = useState<Page>("home");
   const [scrolled,  setScrolled]  = useState(false);
@@ -182,7 +170,6 @@ export default function Rajahmundry() {
   const [form, setForm] = useState({ name:"", phone:"", dept:"", date:"", slot:"" });
   const [sent, setSent] = useState(false);
   const statRef = useRef<HTMLDivElement>(null);
-  const deptScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [page]);
 
@@ -203,12 +190,12 @@ export default function Rajahmundry() {
     setTimeout(() => { setSent(false); setBookOpen(false); setForm({ name:"", phone:"", dept:"", date:"", slot:"" }); }, 3500);
   };
 
-  /* ═══ NAVBAR ════════════════════════════════════════════════ */
+  /* ═══ NAVBAR ═══════════════════════════════════════════════ */
   const Nav = () => (
     <>
       {/* Emergency strip */}
       <div style={{ background: NAVDK, padding: "6px 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".4rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "1.8rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.8rem", flexWrap: "wrap" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ position: "relative", display: "inline-flex", width: 10, height: 10 }}>
               <span style={{ position: "absolute", width: "100%", height: "100%", borderRadius: "50%", background: "#EF4444", animation: "ping 1.5s ease infinite", opacity: .5 }}/>
@@ -218,24 +205,22 @@ export default function Rajahmundry() {
           </div>
           <a href="tel:0883-246-1100" style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".9rem", fontWeight: 900, color: WH, textDecoration: "none" }}>0883-246-1100</a>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-          <span style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".62rem", color: "rgba(255,255,255,.42)" }}>D.No. 7-31, Morampudi Road, Rajahmundry – 533101</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
+          <span className="addr-hide" style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".62rem", color: "rgba(255,255,255,.42)" }}>D.No. 7-31, Morampudi Road, Rajahmundry – 533101</span>
           <Link href="/" style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".62rem", fontWeight: 700, color: "rgba(255,255,255,.5)", textDecoration: "none", letterSpacing: ".1em", textTransform: "uppercase" }}>← Main Site</Link>
         </div>
       </div>
 
       {/* Main nav */}
       <header style={{ position: "sticky", top: 0, zIndex: 500, background: scrolled ? "rgba(255,255,255,.97)" : WH, backdropFilter: scrolled ? "blur(16px)" : "none", borderBottom: `1px solid ${scrolled ? BDR : "rgba(221,229,240,.45)"}`, boxShadow: scrolled ? "0 2px 24px rgba(27,45,91,.07)" : "none", transition: "all .3s" }}>
-        {/* Brand colour bar */}
         <div style={{ height: 4, background: `linear-gradient(90deg,${NAVY} 0%,${PINK} 50%,${NAVY} 100%)` }} />
-        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 2rem", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 1.5rem", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
-          {/* Logo */}
-          <button onClick={() => { setPage("home"); setMobMenu(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+          <button onClick={() => { setPage("home"); setMobMenu(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, flexShrink: 0 }}>
             <Logo h={44} />
           </button>
 
-          {/* Branch badge */}
+          {/* Branch badge — desktop only */}
           <div style={{ display: "flex", alignItems: "center", gap: 10 }} className="d-nav">
             <div style={{ width: 1, height: 30, background: BDR }}/>
             <div>
@@ -244,7 +229,7 @@ export default function Rajahmundry() {
             </div>
           </div>
 
-          {/* 3 page nav */}
+          {/* 3 page nav — desktop */}
           <nav style={{ display: "flex", alignItems: "center", background: BG, borderRadius: 10, padding: "4px", gap: "2px" }} className="d-nav">
             {(["home","departments","doctors"] as Page[]).map(pg => (
               <button key={pg} onClick={() => setPage(pg)}
@@ -259,17 +244,18 @@ export default function Rajahmundry() {
               <span>📞</span>0883-246-1200
             </a>
             <button onClick={() => setBookOpen(true)}
-              style={{ fontFamily: "'Nunito',sans-serif", background: PINK, color: WH, border: "none", borderRadius: 9, padding: ".58rem 1.4rem", fontSize: ".82rem", fontWeight: 900, cursor: "pointer", boxShadow: `0 4px 16px ${PINK}44`, transition: "all .25s" }}
-              onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = PINKL}
-              onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = PINK}>
+              style={{ fontFamily: "'Nunito',sans-serif", background: PINK, color: WH, border: "none", borderRadius: 9, padding: ".58rem 1.4rem", fontSize: ".82rem", fontWeight: 900, cursor: "pointer", boxShadow: `0 4px 16px ${PINK}44`, transition: "all .25s", whiteSpace: "nowrap" }}>
               Book Appointment
             </button>
+            {/* Hamburger */}
             <button onClick={() => setMobMenu(!mobMenu)} className="m-ham"
               style={{ display: "none", flexDirection: "column", gap: 5, background: "none", border: `1.5px solid ${BDR}`, borderRadius: 8, padding: ".4rem .6rem", cursor: "pointer" }}>
               {[0,1,2].map(i => <span key={i} style={{ width: 20, height: 1.5, background: NAVY, display: "block" }}/>)}
             </button>
           </div>
         </div>
+
+        {/* Mobile menu */}
         {mobMenu && (
           <div style={{ background: WH, borderTop: `1px solid ${BDR}`, padding: "1rem 1.5rem", display: "flex", flexDirection: "column", gap: ".8rem" }}>
             {(["home","departments","doctors"] as Page[]).map(pg => (
@@ -278,6 +264,7 @@ export default function Rajahmundry() {
                 {pg === "home" ? "Home" : pg === "departments" ? "Departments" : "Doctors"}
               </button>
             ))}
+            <a href="tel:0883-246-1100" style={{ fontFamily: "'Nunito',sans-serif", color: NAVY, textDecoration: "none", fontWeight: 800, fontSize: ".9rem", padding: ".65rem .9rem" }}>📞 0883-246-1100</a>
             <button onClick={() => { setMobMenu(false); setBookOpen(true); }}
               style={{ fontFamily: "'Nunito',sans-serif", background: PINK, color: WH, border: "none", borderRadius: 8, padding: ".8rem", fontWeight: 900, cursor: "pointer" }}>
               Book Appointment
@@ -288,21 +275,19 @@ export default function Rajahmundry() {
     </>
   );
 
-  /* ═══ HOME PAGE ═════════════════════════════════════════════ */
+  /* ═══ HOME PAGE ════════════════════════════════════════════ */
   const HomePage = () => (
     <div>
 
-      {/* ── HERO — FULL-HEIGHT SPLIT SCREEN ── */}
+      {/* ── HERO ── */}
       <section style={{ display: "flex", minHeight: "92vh", overflow: "hidden" }} className="hero-split">
         {/* Left — colour panel */}
         <div style={{ flex: "0 0 50%", background: `linear-gradient(150deg,${NAVDK} 0%,${NAVY} 60%,#3A104A 100%)`, display: "flex", alignItems: "center", padding: "7rem 4rem 5rem 3rem", position: "relative", overflow: "hidden" }}>
-          {/* Decorative circles */}
           <div style={{ position: "absolute", bottom: "-15%", left: "-10%", width: 400, height: 400, borderRadius: "50%", border: `1px solid ${PINK}20`, pointerEvents: "none" }}/>
           <div style={{ position: "absolute", bottom: "-25%", left: "-20%", width: 600, height: 600, borderRadius: "50%", border: `1px solid ${PINK}12`, pointerEvents: "none" }}/>
           <div style={{ position: "absolute", top: "10%", right: "-5%", width: 200, height: 200, borderRadius: "50%", background: `radial-gradient(circle,${PINK}18 0%,transparent 70%)`, pointerEvents: "none" }}/>
 
           <div style={{ position: "relative", zIndex: 2, maxWidth: 520 }}>
-            {/* NABH tag */}
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: `${PINK}22`, border: `1px solid ${PINK}40`, borderRadius: 100, padding: ".36rem 1rem", marginBottom: "2rem", animation: "fadeUp .8s ease .1s both" }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ADE80", animation: "blink 2s ease infinite", display: "inline-block" }}/>
               <span style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".62rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: "rgba(255,255,255,.88)" }}>NABH Accredited · Est. 2016 · Rajahmundry</span>
@@ -328,9 +313,9 @@ export default function Rajahmundry() {
             </div>
 
             {/* Floating stat cards */}
-            <div ref={statRef} style={{ display: "flex", gap: "1rem", marginTop: "3rem", animation: "fadeUp .8s ease .85s both" }}>
+            <div ref={statRef} style={{ display: "flex", gap: "1rem", marginTop: "3rem", animation: "fadeUp .8s ease .85s both", flexWrap: "wrap" }}>
               {STATS.map((s, i) => (
-                <div key={i} style={{ background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 12, padding: "1rem 1.2rem", backdropFilter: "blur(8px)", flex: 1, textAlign: "center" }}>
+                <div key={i} style={{ background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 12, padding: "1rem 1.2rem", backdropFilter: "blur(8px)", flex: 1, textAlign: "center", minWidth: 70 }}>
                   <p style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.8rem", fontWeight: 700, color: WH, lineHeight: 1 }}>
                     <Cnt to={s.n} suf={s.s} go={statsGo}/>
                   </p>
@@ -341,12 +326,10 @@ export default function Rajahmundry() {
           </div>
         </div>
 
-        {/* Right — photo panel */}
+        {/* Right — photo panel (hidden on mobile) */}
         <div style={{ flex: 1, position: "relative", overflow: "hidden" }} className="hero-photo-r">
           <img src={HOME_IMG.hero} alt="Srikara Rajahmundry Hospital" style={{ width: "100%", height: "100%", objectFit: "cover", animation: "zoomIn 10s ease-out forwards" }}/>
           <div style={{ position: "absolute", inset: 0, background: `linear-gradient(90deg,${NAVDK}80 0%,transparent 40%),linear-gradient(180deg,transparent 50%,${NAVDK}88 100%)` }}/>
-
-          {/* Overlapping info card */}
           <div style={{ position: "absolute", bottom: "3rem", left: "50%", transform: "translateX(-50%)", width: "85%", background: "rgba(255,255,255,.92)", backdropFilter: "blur(16px)", borderRadius: 16, padding: "1.4rem 1.6rem", boxShadow: "0 24px 60px rgba(27,45,91,.2)", border: `1px solid ${BDR}` }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -365,8 +348,6 @@ export default function Rajahmundry() {
               </div>
             </div>
           </div>
-
-          {/* Emergency badge top */}
           <div style={{ position: "absolute", top: "2.5rem", right: "1.5rem", background: "#EF4444", borderRadius: 12, padding: ".8rem 1.1rem" }}>
             <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".58rem", fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: WH, opacity: .85, marginBottom: 2 }}>Emergency 24/7</p>
             <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".95rem", fontWeight: 900, color: WH }}>0883-246-1100</p>
@@ -385,8 +366,8 @@ export default function Rajahmundry() {
         </div>
       </div>
 
-      {/* ── ABOUT — 3-col asymmetric ── */}
-      <section style={{ background: WH, padding: "7rem 2rem" }}>
+      {/* ── ABOUT ── */}
+      <section style={{ background: WH, padding: "7rem 2rem" }} className="sec">
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <Fade>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "3.5rem" }}>
@@ -400,10 +381,8 @@ export default function Rajahmundry() {
             </div>
           </Fade>
 
-          {/* 3-column asymmetric grid */}
           <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1fr", gap: "1.5rem", alignItems: "stretch" }} className="about-grid">
 
-            {/* Col 1 — tall photo */}
             <Fade x={-24}>
               <div style={{ borderRadius: 20, overflow: "hidden", height: "100%", minHeight: 480, position: "relative", boxShadow: `0 24px 60px ${NAVY}18` }}>
                 <img src={HOME_IMG.about1} alt="Hospital" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}/>
@@ -418,10 +397,8 @@ export default function Rajahmundry() {
               </div>
             </Fade>
 
-            {/* Col 2 — pull quote + features */}
             <Fade d={100}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem", height: "100%" }}>
-                {/* Pull quote */}
                 <div style={{ background: `linear-gradient(135deg,${NAVY},${NAVLT})`, borderRadius: 20, padding: "2.2rem", flex: "0 0 auto" }}>
                   <div style={{ fontSize: "3rem", color: PINK, lineHeight: 1, marginBottom: ".8rem", fontFamily: "serif" }}>"</div>
                   <p style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.05rem", color: "rgba(255,255,255,.9)", lineHeight: 1.7 }}>
@@ -432,7 +409,6 @@ export default function Rajahmundry() {
                     <span style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".72rem", fontWeight: 700, color: "rgba(255,255,255,.6)" }}>Medical Director, Srikara Rajahmundry</span>
                   </div>
                 </div>
-                {/* Feature grid */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", flex: 1 }}>
                   {[{ic:"🤖",l:"Robotic Surgery",s:"Minimally invasive"},{ic:"🧬",l:"AI Diagnostics",s:"3T MRI & 256-CT"},{ic:"🏥",l:"180 Beds",s:"Full inpatient care"},{ic:"🚑",l:"24/7 Emergency",s:"<10 min response"}].map(f => (
                     <div key={f.l} style={{ background: BG, borderRadius: 14, padding: "1.2rem", border: `1px solid ${BDR}`, display: "flex", flexDirection: "column", gap: ".4rem", transition: "all .3s", cursor: "default" }}
@@ -447,7 +423,6 @@ export default function Rajahmundry() {
               </div>
             </Fade>
 
-            {/* Col 3 — stacked photos + text */}
             <Fade d={180} x={24}>
               <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem" }}>
                 <div style={{ borderRadius: 16, overflow: "hidden", height: 220 }}>
@@ -465,9 +440,7 @@ export default function Rajahmundry() {
                     Established in 2016, we serve Rajahmundry, Kakinada, Peddapuram and the entire East Godavari district with 30+ board-certified specialists across 8 specialities.
                   </p>
                   <button onClick={() => setBookOpen(true)}
-                    style={{ fontFamily: "'Nunito',sans-serif", display: "inline-flex", alignItems: "center", gap: 8, background: NAVY, color: WH, padding: ".78rem 1.6rem", borderRadius: 8, fontSize: ".82rem", fontWeight: 900, border: "none", cursor: "pointer", transition: "all .25s" }}
-                    onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = NAVLT}
-                    onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = NAVY}>
+                    style={{ fontFamily: "'Nunito',sans-serif", display: "inline-flex", alignItems: "center", gap: 8, background: NAVY, color: WH, padding: ".78rem 1.6rem", borderRadius: 8, fontSize: ".82rem", fontWeight: 900, border: "none", cursor: "pointer", transition: "all .25s" }}>
                     Book Consultation →
                   </button>
                 </div>
@@ -478,7 +451,7 @@ export default function Rajahmundry() {
       </section>
 
       {/* ── DEPT QUICK LOOK ── */}
-      <section style={{ background: BG, padding: "7rem 2rem" }}>
+      <section style={{ background: BG, padding: "7rem 2rem" }} className="sec">
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <Fade>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "3rem", flexWrap: "wrap", gap: "1.5rem" }}>
@@ -500,7 +473,6 @@ export default function Rajahmundry() {
             </div>
           </Fade>
 
-          {/* 2-row dept cards */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem" }} className="dept-grid-h">
             {DEPTS.map((d, i) => (
               <Fade key={d.n} d={i * 45}>
@@ -525,7 +497,7 @@ export default function Rajahmundry() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 2rem" }}>
+      <section style={{ position: "relative", overflow: "hidden", padding: "7rem 2rem" }} className="sec">
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <img src={HOME_IMG.test} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
           <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${NAVDK}F5 0%,${NAVY}EE 50%,${NAVDK}F0 100%)` }}/>
@@ -548,7 +520,7 @@ export default function Rajahmundry() {
           <div style={{ position: "relative", minHeight: 300 }}>
             {TESTIS.map((t, i) => (
               <div key={i} style={{ position: i === activeTst ? "relative" : "absolute", inset: 0, opacity: i === activeTst ? 1 : 0, transform: i === activeTst ? "none" : "translateY(16px)", transition: "all .7s ease", pointerEvents: i === activeTst ? "auto" : "none" }}>
-                <div style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 20, padding: "3rem", backdropFilter: "blur(12px)", position: "relative", overflow: "hidden" }}>
+                <div style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 20, padding: "3rem 2rem", backdropFilter: "blur(12px)", position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "absolute", top: "-20%", right: "-5%", width: 200, height: 200, borderRadius: "50%", background: `radial-gradient(circle,${PINK}15 0%,transparent 70%)`, pointerEvents: "none" }}/>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem", flexWrap: "wrap", gap: ".8rem", position: "relative", zIndex: 1 }}>
                     <span style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".65rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(255,255,255,.88)", background: `${PINK}30`, border: `1px solid ${PINK}50`, borderRadius: 100, padding: ".28rem .85rem" }}>{t.dept}</span>
@@ -577,7 +549,7 @@ export default function Rajahmundry() {
       </section>
 
       {/* ── FACILITIES ── */}
-      <section style={{ background: WH, padding: "7rem 2rem" }}>
+      <section style={{ background: WH, padding: "7rem 2rem" }} className="sec">
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <Fade>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "3rem" }}>
@@ -591,7 +563,7 @@ export default function Rajahmundry() {
             </div>
           </Fade>
 
-          {/* Bento-style facility grid */}
+          {/* Bento grid */}
           <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", gridTemplateRows: "240px 240px", gap: "1.2rem" }} className="fac-bento">
             {[
               { name:"24/7 Emergency & Trauma", tag:"Emergency", img:HOME_IMG.fac1, span:"1 / 1 / 3 / 2", desc:"Trauma bay, crash carts and rapid response every hour." },
@@ -620,7 +592,6 @@ export default function Rajahmundry() {
             ))}
           </div>
 
-          {/* Emrg strip */}
           <Fade d={200}>
             <div style={{ marginTop: "1.2rem", background: "linear-gradient(135deg,#DC2626,#9B1C1C)", borderRadius: 16, overflow: "hidden", position: "relative" }}>
               <div style={{ position: "absolute", inset: 0 }}><img src={HOME_IMG.emrg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: .12 }}/></div>
@@ -640,7 +611,7 @@ export default function Rajahmundry() {
       </section>
 
       {/* ── CONTACT & BRANCHES ── */}
-      <section style={{ background: BG, padding: "7rem 2rem" }}>
+      <section style={{ background: BG, padding: "7rem 2rem" }} className="sec">
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <Fade>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 700, color: INK, textAlign: "center", marginBottom: "3rem" }}>
@@ -673,7 +644,7 @@ export default function Rajahmundry() {
 
             <Fade x={24} d={100}>
               <h3 style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.8rem", fontWeight: 400, color: INK, marginBottom: "1.8rem" }}>Srikara Network</h3>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: BDR, borderRadius: 14, overflow: "hidden", marginBottom: "1.5rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: BDR, borderRadius: 14, overflow: "hidden", marginBottom: "1.5rem" }} className="branch-grid-3">
                 {BRANCHES.map(b => (
                   <div key={b} style={{ background: BG, padding: ".9rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "background .2s", cursor: "pointer" }}
                     onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = WH}
@@ -695,10 +666,9 @@ export default function Rajahmundry() {
     </div>
   );
 
-  /* ═══ DEPARTMENTS PAGE ═══════════════════════════════════════ */
+  /* ═══ DEPARTMENTS PAGE ══════════════════════════════════════ */
   const DepartmentsPage = () => (
     <div>
-      {/* Full-width hero */}
       <div style={{ background: `linear-gradient(135deg,${NAVDK},${NAVY})`, padding: "4rem 2rem 3rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${PINK}08 1px,transparent 1px),linear-gradient(90deg,${PINK}08 1px,transparent 1px)`, backgroundSize: "60px 60px", pointerEvents: "none" }}/>
         <div style={{ maxWidth: 1300, margin: "0 auto", position: "relative", zIndex: 1 }}>
@@ -727,13 +697,11 @@ export default function Rajahmundry() {
         </div>
       </div>
 
-      {/* Dept panels — each with a different photo layout */}
+      {/* Dept panels */}
       <div style={{ background: BG }}>
         {DEPTS.map((d, i) => (
           <div key={d.n} id={`dept-${i}`} style={{ maxWidth: 1300, margin: "0 auto", padding: "4rem 2rem", borderBottom: i < DEPTS.length - 1 ? `1px solid ${BDR}` : "none" }}>
-            <div style={{ display: "grid", gridTemplateColumns: i % 2 === 0 ? "1fr 1fr" : "1fr 1fr", gap: "3rem", alignItems: "center" }} className="two-col">
-
-              {/* Photo side — alternates */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "center" }} className="two-col">
               <div style={{ order: i % 2 === 0 ? 1 : 2 }}>
                 <div style={{ borderRadius: i % 2 === 0 ? "16px 60px 16px 16px" : "60px 16px 16px 16px", overflow: "hidden", boxShadow: `0 24px 60px ${NAVY}18`, position: "relative" }}>
                   <img src={d.img} alt={d.n} style={{ width: "100%", height: 360, objectFit: "cover", display: "block", transition: "transform .6s" }}
@@ -746,8 +714,6 @@ export default function Rajahmundry() {
                   </div>
                 </div>
               </div>
-
-              {/* Text side */}
               <div style={{ order: i % 2 === 0 ? 2 : 1 }}>
                 <div style={{ width: 36, height: 4, background: d.clr, borderRadius: 2, marginBottom: "1.5rem" }}/>
                 <h2 style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "clamp(1.6rem,2.5vw,2.4rem)", fontWeight: 400, color: INK, lineHeight: 1.2, marginBottom: "1rem" }}>{d.n}</h2>
@@ -772,7 +738,6 @@ export default function Rajahmundry() {
   /* ═══ DOCTORS PAGE ══════════════════════════════════════════ */
   const DoctorsPage = () => (
     <div>
-      {/* Hero with bg photo */}
       <div style={{ position: "relative", overflow: "hidden", minHeight: 280, display: "flex", alignItems: "center", padding: "4rem 2rem" }}>
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <img src={DOC_IMG.bg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
@@ -792,8 +757,7 @@ export default function Rajahmundry() {
         </div>
       </div>
 
-      {/* Staggered doctor grid */}
-      <div style={{ background: BG, padding: "5rem 2rem" }}>
+      <div style={{ background: BG, padding: "5rem 2rem" }} className="sec">
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "2rem" }} className="three-col">
             {DOCS.map((d, i) => (
@@ -801,29 +765,21 @@ export default function Rajahmundry() {
                 <div style={{ background: WH, borderRadius: 20, overflow: "hidden", transition: "all .35s", cursor: "pointer", boxShadow: "0 4px 20px rgba(27,45,91,.08)", position: "relative" }}
                   onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = "translateY(-8px)"; el.style.boxShadow = `0 24px 60px ${NAVY}22`; }}
                   onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = ""; el.style.boxShadow = "0 4px 20px rgba(27,45,91,.08)"; }}>
-
-                  {/* Large portrait */}
                   <div style={{ height: 300, overflow: "hidden", position: "relative" }}>
                     <img src={d.img} alt={d.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block", transition: "transform .6s" }}
                       onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"}
                       onMouseLeave={e => (e.currentTarget as HTMLImageElement).style.transform = ""}/>
                     <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg,transparent 45%,${NAVDK}CC 100%)` }}/>
-                    {/* Dept badge */}
                     <span style={{ position: "absolute", top: "1rem", right: "1rem", fontFamily: "'Nunito',sans-serif", fontSize: ".6rem", fontWeight: 800, background: "rgba(255,255,255,.9)", color: MID, padding: ".22rem .65rem", borderRadius: 100 }}>{d.dept}</span>
-                    {/* Exp badge */}
                     <div style={{ position: "absolute", bottom: "1.2rem", left: "1.2rem", background: PINK, borderRadius: 9, padding: ".45rem .9rem" }}>
                       <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".62rem", fontWeight: 700, color: "rgba(255,255,255,.8)", letterSpacing: ".1em", textTransform: "uppercase" }}>Experience</p>
                       <p style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 700, color: WH, lineHeight: 1 }}>{d.exp} <span style={{ fontSize: ".75rem" }}>yrs</span></p>
                     </div>
                   </div>
-
-                  {/* Info */}
                   <div style={{ padding: "1.6rem" }}>
                     <h3 style={{ fontFamily: "'Playfair Display',serif", fontStyle: "italic", fontSize: "1.1rem", fontWeight: 400, color: INK, marginBottom: ".3rem", lineHeight: 1.3 }}>{d.name}</h3>
                     <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".75rem", fontWeight: 900, color: PINK, marginBottom: ".4rem" }}>{d.role}</p>
                     <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".72rem", color: LT, lineHeight: 1.5, marginBottom: "1.2rem" }}>{d.qual}</p>
-
-                    {/* Availability bar */}
                     <div style={{ background: NAVYP, borderRadius: 9, padding: ".75rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: ".8rem", marginBottom: "1rem" }}>
                       <div>
                         <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".58rem", fontWeight: 900, letterSpacing: ".12em", textTransform: "uppercase", color: LT, marginBottom: ".18rem" }}>Available</p>
@@ -831,7 +787,6 @@ export default function Rajahmundry() {
                       </div>
                       <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E", flexShrink: 0, boxShadow: "0 0 0 3px rgba(34,197,94,.2)" }}/>
                     </div>
-
                     <button onClick={() => setBookOpen(true)}
                       style={{ fontFamily: "'Nunito',sans-serif", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", background: NAVY, color: WH, border: "none", borderRadius: 9, padding: ".75rem", fontSize: ".82rem", fontWeight: 900, cursor: "pointer", transition: "background .25s" }}
                       onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = PINK}
@@ -844,7 +799,6 @@ export default function Rajahmundry() {
             ))}
           </div>
 
-          {/* CTA footer */}
           <Fade d={250}>
             <div style={{ marginTop: "3rem", background: `linear-gradient(135deg,${NAVY},${NAVDK})`, borderRadius: 20, padding: "3rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 300, background: `radial-gradient(ellipse at right,${PINK}20 0%,transparent 70%)`, pointerEvents: "none" }}/>
@@ -882,18 +836,54 @@ export default function Rajahmundry() {
         .d-nav{display:flex;align-items:center;}
         .m-ham{display:none!important;}
 
+        /* ── MOBILE RESPONSIVE ── */
         @media(max-width:960px){
+          /* Show hamburger, hide desktop nav */
           .d-nav{display:none!important;}
           .m-ham{display:flex!important;}
-          .hero-split,.two-col,.about-grid{display:block!important;}
+
+          /* Hero: stack panels */
+          .hero-split{display:block!important;}
+          .hero-split > div:first-child{min-height:auto;padding:5rem 1.5rem 4rem;}
           .hero-photo-r{display:none!important;}
-          .hero-split > div:first-child{min-height:90vh;}
+
+          /* About grid → single col */
+          .about-grid{display:block!important;}
+          .about-grid > *{margin-bottom:1.5rem;}
+
+          /* Two-col → single col */
+          .two-col{display:block!important;}
+          .two-col > *{margin-bottom:2rem;order:unset!important;}
+
+          /* Dept cards → 2-col */
           .dept-grid-h{grid-template-columns:1fr 1fr!important;}
+
+          /* Facility bento → single col */
           .fac-bento{grid-template-columns:1fr!important;grid-template-rows:auto!important;}
           .fac-bento > *{grid-area:auto!important;height:200px!important;}
+
+          /* Doctors → 2-col */
           .three-col{grid-template-columns:1fr 1fr!important;}
-          section{padding:4rem 1.5rem!important;}
-          .about-grid > *{margin-bottom:1.5rem;}
+
+          /* Branches → 2-col */
+          .branch-grid-3{grid-template-columns:1fr 1fr!important;}
+
+          /* Address in strip */
+          .addr-hide{display:none!important;}
+
+          /* Section padding */
+          .sec{padding:4rem 1.5rem!important;}
+        }
+
+        @media(max-width:600px){
+          /* Dept cards → 1-col */
+          .dept-grid-h{grid-template-columns:1fr!important;}
+          /* Doctors → 1-col */
+          .three-col{grid-template-columns:1fr!important;}
+          /* Branches → 1-col */
+          .branch-grid-3{grid-template-columns:1fr!important;}
+          /* Hero hero CTA wrap */
+          .hero-split > div:first-child{padding:4rem 1.2rem 3rem;}
         }
       `}</style>
 
@@ -936,7 +926,6 @@ export default function Rajahmundry() {
         <div onClick={e => { if (e.target === e.currentTarget) setBookOpen(false); }}
           style={{ position: "fixed", inset: 0, zIndex: 900, background: "rgba(13,26,53,.7)", backdropFilter: "blur(14px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
           <div style={{ width: "100%", maxWidth: 640, maxHeight: "92vh", overflowY: "auto", background: WH, borderRadius: 22, boxShadow: "0 40px 100px rgba(0,0,0,.3)", animation: "fadeUp .3s ease" }}>
-            {/* Header */}
             <div style={{ height: 5, background: `linear-gradient(90deg,${NAVY},${PINK},${NAVY})`, borderRadius: "22px 22px 0 0" }}/>
             <div style={{ background: `linear-gradient(135deg,${NAVY},${NAVDK})`, padding: "2rem 2rem 1.6rem", display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", right: "-8%", top: "50%", transform: "translateY(-50%)", width: 220, height: 220, borderRadius: "50%", background: `radial-gradient(circle,${PINK}22 0%,transparent 70%)`, pointerEvents: "none" }}/>
@@ -950,7 +939,7 @@ export default function Rajahmundry() {
 
             <form onSubmit={submit} style={{ padding: "2rem" }}>
               <p style={{ fontFamily: "'Nunito',sans-serif", fontSize: ".65rem", fontWeight: 900, letterSpacing: ".18em", textTransform: "uppercase", color: PINK, marginBottom: ".9rem" }}>Your Details</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }} className="modal-form-grid">
                 {[{ l:"Full Name *", k:"name", t:"text", ph:"Your full name" },{ l:"Mobile Number *", k:"phone", t:"tel", ph:"+91 98765 43210" }].map(f => (
                   <div key={f.k}>
                     <label style={{ fontFamily: "'Nunito',sans-serif", display: "block", fontSize: ".7rem", fontWeight: 800, color: MID, marginBottom: ".4rem" }}>{f.l}</label>
@@ -961,7 +950,7 @@ export default function Rajahmundry() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.4rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.4rem" }} className="modal-form-grid">
                 <div>
                   <label style={{ fontFamily: "'Nunito',sans-serif", display: "block", fontSize: ".7rem", fontWeight: 800, color: MID, marginBottom: ".4rem" }}>Department *</label>
                   <select value={form.dept} onChange={e => setForm(p => ({ ...p, dept: e.target.value }))} required
@@ -1007,6 +996,13 @@ export default function Rajahmundry() {
           </div>
         </div>
       )}
+
+      {/* Modal form grid responsive */}
+      <style>{`
+        @media(max-width:500px){
+          .modal-form-grid{grid-template-columns:1fr!important;}
+        }
+      `}</style>
     </>
   );
 }

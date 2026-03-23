@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 // ── IMAGES ────────────────────────────────────────────────────────────────────
 const IMG = {
@@ -30,15 +29,6 @@ const IMG = {
   waiting:   "https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=800&q=80",
   ambulance: "https://images.unsplash.com/photo-1587745416684-47953f16f02f?w=600&q=80",
 };
-
-// ── DATA ──────────────────────────────────────────────────────────────────────
-const NAV = [
-  { label: "About",       href: "#about"       },
-  { label: "Specialities",href: "#specialities"},
-  { label: "Doctors",     href: "#doctors"     },
-  { label: "Facilities",  href: "#facilities"  },
-  { label: "Contact",     href: "#contact"     },
-];
 
 const STATS = [
   { num: "13+", label: "Years of Excellence"  },
@@ -89,13 +79,9 @@ const TESTIMONIALS = [
   { text:"I had a spinal disc surgery with Dr. Sunita. She explained every step clearly and my recovery was faster than anyone expected. Exceptional clinical skill and human care combined.",                                        name:"Balaiah Rao",       area:"AS Rao Nagar, Hyderabad",  rating:5, dept:"Orthopaedics"   },
 ];
 
-// ── Correct 9 Srikara branches ──
 const OTHER_BRANCHES = ["RTC X Roads","Miyapur","Lakdikapul","Kompally","LB Nagar","Peerzadiguda","Rajahmundry","Vijayawada"];
 
-// ── COLOUR TOKENS ─────────────────────────────────────────────────────────────
-// Brand: navy #1B2A4A (SRIKARA text) + magenta #B8246E (HOSPITALS text)
 const C = {
-  // backgrounds / neutrals — unchanged
   white:  "#FFFFFF",
   off:    "#F4F7FC",
   sky:    "#EEF2FA",
@@ -104,16 +90,14 @@ const C = {
   text:   "#0D1B2E",
   mid:    "#4A6080",
   light:  "#8AAAC8",
-  // ── Srikara brand ──
-  navy:    "#1B2A4A",     // primary  – was blue  #0A3D6B
-  navyD:   "#0F1E35",     // darker   – was blue hover
-  navyL:   "#2E4A7A",     // lighter  – for sub-accents
-  magenta: "#B8246E",     // accent   – was teal  #00897B
-  magentaD:"#8A1A52",     // deeper   – was teal hover
-  magentaL:"#D4408A",     // lighter  – was tealLight #00ACC1
+  navy:    "#1B2A4A",
+  navyD:   "#0F1E35",
+  navyL:   "#2E4A7A",
+  magenta: "#B8246E",
+  magentaD:"#8A1A52",
+  magentaL:"#D4408A",
 };
 
-// ── HOOKS ─────────────────────────────────────────────────────────────────────
 function useReveal(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
@@ -142,7 +126,6 @@ function Stars({ n }: { n: number }) {
   return <span style={{ color: "#F59E0B", letterSpacing: 2 }}>{Array(n).fill("★").join("")}</span>;
 }
 
-// ── PAGE ──────────────────────────────────────────────────────────────────────
 export default function EcilPage() {
   const [scrollY,   setScrollY]   = useState(0);
   const [menuOpen,  setMenuOpen]  = useState(false);
@@ -172,8 +155,6 @@ export default function EcilPage() {
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;}
         body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#0D1B2E;overflow-x:hidden;}
-
-        /* Scrollbar — navy track, magenta thumb */
         ::-webkit-scrollbar{width:5px;}
         ::-webkit-scrollbar-track{background:#F0F4FC;}
         ::-webkit-scrollbar-thumb{background:#B8246E;border-radius:3px;}
@@ -191,7 +172,6 @@ export default function EcilPage() {
         .ha5{animation:fadeUp .9s ease .9s  both;}  .ha6{animation:fadeUp .9s ease 1.1s both;}
         .hero-img{animation:zoomIn 8s ease-out both;}
 
-        /* Card interactions */
         .spec-card{overflow:hidden;cursor:pointer;transition:all .4s ease;}
         .spec-card:hover{transform:translateY(-6px);box-shadow:0 24px 64px rgba(27,42,74,.14);}
         .spec-card img{transition:transform .6s ease;}
@@ -207,92 +187,133 @@ export default function EcilPage() {
         .fac-card img{transition:transform .5s ease;}
         .fac-card:hover img{transform:scale(1.05);}
 
-        /* Buttons */
-        /* Primary — navy fill */
         .btn-primary{display:inline-flex;align-items:center;gap:8px;background:#1B2A4A;color:#fff;padding:.85rem 2rem;border-radius:4px;text-decoration:none;font-size:.85rem;font-weight:700;letter-spacing:.04em;transition:all .25s;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;}
         .btn-primary:hover{background:#0F1E35;transform:translateY(-2px);box-shadow:0 8px 28px rgba(27,42,74,.28);}
 
-        /* Outline — navy border */
         .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#1B2A4A;padding:.85rem 2rem;border-radius:4px;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.04em;transition:all .25s;border:1.5px solid #1B2A4A;}
         .btn-outline:hover{background:#1B2A4A;color:#fff;}
 
-        /* Accent — magenta fill (was btn-teal) */
         .btn-magenta{display:inline-flex;align-items:center;gap:8px;background:#B8246E;color:#fff;padding:.85rem 2rem;border-radius:4px;text-decoration:none;font-size:.85rem;font-weight:700;letter-spacing:.04em;transition:all .25s;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;}
         .btn-magenta:hover{background:#8A1A52;}
 
-        /* Section typography helpers */
         .section-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#B8246E;margin-bottom:.8rem;}
         .section-tag::before{content:'';display:block;width:20px;height:2px;background:#B8246E;}
         .section-h{font-family:'Merriweather',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;color:#1B2A4A;line-height:1.2;}
         .section-sub{font-size:1rem;color:#4A6080;line-height:1.8;max-width:540px;}
 
-        /* Form focus */
         input,select,textarea{outline:none;font-family:'Plus Jakarta Sans',sans-serif;}
         input:focus,select:focus,textarea:focus{border-color:#B8246E !important;}
 
-        /* Appointment modal */
         .appt-overlay{position:fixed;inset:0;z-index:900;background:rgba(15,30,53,.65);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1rem;animation:fadeIn .25s ease;}
         .appt-modal{background:#fff;border-radius:12px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 40px 100px rgba(27,42,74,.22);animation:slideUp .3s ease;}
 
-        /* Responsive */
+        /* ── MOBILE RESPONSIVE ── */
         @media(max-width:768px){
-          .desk{display:none !important;} .mob-show{display:flex !important;}
-          .hero-grid{grid-template-columns:1fr !important;}
+          /* Top emergency bar */
+          .top-bar-right{display:none !important;}
+          
+          /* Navbar */
+          .desk-nav{display:none !important;}
+          .mob-show{display:flex !important;}
+          
+          /* Hero */
+          .hero-section{min-height:auto !important;padding:5rem 1.25rem 3rem !important;}
+          .hero-grid{grid-template-columns:1fr !important;gap:2rem !important;}
           .hero-img-col{display:none !important;}
+          .hero-title{font-size:clamp(2rem,8vw,3rem) !important;}
+          .hero-cta-row{flex-direction:column !important;}
+          .hero-cta-row .btn-magenta,
+          .hero-cta-row .btn-outline{width:100%;justify-content:center;}
+          .hero-badges{flex-wrap:wrap !important;gap:.6rem !important;}
+          
+          /* Stats grid */
+          .stats-grid{grid-template-columns:1fr 1fr !important;}
+          .stats-grid > div{padding:1.2rem !important;}
+          
+          /* Sections padding */
+          .section-pad{padding:3.5rem 1.25rem !important;}
+          
+          /* About grid */
+          .about-grid{grid-template-columns:1fr !important;gap:2.5rem !important;}
+          .about-img-col .secondary-img{display:none !important;}
+          
+          /* Specs grid */
+          .spec-grid{grid-template-columns:1fr !important;gap:1rem !important;}
+          
+          /* Doctors grid */
+          .doc-grid{grid-template-columns:1fr 1fr !important;gap:1rem !important;}
+          .doc-card .doc-img{height:180px !important;}
+          
+          /* Facilities grid */
+          .fac-grid{grid-template-columns:1fr !important;gap:1rem !important;}
+          
+          /* Testimonial */
+          .test-card{padding:1.5rem !important;}
+          
+          /* Ambulance strip */
+          .ambu-strip{flex-direction:column !important;align-items:flex-start !important;gap:1.5rem !important;}
+          .ambu-strip a{width:100%;text-align:center;justify-content:center;}
+          
+          /* Contact */
+          .contact-grid{grid-template-columns:1fr !important;gap:2rem !important;}
+          .branch-grid{grid-template-columns:1fr 1fr 1fr !important;}
+          
+          /* Footer */
+          .footer-grid{flex-direction:column !important;gap:1rem !important;align-items:flex-start !important;}
+          .footer-links{flex-wrap:wrap !important;gap:1rem !important;}
+          
+          /* Floating book btn */
+          .float-book{bottom:1rem !important;right:1rem !important;font-size:.75rem !important;padding:.75rem 1.2rem !important;}
+          
+          /* About quick facts grid */
+          .about-facts{grid-template-columns:1fr 1fr !important;}
+          
+          /* Appointment modal */
+          .appt-form-grid{grid-template-columns:1fr !important;}
+          .appt-modal{border-radius:8px !important;}
+          .appt-modal-header{padding:1.5rem !important;}
+          .appt-modal-body{padding:1.25rem !important;}
+
+          /* Hero section content max width override */
+          .hero-text-content{max-width:100% !important;}
+        }
+        
+        @media(max-width:480px){
+          .doc-grid{grid-template-columns:1fr !important;}
+          .branch-grid{grid-template-columns:1fr 1fr !important;}
+          .hero-badges .badge-item{padding:.4rem .7rem !important;}
           .stats-grid{grid-template-columns:1fr 1fr !important;}
           .spec-grid{grid-template-columns:1fr !important;}
-          .doc-grid{grid-template-columns:1fr 1fr !important;}
-          .fac-grid{grid-template-columns:1fr !important;}
-          .about-grid{grid-template-columns:1fr !important;}
-          .contact-grid{grid-template-columns:1fr !important;}
-          .footer-grid{flex-direction:column !important;gap:2rem !important;}
-          .branch-grid{grid-template-columns:1fr 1fr 1fr !important;}
-          .section-pad{padding:4rem 1.5rem !important;}
-          .hero-pad{padding:6rem 1.5rem 4rem !important;}
         }
       `}</style>
 
-      {/* ── EMERGENCY TOP BAR — navy ── */}
-      <div style={{ background: C.navy, padding: "6px 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+      {/* ── EMERGENCY TOP BAR ── */}
+      <div style={{ background: C.navy, padding: "6px 1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: ".5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
           <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: ".68rem", color: "rgba(255,255,255,.65)", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 500 }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ADE80", animation: "pulse 1.5s ease infinite", display: "inline-block" }} />
             24/7 Emergency Active
           </span>
           <a href="tel:040-2717-6000" style={{ fontSize: ".82rem", color: "#fff", fontWeight: 700, textDecoration: "none", letterSpacing: ".05em" }}>📞 040-2717-6000</a>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+        <div className="top-bar-right" style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
           <span style={{ fontSize: ".65rem", color: "rgba(255,255,255,.5)", letterSpacing: ".1em" }}>ECIL X Roads, Hyderabad – 500062</span>
           <Link href="/" style={{ fontSize: ".65rem", color: "rgba(255,255,255,.55)", textDecoration: "none", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 600 }}>← Main Site</Link>
         </div>
       </div>
 
-      {/* ── NAVBAR — white, navy brand line ── */}
+      {/* ── NAVBAR ── */}
       <nav style={{ position: "sticky", top: 0, zIndex: 500, background: navSolid ? "rgba(255,255,255,.97)" : "#fff", borderBottom: `1px solid ${C.border}`, boxShadow: navSolid ? `0 2px 24px rgba(27,42,74,.08)` : "none", backdropFilter: "blur(12px)", transition: "all .3s" }}>
-        <div className="section-pad" style={{ maxWidth: 1400, margin: "0 auto", padding: "0 2.5rem", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-
-          {/* Logo — navy + magenta gradient square */}
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 1.25rem", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-           
-            {/* 🔥 LOGO IMAGE */}
-  <img
-    src="/srikara-logo.png"   
-    alt="Srikara Hospitals"
-    style={{
-      width: 44,
-      height: 44,
-      objectFit: "contain",
-      borderRadius: 6,
-    }}
-  />
+            <img src="/srikara-logo.png" alt="Srikara Hospitals" style={{ width: 44, height: 44, objectFit: "contain", borderRadius: 6 }} />
             <div>
               <p style={{ fontSize: "1rem", fontWeight: 800, color: C.navy, lineHeight: 1.1 }}>Srikara Hospital</p>
               <p style={{ fontSize: ".58rem", color: C.magenta, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600 }}>ECIL Branch · Hyderabad</p>
             </div>
           </Link>
 
-          {/* Desktop nav — Home / Doctors / Departments */}
-          <div className="desk" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div className="desk-nav" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
             {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l,h]) => (
               <Link key={l} href={h} style={{ fontSize: ".82rem", color: C.mid, fontWeight: 500, textDecoration: "none", transition: "color .2s" }}
                 onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = C.navy}
@@ -305,7 +326,6 @@ export default function EcilPage() {
             </button>
           </div>
 
-          {/* Mobile toggle */}
           <button className="mob-show" onClick={() => setMenuOpen(!menuOpen)}
             style={{ display: "none", flexDirection: "column", gap: 5, background: "none", border: `1px solid ${C.border}`, borderRadius: 6, padding: ".4rem .6rem", cursor: "pointer" }}>
             {[0,1,2].map(i => <span key={i} style={{ width: 22, height: 1.5, background: C.navy, display: "block" }} />)}
@@ -313,7 +333,7 @@ export default function EcilPage() {
         </div>
 
         {menuOpen && (
-          <div style={{ background: "#fff", borderTop: `1px solid ${C.border}`, padding: "1.5rem 2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div style={{ background: "#fff", borderTop: `1px solid ${C.border}`, padding: "1.5rem 1.25rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
             {[["Home","#"],["Doctors","#doctors"],["Departments","#specialities"]].map(([l,h]) => (
               <Link key={l} href={h} onClick={() => setMenuOpen(false)} style={{ color: C.text, textDecoration: "none", fontSize: ".9rem", fontWeight: 500, padding: ".5rem 0", borderBottom: `1px solid ${C.border}` }}>{l}</Link>
             ))}
@@ -322,33 +342,24 @@ export default function EcilPage() {
         )}
       </nav>
 
-      {/* ══════════════════════════════════════════
-          HERO — navy bg, same structure
-          ══════════════════════════════════════════ */}
-      <section style={{ background: C.navy, position: "relative", overflow: "hidden", minHeight: "92vh", display: "flex", alignItems: "center" }}>
-
-        {/* Background hospital photo */}
+      {/* ── HERO ── */}
+      <section className="hero-section" style={{ background: C.navy, position: "relative", overflow: "hidden", minHeight: "92vh", display: "flex", alignItems: "center" }}>
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <img src={IMG.heroBg} alt="Hospital" className="hero-img"
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", opacity: .15 }} />
-          {/* navy → magenta diagonal overlay */}
           <div style={{ position: "absolute", inset: 0, background: `linear-gradient(105deg,${C.navy} 45%,rgba(27,42,74,.7) 75%,rgba(184,36,110,.25) 100%)` }} />
         </div>
 
-        <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1400, margin: "0 auto", padding: "5rem 2.5rem" }} className="hero-pad">
+        <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1400, margin: "0 auto", padding: "5rem 1.25rem" }} className="hero-section">
           <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
-
-            {/* Left */}
-            <div>
-              {/* Status pill — magenta glow */}
+            <div className="hero-text-content">
               <div className="ha1" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: `rgba(184,36,110,.15)`, border: `1px solid rgba(184,36,110,.3)`, borderRadius: 100, padding: ".35rem 1rem", marginBottom: "2rem" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ADE80", animation: "pulse 2s ease infinite", display: "inline-block" }} />
                 <span style={{ fontSize: ".65rem", fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(220,130,180,.9)" }}>NABH Accredited · ECIL, Hyderabad</span>
               </div>
 
-              <h1 className="ha2" style={{ fontFamily: "'Merriweather',serif", fontSize: "clamp(2.6rem,5vw,4.8rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "1.5rem" }}>
+              <h1 className="ha2 hero-title" style={{ fontFamily: "'Merriweather',serif", fontSize: "clamp(2.6rem,5vw,4.8rem)", fontWeight: 700, color: "#fff", lineHeight: 1.1, marginBottom: "1.5rem" }}>
                 Trusted Healthcare<br />
-                {/* Italic accent — soft pink-white (was teal #63D9D0) */}
                 <span style={{ color: "#E8A0C0", fontStyle: "italic" }}>Close to Home.</span>
               </h1>
 
@@ -356,8 +367,7 @@ export default function EcilPage() {
                 Srikara ECIL is East Hyderabad's premier multi-specialty hospital — combining 45+ specialist doctors, robotic surgery, AI diagnostics and genuine human warmth to deliver care that truly makes a difference.
               </p>
 
-              <div className="ha4" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                {/* Primary CTA — magenta fill */}
+              <div className="ha4 hero-cta-row" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                 <button className="btn-magenta" onClick={() => setApptOpen(true)}>📅 Book Appointment</button>
                 <a href="tel:040-2717-6000" className="btn-outline"
                   style={{ color: "rgba(255,255,255,.82)", borderColor: "rgba(255,255,255,.28)" }}
@@ -367,10 +377,9 @@ export default function EcilPage() {
                 </a>
               </div>
 
-              {/* Certification badges */}
-              <div className="ha5" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2.5rem" }}>
+              <div className="ha5 hero-badges" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "2.5rem" }}>
                 {[{ l:"NABH",s:"Accredited"},{l:"ISO",s:"9001:2015"},{l:"NABL",s:"Certified Lab"},{l:"100+",s:"Insurers"}].map(b => (
-                  <div key={b.l} style={{ background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 6, padding: ".5rem .9rem", textAlign: "center" }}>
+                  <div key={b.l} className="badge-item" style={{ background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 6, padding: ".5rem .9rem", textAlign: "center" }}>
                     <p style={{ fontSize: ".88rem", fontWeight: 800, color: "#fff", lineHeight: 1 }}>{b.l}</p>
                     <p style={{ fontSize: ".58rem", color: "rgba(255,255,255,.45)", letterSpacing: ".1em", textTransform: "uppercase", marginTop: 2 }}>{b.s}</p>
                   </div>
@@ -378,7 +387,6 @@ export default function EcilPage() {
               </div>
             </div>
 
-            {/* Right — doctor photo card */}
             <div className="ha3 hero-img-col" style={{ position: "relative" }}>
               <div style={{ borderRadius: 16, overflow: "hidden", boxShadow: "0 40px 80px rgba(0,0,0,.38)", position: "relative" }}>
                 <img src={IMG.heroDoc} alt="Srikara ECIL doctors"
@@ -389,8 +397,6 @@ export default function EcilPage() {
                   <p style={{ fontFamily: "'Merriweather',serif", fontSize: "1.2rem", fontWeight: 700, color: "#fff", lineHeight: 1.35 }}>45+ Dedicated<br />Specialists on Call</p>
                 </div>
               </div>
-
-              {/* Floating emergency card — white with magenta pulse dot */}
               <div style={{ position: "absolute", top: 20, right: -16, background: "#fff", borderRadius: 10, padding: "1rem 1.2rem", boxShadow: `0 12px 40px rgba(27,42,74,.18)`, minWidth: 180, animation: "float 4s ease-in-out infinite" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: ".3rem" }}>
                   <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#EF4444", animation: "pulse 1.5s ease infinite", display: "inline-block" }} />
@@ -399,8 +405,6 @@ export default function EcilPage() {
                 <p style={{ fontSize: "1.1rem", fontWeight: 800, color: C.navy, lineHeight: 1 }}>040-2717-6000</p>
                 <p style={{ fontSize: ".62rem", color: C.mid, marginTop: 3 }}>Available 24 hours a day</p>
               </div>
-
-              {/* Floating stat chip — magenta (was teal) */}
               <div style={{ position: "absolute", bottom: 60, left: -16, background: C.magenta, borderRadius: 10, padding: "1rem 1.2rem", boxShadow: `0 12px 40px rgba(184,36,110,.28)`, animation: "float 5s ease-in-out infinite 1s" }}>
                 <p style={{ fontSize: "1.6rem", fontWeight: 800, color: "#fff", lineHeight: 1 }}>65k<span style={{ fontSize: ".9rem" }}>+</span></p>
                 <p style={{ fontSize: ".6rem", fontWeight: 600, color: "rgba(255,255,255,.72)", letterSpacing: ".12em", textTransform: "uppercase", marginTop: 2 }}>Patients annually</p>
@@ -408,7 +412,6 @@ export default function EcilPage() {
             </div>
           </div>
 
-          {/* Stats row — same translucent panels */}
           <div className="ha6 stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1px", background: "rgba(255,255,255,.1)", marginTop: "4rem", borderRadius: 10, overflow: "hidden" }}>
             {STATS.map((s, i) => (
               <div key={i} style={{ background: "rgba(255,255,255,.06)", padding: "1.8rem 2rem", backdropFilter: "blur(12px)" }}>
@@ -420,7 +423,7 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ── MARQUEE — magenta bg ── */}
+      {/* ── MARQUEE ── */}
       <div style={{ background: C.magenta, padding: ".8rem 0", overflow: "hidden", whiteSpace: "nowrap" }}>
         <div style={{ display: "inline-flex", gap: "3rem", animation: "marquee 30s linear infinite" }}>
           {Array(3).fill(["Advanced Cardiac Care","Robotic Joint Replacement","Level III NICU","3T MRI & PET-CT","24/7 Trauma Centre","NABH Accredited","IVF & Fertility Clinic","NABL Laboratory","Stroke Unit","Bariatric Surgery","Oncology Tumour Board","Physiotherapy & Rehab"]).flat().map((t, i) => (
@@ -431,22 +434,17 @@ export default function EcilPage() {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════
-          ABOUT — white bg, same image collage
-          ══════════════════════════════════════════ */}
-      <section id="about" className="section-pad" style={{ background: "#fff", padding: "7rem 2.5rem" }}>
+      {/* ── ABOUT ── */}
+      <section id="about" className="section-pad" style={{ background: "#fff", padding: "7rem 1.25rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
-
-            {/* Left — images collage */}
             <Reveal>
-              <div style={{ position: "relative" }}>
+              <div className="about-img-col" style={{ position: "relative" }}>
                 <img src={IMG.aboutHosp} alt="Srikara ECIL Hospital"
                   style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 12, display: "block" }} />
-                <div style={{ position: "absolute", bottom: -24, right: -24, borderRadius: 10, overflow: "hidden", border: "4px solid #fff", boxShadow: `0 12px 40px rgba(27,42,74,.14)`, width: 200 }}>
+                <div className="secondary-img" style={{ position: "absolute", bottom: -24, right: -24, borderRadius: 10, overflow: "hidden", border: "4px solid #fff", boxShadow: `0 12px 40px rgba(27,42,74,.14)`, width: 200 }}>
                   <img src={IMG.waiting} alt="Patient waiting area" style={{ width: "100%", height: 140, objectFit: "cover", display: "block" }} />
                 </div>
-                {/* Navy badge — was blue */}
                 <div style={{ position: "absolute", top: 24, left: 24, background: C.navy, borderRadius: 8, padding: ".8rem 1.2rem", boxShadow: `0 8px 24px rgba(27,42,74,.28)` }}>
                   <p style={{ fontFamily: "'Merriweather',serif", fontSize: "1.8rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>13+</p>
                   <p style={{ fontSize: ".6rem", fontWeight: 600, color: "rgba(255,255,255,.6)", letterSpacing: ".12em", textTransform: "uppercase" }}>Years of care</p>
@@ -454,7 +452,6 @@ export default function EcilPage() {
               </div>
             </Reveal>
 
-            {/* Right text */}
             <Reveal delay={150}>
               <span className="section-tag">About Srikara ECIL</span>
               <h2 className="section-h" style={{ marginBottom: "1.2rem" }}>A hospital built<br />on trust &amp; expertise</h2>
@@ -465,7 +462,7 @@ export default function EcilPage() {
                 Our 320-bed facility is equipped with the latest medical technology — from robotic surgery systems and 3T MRI to a fully automated NABL-certified laboratory. But what truly sets us apart is our culture of compassion-first care.
               </p>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
+              <div className="about-facts" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
                 {[
                   { icon:"🏥", l:"320 Beds",       s:"Including ICU & HDU"   },
                   { icon:"🤖", l:"Robotic Surgery", s:"Advanced precision care"},
@@ -487,10 +484,8 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          SPECIALITIES — mist bg, magenta accents
-          ══════════════════════════════════════════ */}
-      <section id="specialities" className="section-pad" style={{ background: C.mist, padding: "7rem 2.5rem" }}>
+      {/* ── SPECIALITIES ── */}
+      <section id="specialities" className="section-pad" style={{ background: C.mist, padding: "7rem 1.25rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <Reveal>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "3.5rem", flexWrap: "wrap", gap: "1.5rem" }}>
@@ -517,7 +512,6 @@ export default function EcilPage() {
                   <div style={{ padding: "1.5rem" }}>
                     <h3 style={{ fontFamily: "'Merriweather',serif", fontSize: "1.1rem", fontWeight: 700, color: C.navy, marginBottom: ".6rem", lineHeight: 1.3 }}>{s.name}</h3>
                     <p style={{ fontSize: ".82rem", color: C.mid, lineHeight: 1.75, marginBottom: "1.2rem" }}>{s.desc}</p>
-                    {/* CTA — magenta */}
                     <button className="btn-magenta" onClick={() => setApptOpen(true)} style={{ fontSize: ".72rem", padding: ".55rem 1.2rem" }}>Book Appointment →</button>
                   </div>
                 </div>
@@ -527,10 +521,8 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          DOCTORS — white bg
-          ══════════════════════════════════════════ */}
-      <section id="doctors" className="section-pad" style={{ background: "#fff", padding: "7rem 2.5rem" }}>
+      {/* ── DOCTORS ── */}
+      <section id="doctors" className="section-pad" style={{ background: "#fff", padding: "7rem 1.25rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <Reveal>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "3.5rem", flexWrap: "wrap", gap: "1.5rem" }}>
@@ -547,7 +539,7 @@ export default function EcilPage() {
             {DOCTORS.map((d, i) => (
               <Reveal key={d.name} delay={i * 70}>
                 <div className="doc-card" style={{ background: "#fff", borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }}>
-                  <div style={{ height: 240, overflow: "hidden", position: "relative", background: "#EEF2FA" }}>
+                  <div className="doc-img" style={{ height: 240, overflow: "hidden", position: "relative", background: "#EEF2FA" }}>
                     {d.img ? (
                       <img src={d.img} alt={d.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }} />
                     ) : (
@@ -573,16 +565,13 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          TESTIMONIALS — navy bg
-          ══════════════════════════════════════════ */}
-      <section style={{ background: C.navy, padding: "7rem 2.5rem", position: "relative", overflow: "hidden" }}>
+      {/* ── TESTIMONIALS ── */}
+      <section style={{ background: C.navy, padding: "7rem 1.25rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <img src={IMG.heroBg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: .05 }} />
         </div>
         <div style={{ maxWidth: 960, margin: "0 auto", position: "relative", zIndex: 1, textAlign: "center" }}>
           <Reveal>
-            {/* Section tag — magenta */}
             <span className="section-tag" style={{ justifyContent: "center", color: C.magenta }}>
               <span style={{ background: C.magenta }} />
               Patient Stories
@@ -594,15 +583,13 @@ export default function EcilPage() {
           <div style={{ position: "relative", minHeight: 280 }}>
             {TESTIMONIALS.map((t, i) => (
               <div key={i} style={{ position: i===activeTest?"relative":"absolute", inset: 0, opacity: i===activeTest?1:0, transform: i===activeTest?"none":"translateY(12px)", transition: "all .7s ease", pointerEvents: i===activeTest?"auto":"none" }}>
-                <div style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", borderRadius: 16, padding: "3rem", backdropFilter: "blur(12px)" }}>
+                <div className="test-card" style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", borderRadius: 16, padding: "3rem", backdropFilter: "blur(12px)" }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
-                    {/* Dept pill — magenta tint */}
                     <span style={{ background: `${C.magenta}25`, color: C.magenta, fontSize: ".65rem", fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", padding: ".3rem .9rem", borderRadius: 100, border: `1px solid rgba(184,36,110,.3)` }}>{t.dept}</span>
                     <Stars n={t.rating} />
                   </div>
                   <p style={{ fontFamily: "'Merriweather',serif", fontSize: "clamp(1.05rem,2vw,1.35rem)", fontStyle: "italic", color: "rgba(255,255,255,.88)", lineHeight: 1.75, marginBottom: "2.5rem" }}>"{t.text}"</p>
                   <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    {/* Avatar — navy→magenta gradient */}
                     <div style={{ width: 48, height: 48, borderRadius: "50%", background: `linear-gradient(135deg,${C.navyL},${C.magenta})`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <span style={{ fontFamily: "'Merriweather',serif", fontWeight: 700, color: "#fff", fontSize: ".9rem" }}>{t.name[0]}</span>
                     </div>
@@ -616,7 +603,6 @@ export default function EcilPage() {
             ))}
           </div>
 
-          {/* Progress dots — magenta active */}
           <div style={{ display: "flex", justifyContent: "center", gap: ".5rem", marginTop: "2.5rem" }}>
             {TESTIMONIALS.map((_,i) => (
               <button key={i} onClick={() => setActiveTest(i)}
@@ -626,10 +612,8 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          FACILITIES — mist bg
-          ══════════════════════════════════════════ */}
-      <section id="facilities" className="section-pad" style={{ background: C.mist, padding: "7rem 2.5rem" }}>
+      {/* ── FACILITIES ── */}
+      <section id="facilities" className="section-pad" style={{ background: C.mist, padding: "7rem 1.25rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <Reveal>
             <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
@@ -646,7 +630,6 @@ export default function EcilPage() {
                   <div style={{ height: 200, overflow: "hidden", borderRadius: "12px 12px 0 0", position: "relative" }}>
                     <img src={f.img} alt={f.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                     <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg,transparent 30%,rgba(15,30,53,.6) 100%)` }} />
-                    {/* Tag — magenta */}
                     <span style={{ position: "absolute", top: "1rem", right: "1rem", background: C.magenta, color: "#fff", fontSize: ".6rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", padding: ".25rem .7rem", borderRadius: 100 }}>{f.tag}</span>
                   </div>
                   <div style={{ padding: "1.4rem" }}>
@@ -660,12 +643,12 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ── AMBULANCE CTA STRIP — red (semantic, kept) ── */}
+      {/* ── AMBULANCE CTA ── */}
       <section style={{ background: "#EF4444", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <img src={IMG.ambulance} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: .1 }} />
         </div>
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "3rem 2.5rem", position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}>
+        <div className="ambu-strip" style={{ maxWidth: 1400, margin: "0 auto", padding: "3rem 1.25rem", position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(255,255,255,.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem", flexShrink: 0 }}>🚑</div>
             <div>
@@ -674,7 +657,7 @@ export default function EcilPage() {
             </div>
           </div>
           <a href="tel:040-2717-6000"
-            style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", color: "#EF4444", padding: "1rem 2.2rem", borderRadius: 6, textDecoration: "none", fontSize: ".9rem", fontWeight: 800, letterSpacing: ".06em", whiteSpace: "nowrap", transition: "all .25s", boxShadow: "0 8px 24px rgba(0,0,0,.2)" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", color: "#EF4444", padding: "1rem 2.2rem", borderRadius: 6, textDecoration: "none", fontSize: ".9rem", fontWeight: 800, letterSpacing: ".06em", whiteSpace: "nowrap", transition: "all .25s", boxShadow: "0 8px 24px rgba(0,0,0,.2)", width: "100%", justifyContent: "center" }}
             onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = "#FEE2E2"}
             onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = "#fff"}>
             📞 Call 040-2717-6000
@@ -682,10 +665,8 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          CONTACT — white bg
-          ══════════════════════════════════════════ */}
-      <section id="contact" className="section-pad" style={{ background: "#fff", padding: "7rem 2.5rem" }}>
+      {/* ── CONTACT ── */}
+      <section id="contact" className="section-pad" style={{ background: "#fff", padding: "7rem 1.25rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <Reveal>
             <div style={{ textAlign: "center", marginBottom: "4rem" }}>
@@ -695,11 +676,8 @@ export default function EcilPage() {
           </Reveal>
 
           <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
-
-            {/* Contact details */}
             <Reveal>
               <div style={{ background: C.mist, borderRadius: 12, border: `1px solid ${C.border}`, overflow: "hidden" }}>
-                {/* Navy → magenta top accent line */}
                 <div style={{ height: 4, background: `linear-gradient(90deg,${C.navy},${C.magenta})` }} />
                 <div style={{ padding: "2.5rem" }}>
                   {[
@@ -712,7 +690,6 @@ export default function EcilPage() {
                     <div key={c.l} style={{ display: "flex", gap: "1rem", paddingBottom: "1.2rem", marginBottom: i < 4 ? "1.2rem" : 0, borderBottom: i < 4 ? `1px solid ${C.border}` : "none" }}>
                       <span style={{ fontSize: "1.2rem", flexShrink: 0, marginTop: 2 }}>{c.icon}</span>
                       <div>
-                        {/* Label — magenta */}
                         <p style={{ fontSize: ".6rem", fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", color: C.magenta, marginBottom: ".3rem" }}>{c.l}</p>
                         <p style={{ fontSize: ".9rem", color: C.navy, fontWeight: 600, whiteSpace: "pre-line", lineHeight: 1.6 }}>{c.v}</p>
                       </div>
@@ -722,7 +699,6 @@ export default function EcilPage() {
               </div>
             </Reveal>
 
-            {/* Branches */}
             <Reveal delay={100}>
               <div>
                 <h3 style={{ fontFamily: "'Merriweather',serif", fontSize: "1.5rem", fontWeight: 700, color: C.navy, marginBottom: ".5rem" }}>Our Other Branches</h3>
@@ -746,11 +722,10 @@ export default function EcilPage() {
         </div>
       </section>
 
-      {/* ── FOOTER — navy ── */}
+      {/* ── FOOTER ── */}
       <footer style={{ background: C.navy }}>
-        {/* Magenta → navy gradient top line */}
         <div style={{ height: 3, background: `linear-gradient(90deg,${C.magenta},${C.navy},${C.magenta})` }} />
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "2rem 2.5rem" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "2rem 1.25rem" }}>
           <div className="footer-grid" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ width: 36, height: 36, borderRadius: 6, background: `linear-gradient(135deg,${C.navyL},${C.magenta})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -760,7 +735,7 @@ export default function EcilPage() {
                 © {new Date().getFullYear()} Srikara Hospital – ECIL Branch · Part of Srikara Hospital Group, Hyderabad
               </span>
             </div>
-            <div style={{ display: "flex", gap: "2rem" }}>
+            <div className="footer-links" style={{ display: "flex", gap: "2rem" }}>
               {["Privacy Policy","Terms of Service","Sitemap"].map(l => (
                 <Link key={l} href="#" style={{ fontSize: ".65rem", color: "rgba(255,255,255,.28)", textDecoration: "none", letterSpacing: ".08em" }}
                   onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = C.magenta}
@@ -773,8 +748,8 @@ export default function EcilPage() {
         </div>
       </footer>
 
-      {/* ── FLOATING APPOINTMENT BUTTON — magenta ── */}
-      <button onClick={() => setApptOpen(true)}
+      {/* ── FLOATING APPOINTMENT BUTTON ── */}
+      <button className="float-book" onClick={() => setApptOpen(true)}
         style={{ position: "fixed", bottom: "2rem", right: "2rem", zIndex: 400, background: C.magenta, color: "#fff", border: "none", borderRadius: "50px", padding: ".9rem 1.6rem", fontSize: ".82rem", fontWeight: 700, letterSpacing: ".06em", cursor: "pointer", boxShadow: `0 8px 32px rgba(184,36,110,.42)`, transition: "all .3s", display: "flex", alignItems: "center", gap: 8, fontFamily: "'Plus Jakarta Sans',sans-serif" }}
         onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.05)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 12px 40px rgba(184,36,110,.55)`; }}
         onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";   (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 8px 32px rgba(184,36,110,.42)`; }}>
@@ -785,8 +760,7 @@ export default function EcilPage() {
       {apptOpen && (
         <div className="appt-overlay" onClick={(e) => { if (e.target === e.currentTarget) setApptOpen(false); }}>
           <div className="appt-modal">
-            {/* Modal header — navy → magenta gradient */}
-            <div style={{ background: `linear-gradient(135deg,${C.navy},${C.magenta})`, padding: "2rem 2rem 1.5rem" }}>
+            <div className="appt-modal-header" style={{ background: `linear-gradient(135deg,${C.navy},${C.magenta})`, padding: "2rem 2rem 1.5rem" }}>
               <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
                 <div>
                   <p style={{ fontSize: ".65rem", fontWeight: 700, letterSpacing: ".18em", textTransform: "uppercase", color: "rgba(255,255,255,.65)", marginBottom: ".4rem" }}>Srikara Hospital · ECIL Branch</p>
@@ -798,9 +772,8 @@ export default function EcilPage() {
               </div>
             </div>
 
-            {/* Form */}
-            <form onSubmit={submit} style={{ padding: "2rem" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1.2rem" }}>
+            <form onSubmit={submit} className="appt-modal-body" style={{ padding: "2rem" }}>
+              <div className="appt-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1.2rem" }}>
                 {[
                   { label:"Full Name *",     key:"name",  type:"text", ph:"Your full name"     },
                   { label:"Mobile Number *", key:"phone", type:"tel",  ph:"+91 98765 43210"     },
@@ -814,7 +787,7 @@ export default function EcilPage() {
                 ))}
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1.2rem" }}>
+              <div className="appt-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1.2rem" }}>
                 <div>
                   <label style={{ display: "block", fontSize: ".68rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: C.mid, marginBottom: ".5rem" }}>Department *</label>
                   <select value={form.dept} onChange={e => setForm(p => ({ ...p, dept: e.target.value }))}
@@ -842,7 +815,6 @@ export default function EcilPage() {
                   style={{ width: "100%", border: `1.5px solid ${C.border}`, borderRadius: 6, padding: ".75rem 1rem", fontSize: ".9rem", color: C.text, background: C.mist }} />
               </div>
 
-              {/* Submit — magenta, green on success */}
               <button type="submit" className="btn-magenta"
                 style={{ width: "100%", justifyContent: "center", padding: "1rem", fontSize: ".9rem", background: sent ? "#22c55e" : C.magenta }}>
                 {sent ? "✓ Appointment Confirmed! We'll call you shortly." : "Confirm Appointment →"}

@@ -74,6 +74,14 @@ export default function RTCPage({ hospital }: { hospital: any }) {
   const [activeTest, setActiveTest] = useState(0);
   const [form, setForm] = useState({ name: "", phone: "", dept: "", date: "" });
   const [sent, setSent] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const fn = () => setScrollY(window.scrollY);
@@ -131,6 +139,7 @@ export default function RTCPage({ hospital }: { hospital: any }) {
         @keyframes marquee  { from { transform:translateX(0); } to { transform:translateX(-50%); } }
         @keyframes breathe  { 0%,100% { transform:scale(1); } 50% { transform:scale(1.04); } }
         @keyframes slideIn  { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+        @keyframes slideDown { from { transform:translateY(-10px); opacity:0; } to { transform:translateY(0); opacity:1; } }
 
         .h-a1 { animation: fadeUp .9s ease .1s both; }
         .h-a2 { animation: fadeUp .9s ease .3s both; }
@@ -151,24 +160,94 @@ export default function RTCPage({ hospital }: { hospital: any }) {
         ::-webkit-scrollbar-track { background: var(--warm); }
         ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
 
-        /* Mobile */
+        /* ─── MOBILE RESPONSIVE ─── */
         @media (max-width: 768px) {
           body { cursor: auto; }
-          .cursor { display: none; }
-          .desk { display: none !important; }
-          .mob-show { display: flex !important; }
-          .hero-cols { flex-direction: column !important; }
-          .why-cols { flex-direction: column !important; }
-          .spec-grid { grid-template-columns: 1fr !important; }
-          .doc-grid  { grid-template-columns: 1fr !important; }
-          .stat-row  { flex-wrap: wrap !important; gap: 2rem !important; }
-          .contact-cols { flex-direction: column !important; }
-          .footer-cols { flex-direction: column !important; }
-          .pad { padding: 4rem 1.5rem !important; }
-          .nav-inner { padding: 0 1.5rem !important; }
+          .cursor { display: none !important; }
+
+          /* Nav */
+          .nav-inner { padding: 0 1.25rem !important; height: 60px !important; }
+          .nav-book-btn { padding: 0.45rem 1rem !important; font-size: 0.7rem !important; }
+
+          /* Hero */
+          .hero-section { min-height: 100svh !important; }
+          .hero-content-wrap { padding: 6rem 1.25rem 3rem !important; flex-direction: column !important; gap: 2rem !important; }
+          .hero-left { flex: none !important; width: 100% !important; }
+          .hero-title { font-size: clamp(2.8rem, 11vw, 4rem) !important; }
+          .hero-desc { font-size: 0.9rem !important; margin-bottom: 2rem !important; }
+          .hero-cta-row { flex-direction: column !important; gap: 0.75rem !important; }
+          .hero-cta-row a { width: 100% !important; justify-content: center !important; text-align: center !important; }
+          .stat-row { flex-wrap: wrap !important; gap: 1.5rem 2rem !important; margin-top: 2.5rem !important; padding-top: 2rem !important; }
+          .stat-row > div { flex: 0 0 calc(50% - 1rem) !important; }
+          .hero-right-card { display: none !important; }
           .watermark { display: none !important; }
-          .hero-title { font-size: clamp(3rem,10vw,5rem) !important; }
-          .appt-cols { flex-direction: column !important; }
+          .hero-deco-circle-1,
+          .hero-deco-circle-2 { display: none !important; }
+
+          /* Intro strip */
+          .intro-strip { padding: 1.2rem 1.25rem !important; }
+
+          /* Specialities */
+          .section-pad { padding: 4rem 1.25rem !important; }
+          .spec-header { flex-direction: column !important; align-items: flex-start !important; gap: 1rem !important; margin-bottom: 2.5rem !important; }
+          .spec-grid { grid-template-columns: 1fr !important; }
+          .spec-card { padding: 2rem 1.25rem !important; }
+
+          /* Why Us */
+          .why-cols { flex-direction: column !important; min-height: auto !important; }
+          .why-left { flex: none !important; width: 100% !important; padding: 4rem 1.25rem !important; }
+          .why-right { flex: none !important; width: 100% !important; padding: 3rem 1.25rem !important; }
+          .why-watermark { display: none !important; }
+
+          /* Doctors */
+          .doc-grid { grid-template-columns: 1fr 1fr !important; }
+          .doc-header { margin-bottom: 2.5rem !important; }
+
+          /* Appointment */
+          .appt-section { padding: 4rem 1.25rem !important; }
+          .appt-form { grid-template-columns: 1fr !important; }
+          .appt-form > div { padding: 1.2rem 1rem !important; }
+          .appt-header { margin-bottom: 2.5rem !important; }
+          .appt-deco-1, .appt-deco-2 { display: none !important; }
+
+          /* Facilities */
+          .fac-section { padding: 4rem 1.25rem !important; }
+          .fac-header { margin-bottom: 2.5rem !important; }
+          .fac-row { flex-direction: row !important; align-items: flex-start !important; }
+          .fac-icon-box { width: 60px !important; height: 60px !important; font-size: 1.2rem !important; flex-shrink: 0 !important; }
+          .fac-content { padding: 1rem !important; gap: 0.5rem !important; flex-direction: column !important; align-items: flex-start !important; }
+          .fac-content p { max-width: 100% !important; }
+          .fac-arrow { display: none !important; }
+
+          /* Contact */
+          .contact-section { padding: 4rem 1.25rem !important; }
+          .contact-cols { flex-direction: column !important; gap: 3rem !important; }
+          .contact-left { flex: none !important; width: 100% !important; }
+          .contact-right { flex: none !important; width: 100% !important; }
+          .branches-grid { grid-template-columns: 1fr 1fr !important; }
+
+          /* Footer */
+          .footer-inner { flex-direction: column !important; align-items: flex-start !important; gap: 1rem !important; padding: 1.5rem 1.25rem !important; }
+        }
+
+        @media (max-width: 480px) {
+          .doc-grid { grid-template-columns: 1fr !important; }
+          .branches-grid { grid-template-columns: 1fr !important; }
+          .hero-title { font-size: clamp(2.4rem, 12vw, 3rem) !important; }
+        }
+
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .hero-content-wrap { padding: 7rem 2rem 4rem !important; gap: 2.5rem !important; }
+          .section-pad { padding: 5rem 2rem !important; }
+          .spec-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .doc-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .appt-section { padding: 5rem 2rem !important; }
+          .fac-section { padding: 5rem 2rem !important; }
+          .contact-section { padding: 4rem 2rem !important; }
+          .nav-inner { padding: 0 2rem !important; }
+          .why-left { padding: 5rem 2rem !important; }
+          .why-right { padding: 5rem 2rem !important; }
         }
       `}</style>
 
@@ -188,33 +267,27 @@ export default function RTCPage({ hospital }: { hospital: any }) {
 
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            {/* 🔥 LOGO IMAGE */}
-  <img
-    src="/srikara-logo.png"   
-    alt="Srikara Hospitals"
-    style={{
-      width: 44,
-      height: 44,
-      objectFit: "contain",
-      borderRadius: 6,
-    }}
-  />
+            <img
+              src="/srikara-logo.png"
+              alt="Srikara Hospitals"
+              style={{ width: 44, height: 44, objectFit: "contain", borderRadius: 6 }}
+            />
             <div>
-              <p style={{ fontFamily: "'Fraunces',serif", fontSize: "1rem", fontWeight: 600, color: "var(--forest)", lineHeight: 1.1 }}>Srikara Hospital</p>
+              <p style={{ fontFamily: "'Fraunces',serif", fontSize: "1rem", fontWeight: 600, color: navBg ? "var(--forest)" : "var(--parch)", lineHeight: 1.1, transition: "color .4s" }}>Srikara Hospital</p>
               <p style={{ fontSize: "0.6rem", color: "var(--amber)", letterSpacing: "0.18em", textTransform: "uppercase" }}>RTC X Roads · Hyderabad</p>
             </div>
           </Link>
 
           {/* Desktop Links */}
-          <div className="desk" style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }} className="desk-nav">
             {NAV.map(l => (
-              <Link key={l.href} href={l.href} style={{ fontSize: "0.78rem", color: "var(--ink)", letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none", opacity: 0.7, transition: "opacity .2s" }}
+              <Link key={l.href} href={l.href} style={{ fontSize: "0.78rem", color: navBg ? "var(--ink)" : "var(--parch)", letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none", opacity: 0.7, transition: "opacity .2s, color .4s" }}
                 onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "1"}
                 onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.opacity = "0.7"}>
                 {l.label}
               </Link>
             ))}
-            <Link href="#appointment" style={{ background: "var(--forest)", color: "var(--parch)", padding: "0.55rem 1.4rem", borderRadius: 2, fontSize: "0.78rem", letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
+            <Link href="#appointment" className="nav-book-btn" style={{ background: "var(--forest)", color: "var(--parch)", padding: "0.55rem 1.4rem", borderRadius: 2, fontSize: "0.78rem", letterSpacing: "0.1em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
               onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = "var(--amber)"}
               onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = "var(--forest)"}>
               Book Now
@@ -222,39 +295,57 @@ export default function RTCPage({ hospital }: { hospital: any }) {
           </div>
 
           {/* Mobile toggle */}
-          <button className="mob-show" style={{ display: "none", background: "none", border: "none", cursor: "pointer", flexDirection: "column", gap: 5 }} onClick={() => setMenuOpen(!menuOpen)}>
-            {[0, 1, 2].map(i => <span key={i} style={{ width: 24, height: 1.5, background: "var(--forest)", display: "block", transition: "all .3s", transform: menuOpen && i === 0 ? "rotate(45deg) translateY(6px)" : menuOpen && i === 2 ? "rotate(-45deg) translateY(-6px)" : menuOpen && i === 1 ? "scaleX(0)" : "none" }} />)}
+          <button className="mob-menu-btn" style={{ display: "none", background: "none", border: "none", cursor: "pointer", flexDirection: "column", gap: 5, padding: "8px" }} onClick={() => setMenuOpen(!menuOpen)}>
+            {[0, 1, 2].map(i => (
+              <span key={i} style={{
+                width: 24, height: 1.5,
+                background: navBg ? "var(--forest)" : "var(--parch)",
+                display: "block", transition: "all .3s",
+                transform: menuOpen && i === 0 ? "rotate(45deg) translateY(6px)" : menuOpen && i === 2 ? "rotate(-45deg) translateY(-6px)" : menuOpen && i === 1 ? "scaleX(0)" : "none"
+              }} />
+            ))}
           </button>
         </div>
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div style={{ background: "var(--white)", borderTop: "1px solid var(--warm)", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1.2rem", animation: "slideIn .25s ease" }}>
+          <div style={{ background: "var(--white)", borderTop: "1px solid var(--warm)", padding: "1.5rem 1.25rem", display: "flex", flexDirection: "column", gap: "1.2rem", animation: "slideDown .25s ease" }}>
             {NAV.map(l => (
               <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)} style={{ fontSize: "0.9rem", color: "var(--ink)", textDecoration: "none", letterSpacing: "0.08em", textTransform: "uppercase", paddingBottom: "0.8rem", borderBottom: "1px solid var(--warm)" }}>{l.label}</Link>
             ))}
-            <Link href="#appointment" onClick={() => setMenuOpen(false)} style={{ background: "var(--forest)", color: "var(--parch)", padding: "0.8rem 1.5rem", textAlign: "center", textDecoration: "none", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "0.82rem" }}>Book Appointment</Link>
+            <Link href="#appointment" onClick={() => setMenuOpen(false)} style={{ background: "var(--forest)", color: "var(--parch)", padding: "0.85rem 1.5rem", textAlign: "center", textDecoration: "none", letterSpacing: "0.1em", textTransform: "uppercase", fontSize: "0.82rem", borderRadius: 2 }}>Book Appointment</Link>
           </div>
         )}
       </nav>
 
+      {/* ── Inline styles for responsive nav ── */}
+      <style>{`
+        @media (max-width: 768px) {
+          .desk-nav { display: none !important; }
+          .mob-menu-btn { display: flex !important; }
+        }
+        @media (min-width: 769px) {
+          .mob-menu-btn { display: none !important; }
+        }
+      `}</style>
+
       {/* ── HERO ── */}
-      <section style={{ minHeight: "100vh", background: "var(--forest)", position: "relative", overflow: "hidden", display: "flex", alignItems: "center" }}>
+      <section className="hero-section" style={{ minHeight: "100vh", background: "var(--forest)", position: "relative", overflow: "hidden", display: "flex", alignItems: "center" }}>
 
         {/* Big watermark */}
         <div className="watermark" style={{ position: "absolute", right: -60, top: "50%", transform: "translateY(-50%) rotate(90deg)", fontFamily: "'Fraunces',serif", fontSize: "22vw", fontWeight: 200, color: "rgba(247,243,236,0.04)", lineHeight: 1, whiteSpace: "nowrap", pointerEvents: "none", letterSpacing: "0.1em", userSelect: "none" }}>
           SRIKARA
         </div>
 
-        {/* Decorative circle */}
-        <div style={{ position: "absolute", right: "8%", top: "50%", transform: "translateY(-50%)", width: "42vw", height: "42vw", borderRadius: "50%", border: "1px solid rgba(247,243,236,0.08)", animation: "breathe 8s ease-in-out infinite" }} />
-        <div style={{ position: "absolute", right: "12%", top: "50%", transform: "translateY(-50%)", width: "34vw", height: "34vw", borderRadius: "50%", border: "1px solid rgba(196,123,43,0.12)" }} />
+        {/* Decorative circles */}
+        <div className="hero-deco-circle-1" style={{ position: "absolute", right: "8%", top: "50%", transform: "translateY(-50%)", width: "42vw", height: "42vw", borderRadius: "50%", border: "1px solid rgba(247,243,236,0.08)", animation: "breathe 8s ease-in-out infinite" }} />
+        <div className="hero-deco-circle-2" style={{ position: "absolute", right: "12%", top: "50%", transform: "translateY(-50%)", width: "34vw", height: "34vw", borderRadius: "50%", border: "1px solid rgba(196,123,43,0.12)" }} />
 
         {/* Content */}
-        <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1400, margin: "0 auto", padding: "8rem 3rem 5rem", display: "flex", alignItems: "center", gap: "5rem" }} className="hero-cols">
+        <div className="hero-content-wrap" style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: 1400, margin: "0 auto", padding: "8rem 3rem 5rem", display: "flex", alignItems: "center", gap: "5rem" }}>
 
           {/* Left */}
-          <div style={{ flex: "0 0 55%" }}>
+          <div className="hero-left" style={{ flex: "0 0 55%" }}>
             <div className="h-a1" style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: "2rem" }}>
               <div style={{ width: 32, height: 1, background: "var(--amber)" }} />
               <span style={{ fontSize: "0.68rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--amber)" }}>RTC X Roads, Hyderabad</span>
@@ -265,11 +356,11 @@ export default function RTCPage({ hospital }: { hospital: any }) {
               meets <em style={{ fontStyle: "italic", color: "#9BBFA8" }}>heart.</em>
             </h1>
 
-            <p className="h-a3" style={{ fontSize: "1rem", color: "rgba(240,232,216,0.65)", lineHeight: 1.8, maxWidth: 460, marginBottom: "3rem" }}>
+            <p className="h-a3 hero-desc" style={{ fontSize: "1rem", color: "rgba(240,232,216,0.65)", lineHeight: 1.8, maxWidth: 460, marginBottom: "3rem" }}>
               A multi-specialty centre born from one conviction — that every patient deserves care as individual as they are. Serving Musheerabad since 2008.
             </p>
 
-            <div className="h-a4" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <div className="h-a4 hero-cta-row" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <Link href="#appointment" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "var(--amber)", color: "var(--forest)", padding: "0.9rem 2.2rem", textDecoration: "none", fontSize: "0.82rem", letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600, transition: "all .3s" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "var(--parch)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "var(--amber)"; }}>
@@ -295,8 +386,8 @@ export default function RTCPage({ hospital }: { hospital: any }) {
             </div>
           </div>
 
-          {/* Right – Info card stack */}
-          <div className="h-a3 desk" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1rem" }}>
+          {/* Right – Info card stack (desktop only) */}
+          <div className="hero-right-card h-a3" style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1rem" }}>
             {/* Primary card */}
             <div style={{ background: "rgba(247,243,236,0.07)", border: "1px solid rgba(247,243,236,0.1)", borderRadius: 4, padding: "2rem", backdropFilter: "blur(12px)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "1.5rem" }}>
@@ -331,7 +422,7 @@ export default function RTCPage({ hospital }: { hospital: any }) {
       </section>
 
       {/* ── INTRO STRIP ── */}
-      <section style={{ background: "var(--cream)", padding: "1.5rem 3rem", overflow: "hidden", whiteSpace: "nowrap", borderBottom: "1px solid var(--mist)" }}>
+      <section className="intro-strip" style={{ background: "var(--cream)", padding: "1.5rem 3rem", overflow: "hidden", whiteSpace: "nowrap", borderBottom: "1px solid var(--mist)" }}>
         <div style={{ display: "inline-flex", gap: "4rem", animation: "marquee 35s linear infinite" }}>
           {Array(3).fill(["Advanced Cardiac Care", "Laparoscopic Surgery", "Neonatal ICU", "Digital Pathology", "Joint Replacement", "Robotic Surgery", "24/7 Trauma", "NABH Certified", "Blood Bank", "Dialysis Unit"]).flat().map((t, i) => (
             <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "1.2rem", fontSize: "0.72rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--sage)" }}>
@@ -342,24 +433,24 @@ export default function RTCPage({ hospital }: { hospital: any }) {
       </section>
 
       {/* ── SPECIALITIES ── */}
-      <section id="specialities" className="pad" style={{ background: "var(--cream)", padding: "7rem 3rem" }}>
+      <section id="specialities" className="section-pad" style={{ background: "var(--cream)", padding: "7rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <R>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "4rem", flexWrap: "wrap", gap: "2rem" }}>
+            <div className="spec-header" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "4rem", flexWrap: "wrap", gap: "1.5rem" }}>
               <div>
                 <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1rem" }}>What we treat</span>
                 <h2 className="serif" style={{ fontSize: "clamp(2.5rem,4vw,4rem)", fontWeight: 200, color: "var(--forest)", lineHeight: 1.1 }}>
                   Specialities built<br /><em style={{ fontStyle: "italic" }}>around you.</em>
                 </h2>
               </div>
-              <Link href="#" style={{ fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--sage)", textDecoration: "none", borderBottom: "1px solid var(--sage)", paddingBottom: 2, transition: "color .2s" }}>All Departments →</Link>
+              <Link href="#" style={{ fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--sage)", textDecoration: "none", borderBottom: "1px solid var(--sage)", paddingBottom: 2 }}>All Departments →</Link>
             </div>
           </R>
 
           <div className="spec-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1px", background: "var(--mist)" }}>
             {SPECIALITIES.map((s, i) => (
               <R key={s.name} d={i * 60}>
-                <div style={{ background: "var(--cream)", padding: "2.5rem 2rem", transition: "background .3s", cursor: "pointer", position: "relative", overflow: "hidden" }}
+                <div className="spec-card" style={{ background: "var(--cream)", padding: "2.5rem 2rem", transition: "background .3s", cursor: "pointer", position: "relative", overflow: "hidden" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = "var(--forest)"; (e.currentTarget as HTMLDivElement).querySelectorAll("[data-text]").forEach(el => ((el as HTMLElement).style.color = "var(--parch)")); (e.currentTarget as HTMLDivElement).querySelectorAll("[data-sub]").forEach(el => ((el as HTMLElement).style.color = "rgba(240,232,216,0.55)")); (e.currentTarget as HTMLDivElement).querySelectorAll("[data-tag]").forEach(el => ((el as HTMLElement).style.color = "var(--amber)")); }}
                   onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = "var(--cream)"; (e.currentTarget as HTMLDivElement).querySelectorAll("[data-text]").forEach(el => ((el as HTMLElement).style.color = "")); (e.currentTarget as HTMLDivElement).querySelectorAll("[data-sub]").forEach(el => ((el as HTMLElement).style.color = "")); (e.currentTarget as HTMLDivElement).querySelectorAll("[data-tag]").forEach(el => ((el as HTMLElement).style.color = "")); }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem" }}>
@@ -380,8 +471,8 @@ export default function RTCPage({ hospital }: { hospital: any }) {
         <div className="why-cols" style={{ maxWidth: 1400, margin: "0 auto", display: "flex", minHeight: 600 }}>
 
           {/* Left — big number + text */}
-          <div className="pad" style={{ flex: "0 0 45%", padding: "7rem 3rem", background: "var(--forest)", position: "relative", overflow: "hidden" }}>
-            <div className="watermark" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontFamily: "'Fraunces',serif", fontSize: "18rem", fontWeight: 200, color: "rgba(247,243,236,0.03)", lineHeight: 1, pointerEvents: "none", whiteSpace: "nowrap" }}>15</div>
+          <div className="why-left" style={{ flex: "0 0 45%", padding: "7rem 3rem", background: "var(--forest)", position: "relative", overflow: "hidden" }}>
+            <div className="why-watermark watermark" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontFamily: "'Fraunces',serif", fontSize: "18rem", fontWeight: 200, color: "rgba(247,243,236,0.03)", lineHeight: 1, pointerEvents: "none", whiteSpace: "nowrap" }}>15</div>
             <R>
               <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1.5rem" }}>Why Srikara</span>
               <h2 className="serif" style={{ fontSize: "clamp(2.2rem,3.5vw,3.5rem)", fontWeight: 200, color: "var(--parch)", lineHeight: 1.15, marginBottom: "2rem" }}>
@@ -411,7 +502,7 @@ export default function RTCPage({ hospital }: { hospital: any }) {
           </div>
 
           {/* Right — Testimonial carousel */}
-          <div className="pad" style={{ flex: 1, padding: "7rem 3rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative" }}>
+          <div className="why-right" style={{ flex: 1, padding: "7rem 3rem", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative" }}>
             <R>
               <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1.5rem" }}>Patient voices</span>
 
@@ -423,7 +514,7 @@ export default function RTCPage({ hospital }: { hospital: any }) {
                       {t.quote}
                     </p>
                     <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                      <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--forest)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--forest)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <span style={{ fontSize: "0.7rem", fontFamily: "'Fraunces',serif", color: "var(--parch)", fontWeight: 600 }}>{t.name[0]}</span>
                       </div>
                       <div>
@@ -446,10 +537,10 @@ export default function RTCPage({ hospital }: { hospital: any }) {
       </section>
 
       {/* ── DOCTORS ── */}
-      <section id="doctors" className="pad" style={{ background: "var(--cream)", padding: "7rem 3rem" }}>
+      <section id="doctors" className="section-pad" style={{ background: "var(--cream)", padding: "7rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <R>
-            <div style={{ marginBottom: "4rem" }}>
+            <div className="doc-header" style={{ marginBottom: "4rem" }}>
               <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1rem" }}>Our physicians</span>
               <h2 className="serif" style={{ fontSize: "clamp(2.5rem,4vw,4rem)", fontWeight: 200, color: "var(--forest)", lineHeight: 1.1 }}>
                 Specialists who<br /><em style={{ fontStyle: "italic" }}>listen first.</em>
@@ -464,18 +555,18 @@ export default function RTCPage({ hospital }: { hospital: any }) {
                   onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)"}
                   onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.transform = ""}>
                   {/* Colour band */}
-                  <div style={{ height: 180, background: d.tone, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "1.2rem", position: "relative" }}>
-                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-55%)", fontSize: "5rem" }}>
+                  <div style={{ height: 160, background: d.tone, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "1.2rem", position: "relative" }}>
+                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-55%)", fontSize: "4.5rem" }}>
                       {i % 2 === 0 ? "👨‍⚕️" : "👩‍⚕️"}
                     </div>
-                    <span style={{ background: "rgba(247,243,236,0.15)", color: "var(--parch)", fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", padding: "0.3rem 0.7rem", borderRadius: 1, width: "fit-content", backdropFilter: "blur(8px)" }}>{d.exp} yrs experience</span>
+                    <span style={{ background: "rgba(247,243,236,0.15)", color: "var(--parch)", fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", padding: "0.3rem 0.7rem", borderRadius: 1, width: "fit-content", backdropFilter: "blur(8px)" }}>{d.exp} yrs experience</span>
                   </div>
-                  <div style={{ padding: "1.5rem" }}>
-                    <p className="serif" style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--forest)", marginBottom: "0.3rem" }}>{d.name}</p>
-                    <p style={{ fontSize: "0.75rem", color: "var(--amber)", fontWeight: 500, marginBottom: "0.5rem", letterSpacing: "0.04em" }}>{d.role}</p>
-                    <p style={{ fontSize: "0.72rem", color: "var(--sage)", marginBottom: "1rem", lineHeight: 1.5 }}>{d.qual}</p>
-                    <div style={{ paddingTop: "0.8rem", borderTop: "1px solid var(--warm)", fontSize: "0.7rem", color: "var(--ink)", opacity: 0.5 }}>
-                      <span style={{ letterSpacing: "0.08em" }}>{d.avail}</span>
+                  <div style={{ padding: "1.25rem" }}>
+                    <p className="serif" style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--forest)", marginBottom: "0.3rem", lineHeight: 1.3 }}>{d.name}</p>
+                    <p style={{ fontSize: "0.72rem", color: "var(--amber)", fontWeight: 500, marginBottom: "0.4rem", letterSpacing: "0.04em" }}>{d.role}</p>
+                    <p style={{ fontSize: "0.68rem", color: "var(--sage)", marginBottom: "0.8rem", lineHeight: 1.5 }}>{d.qual}</p>
+                    <div style={{ paddingTop: "0.7rem", borderTop: "1px solid var(--warm)", fontSize: "0.65rem", color: "var(--ink)", opacity: 0.5 }}>
+                      <span style={{ letterSpacing: "0.06em" }}>{d.avail}</span>
                     </div>
                   </div>
                 </div>
@@ -496,14 +587,14 @@ export default function RTCPage({ hospital }: { hospital: any }) {
       </section>
 
       {/* ── APPOINTMENT ── */}
-      <section id="appointment" style={{ background: "var(--forest)", padding: "7rem 3rem", position: "relative", overflow: "hidden" }}>
-        {/* Decorative element */}
-        <div style={{ position: "absolute", right: -100, top: "50%", transform: "translateY(-50%)", width: 500, height: 500, borderRadius: "50%", border: "1px solid rgba(247,243,236,0.06)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", right: -50, top: "50%", transform: "translateY(-50%)", width: 350, height: 350, borderRadius: "50%", border: "1px solid rgba(196,123,43,0.1)", pointerEvents: "none" }} />
+      <section id="appointment" className="appt-section" style={{ background: "var(--forest)", padding: "7rem 3rem", position: "relative", overflow: "hidden" }}>
+        {/* Decorative elements */}
+        <div className="appt-deco-1" style={{ position: "absolute", right: -100, top: "50%", transform: "translateY(-50%)", width: 500, height: 500, borderRadius: "50%", border: "1px solid rgba(247,243,236,0.06)", pointerEvents: "none" }} />
+        <div className="appt-deco-2" style={{ position: "absolute", right: -50, top: "50%", transform: "translateY(-50%)", width: 350, height: 350, borderRadius: "50%", border: "1px solid rgba(196,123,43,0.1)", pointerEvents: "none" }} />
 
-        <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }} className="appt-cols">
+        <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <R>
-            <div style={{ marginBottom: "4rem" }}>
+            <div className="appt-header" style={{ marginBottom: "4rem" }}>
               <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1rem" }}>Schedule a visit</span>
               <h2 className="serif" style={{ fontSize: "clamp(2.5rem,4vw,4rem)", fontWeight: 200, color: "var(--parch)", lineHeight: 1.1 }}>
                 Book your<br /><em style={{ fontStyle: "italic", color: "#9BBFA8" }}>appointment.</em>
@@ -515,10 +606,10 @@ export default function RTCPage({ hospital }: { hospital: any }) {
           </R>
 
           <R d={100}>
-            <form onSubmit={submit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "rgba(247,243,236,0.1)" }}>
+            <form onSubmit={submit} className="appt-form" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "rgba(247,243,236,0.1)" }}>
               {[
-                { label: "Your Name", key: "name", type: "text", ph: "Full name", col: 1 },
-                { label: "Mobile Number", key: "phone", type: "tel", ph: "+91 98765 43210", col: 1 },
+                { label: "Your Name", key: "name", type: "text", ph: "Full name" },
+                { label: "Mobile Number", key: "phone", type: "tel", ph: "+91 98765 43210" },
               ].map(f => (
                 <div key={f.key} style={{ background: "rgba(247,243,236,0.04)", padding: "1.5rem", transition: "background .2s" }}
                   onFocusCapture={e => (e.currentTarget as HTMLDivElement).style.background = "rgba(247,243,236,0.08)"}
@@ -563,10 +654,10 @@ export default function RTCPage({ hospital }: { hospital: any }) {
       </section>
 
       {/* ── FACILITIES ── */}
-      <section id="facilities" className="pad" style={{ background: "var(--warm)", padding: "7rem 3rem" }}>
+      <section id="facilities" className="fac-section" style={{ background: "var(--warm)", padding: "7rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <R>
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "4rem", flexWrap: "wrap", gap: "2rem" }}>
+            <div className="fac-header" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "4rem", flexWrap: "wrap", gap: "2rem" }}>
               <div>
                 <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1rem" }}>Infrastructure</span>
                 <h2 className="serif" style={{ fontSize: "clamp(2.5rem,4vw,4rem)", fontWeight: 200, color: "var(--forest)", lineHeight: 1.1 }}>
@@ -587,21 +678,21 @@ export default function RTCPage({ hospital }: { hospital: any }) {
               { icon: "💊", t: "Round-the-Clock Pharmacy", d: "24/7 dispensary with generic and branded medications, cold-chain biologics, oncology drugs and automated dispensing.", tag: "Pharmacy" },
             ].map((f, i) => (
               <R key={f.t} d={i * 50}>
-                <div style={{ display: "flex", alignItems: "center", gap: 0, background: "var(--warm)", transition: "background .3s", cursor: "pointer" }}
+                <div className="fac-row" style={{ display: "flex", alignItems: "center", gap: 0, background: "var(--warm)", transition: "background .3s", cursor: "pointer" }}
                   onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = "var(--cream)"}
                   onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "var(--warm)"}>
-                  {/* Number */}
-                  <div style={{ flexShrink: 0, width: 80, height: 80, display: "flex", alignItems: "center", justifyContent: "center", background: i % 2 === 0 ? "var(--forest)" : "var(--cream)", fontSize: "1.5rem" }}>
+                  {/* Icon box */}
+                  <div className="fac-icon-box" style={{ flexShrink: 0, width: 80, height: 80, display: "flex", alignItems: "center", justifyContent: "center", background: i % 2 === 0 ? "var(--forest)" : "var(--cream)", fontSize: "1.5rem" }}>
                     <span>{f.icon}</span>
                   </div>
-                  <div style={{ flex: 1, padding: "1.5rem 2rem", display: "flex", alignItems: "center", gap: "3rem", flexWrap: "wrap" }}>
+                  <div className="fac-content" style={{ flex: 1, padding: "1.5rem 2rem", display: "flex", alignItems: "center", gap: "3rem", flexWrap: "wrap" }}>
                     <div style={{ minWidth: 200 }}>
                       <span style={{ fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "0.3rem" }}>{f.tag}</span>
-                      <h4 className="serif" style={{ fontSize: "1.15rem", fontWeight: 600, color: "var(--forest)" }}>{f.t}</h4>
+                      <h4 className="serif" style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--forest)" }}>{f.t}</h4>
                     </div>
                     <p style={{ fontSize: "0.82rem", color: "var(--sage)", lineHeight: 1.7, flex: 1, maxWidth: 480 }}>{f.d}</p>
                   </div>
-                  <div className="desk" style={{ flexShrink: 0, padding: "0 2rem", color: "var(--mist)", fontSize: "1.2rem" }}>→</div>
+                  <div className="fac-arrow" style={{ flexShrink: 0, padding: "0 2rem", color: "var(--mist)", fontSize: "1.2rem" }}>→</div>
                 </div>
               </R>
             ))}
@@ -610,11 +701,11 @@ export default function RTCPage({ hospital }: { hospital: any }) {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="pad" style={{ background: "var(--forest)", padding: "6rem 3rem" }}>
+      <section id="contact" className="contact-section" style={{ background: "var(--forest)", padding: "6rem 3rem" }}>
         <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <R>
             <div className="contact-cols" style={{ display: "flex", gap: "5rem", flexWrap: "wrap" }}>
-              <div style={{ flex: "0 0 35%" }}>
+              <div className="contact-left" style={{ flex: "0 0 35%" }}>
                 <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1.5rem" }}>Find us</span>
                 <h2 className="serif" style={{ fontSize: "clamp(2rem,3vw,3rem)", fontWeight: 200, color: "var(--parch)", lineHeight: 1.2, marginBottom: "2rem" }}>
                   Come see us<br /><em style={{ fontStyle: "italic", color: "#9BBFA8" }}>anytime.</em>
@@ -636,10 +727,10 @@ export default function RTCPage({ hospital }: { hospital: any }) {
               </div>
 
               {/* Branches */}
-              <div style={{ flex: 1 }}>
+              <div className="contact-right" style={{ flex: 1 }}>
                 <span style={{ fontSize: "0.65rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--amber)", display: "block", marginBottom: "1.5rem" }}>Other branches</span>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "rgba(247,243,236,0.08)" }}>
-                  {["Ameerpet", "Kukatpally", "LB Nagar", "Dilsukhnagar", "Secunderabad", "Begumpet", "Miyapur", "Uppal"].map((b, i) => (
+                <div className="branches-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "rgba(247,243,236,0.08)" }}>
+                  {["Ameerpet", "Kukatpally", "LB Nagar", "Dilsukhnagar", "Secunderabad", "Begumpet", "Miyapur", "Uppal"].map((b) => (
                     <Link key={b} href={`/hospitals/${b.toLowerCase().replace(/ /g, "-")}`} style={{ background: "var(--forest)", padding: "1.2rem 1.5rem", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "background .2s" }}
                       onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = "rgba(247,243,236,0.06)"}
                       onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = "var(--forest)"}>
@@ -659,8 +750,7 @@ export default function RTCPage({ hospital }: { hospital: any }) {
 
       {/* ── FOOTER ── */}
       <footer style={{ background: "#100E0A", padding: "2rem 3rem" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-
+        <div className="footer-inner" style={{ maxWidth: 1400, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <p style={{ fontSize: "0.72rem", color: "rgba(240,232,216,0.25)", letterSpacing: "0.06em" }}>
             © {new Date().getFullYear()} Srikara Hospital – RTC X Roads. Part of Srikara Hospital Group, Hyderabad.
           </p>

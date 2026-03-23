@@ -9,7 +9,7 @@ const GLOW = "#F9A8D4";
 const WH = "#FFFFFF", CRM = "#F7F9FC", CARD = "#FFFFFF";
 const BDR = "rgba(27,45,91,0.12)", INK = "#0D1A35", MID = "#3A5070", SOFT = "#6B7FA0";
 
-/* ── IMAGES — all different ── */
+/* ── IMAGES ── */
 const IMG = {
   h1: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1800&q=85",
   h2: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=900&q=85",
@@ -112,52 +112,11 @@ function Reveal({c,d=0,y=28,x=0}:{c:React.ReactNode;d?:number;y?:number;x?:numbe
 /* ── LOGO SVG ── */
 const Logo=({h=42}:{h?:number})=>(
   <svg height={h} viewBox="0 0 265 80" xmlns="http://www.w3.org/2000/svg">
-  
-  {/* ✅ USE image INSTEAD OF img */}
-  <image
-    href="/srikara-logo.png"
-    x="0"
-    y="10"
-    width="80"
-    height="80"
-    preserveAspectRatio="xMidYMid meet"
-  />
-
-  <text
-    x="84"
-    y="52"
-    fontFamily="'Arial Black',Arial,sans-serif"
-    fontWeight="900"
-    fontSize="32"
-    fill={NAV}
-    letterSpacing="-0.5"
-  >
-    SRIKARA
-  </text>
-
-  <ellipse
-    cx="103"
-    cy="43"
-    rx="4"
-    ry="10"
-    fill={PINK}
-    opacity=".95"
-    transform="rotate(-8,103,43)"
-  />
-
-  <text
-    x="84"
-    y="73"
-    fontFamily="'Arial Black',Arial,sans-serif"
-    fontWeight="900"
-    fontSize="19"
-    fill={PINK}
-    letterSpacing="2.5"
-  >
-    HOSPITALS
-  </text>
-
-</svg>
+    <image href="/srikara-logo.png" x="0" y="10" width="80" height="80" preserveAspectRatio="xMidYMid meet" />
+    <text x="84" y="52" fontFamily="'Arial Black',Arial,sans-serif" fontWeight="900" fontSize="32" fill={NAV} letterSpacing="-0.5">SRIKARA</text>
+    <ellipse cx="103" cy="43" rx="4" ry="10" fill={PINK} opacity=".95" transform="rotate(-8,103,43)" />
+    <text x="84" y="73" fontFamily="'Arial Black',Arial,sans-serif" fontWeight="900" fontSize="19" fill={PINK} letterSpacing="2.5">HOSPITALS</text>
+  </svg>
 );
 
 /* ══════════════════════════════════════════════════════
@@ -192,7 +151,7 @@ export default function LakdikapulPage(){
   /* ── NAV ── */
   const Nav=()=>(
     <>
-      <div style={{background:NAVDKR,padding:"5px 2rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:".4rem"}}>
+      <div style={{background:NAVDKR,padding:"5px 1.25rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:".4rem"}}>
         <div style={{display:"flex",alignItems:"center",gap:"1.6rem"}}>
           <span style={{display:"inline-flex",alignItems:"center",gap:7}}>
             <span style={{width:8,height:8,borderRadius:"50%",background:"#22C55E",display:"inline-block",boxShadow:"0 0 0 3px rgba(34,197,94,.2)"}}/>
@@ -200,23 +159,21 @@ export default function LakdikapulPage(){
           </span>
           <a href="tel:040-6600-7700" style={{fontFamily:"'DM Sans',sans-serif",fontSize:".88rem",fontWeight:800,color:WH,textDecoration:"none"}}>040-6600-7700</a>
         </div>
-        <div style={{display:"flex",gap:"1.4rem",alignItems:"center"}}>
+        <div className="top-strip-right" style={{display:"flex",gap:"1.4rem",alignItems:"center"}}>
           <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".6rem",color:"rgba(255,255,255,.42)"}}>Road No.10, Banjara Hills, Lakdikapul – 500004</span>
           <Link href="/" style={{fontFamily:"'DM Sans',sans-serif",fontSize:".6rem",fontWeight:700,color:"rgba(255,255,255,.5)",textDecoration:"none",letterSpacing:".1em",textTransform:"uppercase"}}>← Main Site</Link>
         </div>
       </div>
 
       <header style={{position:"sticky",top:0,zIndex:500,background:scrolled?"rgba(255,255,255,.97)":WH,backdropFilter:scrolled?"blur(16px)":"none",borderBottom:`1px solid ${scrolled?BDR:"rgba(27,45,91,.1)"}`,boxShadow:scrolled?"0 2px 24px rgba(27,45,91,.08)":"none",transition:"all .3s"}}>
-        {/* Twin colour stripe */}
         <div style={{height:2,background:NAV}}/>
         <div style={{height:2,background:PINK}}/>
-        <div style={{maxWidth:1300,margin:"0 auto",padding:"0 2rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{maxWidth:1300,margin:"0 auto",padding:"0 1.25rem",height:66,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
 
           <button onClick={()=>{setPage("home");setMob(false);}} style={{background:"none",border:"none",cursor:"pointer",padding:0}}>
             <Logo h={40}/>
           </button>
 
-          {/* Branch label */}
           <div style={{display:"flex",alignItems:"center",gap:10}} className="dk">
             <div style={{width:1,height:26,background:BDR}}/>
             <div>
@@ -225,7 +182,6 @@ export default function LakdikapulPage(){
             </div>
           </div>
 
-          {/* 3-page pill nav */}
           <nav style={{display:"flex",alignItems:"center",background:"#F0F4F8",border:`1px solid ${BDR}`,borderRadius:12,padding:"5px",gap:"3px"}} className="dk">
             {(["home","departments","doctors"] as Page[]).map(pg=>(
               <button key={pg} onClick={()=>setPage(pg)}
@@ -250,7 +206,7 @@ export default function LakdikapulPage(){
           </div>
         </div>
         {mob&&(
-          <div style={{background:WH,borderTop:`1px solid ${BDR}`,padding:"1rem 1.5rem",display:"flex",flexDirection:"column",gap:".8rem"}}>
+          <div style={{background:WH,borderTop:`1px solid ${BDR}`,padding:"1rem 1.25rem",display:"flex",flexDirection:"column",gap:".8rem"}}>
             {(["home","departments","doctors"] as Page[]).map(pg=>(
               <button key={pg} onClick={()=>{setPage(pg);setMob(false);}}
                 style={{fontFamily:"'DM Sans',sans-serif",background:page===pg?PINKP:"transparent",border:"none",color:page===pg?PINK:MID,fontWeight:800,fontSize:".9rem",cursor:"pointer",padding:".6rem .9rem",borderRadius:7,textAlign:"left"}}>
@@ -265,46 +221,30 @@ export default function LakdikapulPage(){
     </>
   );
 
-  /* ══════════════════════════════════════════
-     HOME
-  ══════════════════════════════════════════ */
+  /* ── HOME ── */
   const Home=()=>(
     <div>
-
-      {/* ── KINETIC HERO — watermark + floating card ── */}
+      {/* HERO */}
       <section style={{minHeight:"100vh",background:NAVDKR,position:"relative",overflow:"hidden",display:"flex",alignItems:"center"}}>
-
-        {/* Full bleed photo right half */}
-        <div style={{position:"absolute",right:0,top:0,bottom:0,width:"52%",zIndex:0}}>
+        <div className="hero-photo-col" style={{position:"absolute",right:0,top:0,bottom:0,width:"52%",zIndex:0}}>
           <img src={IMG.h1} alt="" style={{width:"100%",height:"100%",objectFit:"cover",opacity:.28,animation:"zoomIn 10s ease-out forwards"}}/>
           <div style={{position:"absolute",inset:0,background:`linear-gradient(90deg,${NAVDKR} 0%,${NAVDKR}00 60%)`}}/>
         </div>
-
-        {/* Giant LAKDIKAPUL watermark */}
         <div style={{position:"absolute",inset:0,zIndex:1,display:"flex",alignItems:"center",justifyContent:"center",pointerEvents:"none",overflow:"hidden"}}>
-          <span style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(6rem,16vw,18rem)",fontWeight:400,color:"rgba(163,25,91,0.07)",lineHeight:1,letterSpacing:".04em",textTransform:"uppercase",userSelect:"none",whiteSpace:"nowrap"}}>LAKDIKAPUL</span>
+          <span className="hero-wm" style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(6rem,16vw,18rem)",fontWeight:400,color:"rgba(163,25,91,0.07)",lineHeight:1,letterSpacing:".04em",textTransform:"uppercase",userSelect:"none",whiteSpace:"nowrap"}}>LAKDIKAPUL</span>
         </div>
-
-        {/* Grid */}
         <div style={{position:"absolute",inset:0,zIndex:1,backgroundImage:`linear-gradient(rgba(163,25,91,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(163,25,91,.04) 1px,transparent 1px)`,backgroundSize:"72px 72px",pointerEvents:"none"}}/>
-
-        {/* Left pink glow */}
         <div style={{position:"absolute",top:"20%",left:"-5%",width:320,height:320,borderRadius:"50%",background:`radial-gradient(circle,${PINK}18 0%,transparent 65%)`,zIndex:1,pointerEvents:"none"}}/>
 
-        {/* Content */}
-        <div style={{position:"relative",zIndex:2,maxWidth:1300,margin:"0 auto",padding:"7rem 2rem 6rem",width:"100%"}}>
-
-          {/* Eyebrow */}
+        <div style={{position:"relative",zIndex:2,maxWidth:1300,margin:"0 auto",padding:"7rem 1.25rem 6rem",width:"100%"}}>
           <div style={{display:"inline-flex",alignItems:"center",gap:10,background:`${PINK}20`,border:`1px solid ${PINK}40`,borderRadius:100,padding:".36rem 1.1rem",marginBottom:"2.5rem",animation:"fadeUp .8s ease .1s both"}}>
             <span style={{width:6,height:6,borderRadius:"50%",background:"#4ADE80",animation:"blink 2s ease infinite",display:"inline-block"}}/>
             <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".62rem",fontWeight:700,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(255,255,255,.9)"}}>NABH Accredited · Est. 2019 · Central Hyderabad</span>
           </div>
 
-          {/* Giant layered headline — Anton display */}
           <div style={{marginBottom:"2.5rem",animation:"fadeUp .85s ease .25s both"}}>
-            {/* Outlined ghost behind */}
-            <p style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(4rem,10vw,10rem)",fontWeight:400,lineHeight:.88,letterSpacing:".02em",textTransform:"uppercase",WebkitTextStroke:`2px rgba(249,168,212,0.18)`,color:"transparent",position:"absolute",pointerEvents:"none",userSelect:"none",marginTop:0}}>CARE.</p>
-            <h1 style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(4rem,10vw,10rem)",fontWeight:400,color:WH,lineHeight:.88,letterSpacing:".02em",textTransform:"uppercase",paddingTop:"0.08em"}}>
+            <p className="hero-wm" style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(4rem,10vw,10rem)",fontWeight:400,lineHeight:.88,letterSpacing:".02em",textTransform:"uppercase",WebkitTextStroke:`2px rgba(249,168,212,0.18)`,color:"transparent",position:"absolute",pointerEvents:"none",userSelect:"none",marginTop:0}}>CARE.</p>
+            <h1 style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(3.5rem,9vw,10rem)",fontWeight:400,color:WH,lineHeight:.88,letterSpacing:".02em",textTransform:"uppercase",paddingTop:"0.08em"}}>
               <span style={{display:"block"}}>WHERE</span>
               <span style={{display:"block",color:PINK}}>CARE</span>
               <span style={{display:"block",WebkitTextStroke:`2px rgba(255,255,255,.35)`,color:"transparent"}}>BEGINS.</span>
@@ -315,19 +255,18 @@ export default function LakdikapulPage(){
             Central Hyderabad's most trusted multi-specialty hospital — 28+ super-specialists, robotic surgery, AI diagnostics and compassionate care serving Lakdikapul, Abids, Nampally and the heart of the city.
           </p>
 
-          <div style={{display:"flex",gap:"1rem",flexWrap:"wrap",marginBottom:"3.5rem",animation:"fadeUp .85s ease .6s both"}}>
+          <div className="hero-cta-row" style={{display:"flex",gap:"1rem",flexWrap:"wrap",marginBottom:"3.5rem",animation:"fadeUp .85s ease .6s both"}}>
             <button onClick={()=>setBookOpen(true)}
-              style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:PINK,color:WH,padding:"1rem 2.5rem",borderRadius:0,fontSize:".9rem",fontWeight:900,border:"none",cursor:"pointer",boxShadow:`0 4px 24px ${PINK}55`,transition:"all .28s",letterSpacing:".05em",textTransform:"uppercase",clipPath:"polygon(0 0,calc(100% - 12px) 0,100% 100%,12px 100%)"}}>
+              style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:PINK,color:WH,padding:"1rem 2.5rem",borderRadius:6,fontSize:".9rem",fontWeight:900,border:"none",cursor:"pointer",boxShadow:`0 4px 24px ${PINK}55`,transition:"all .28s",letterSpacing:".05em",textTransform:"uppercase"}}>
               Book Appointment
             </button>
             <a href="tel:040-6600-7700"
-              style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:"transparent",color:WH,padding:"1rem 2rem",borderRadius:0,fontSize:".9rem",fontWeight:700,border:"2px solid rgba(255,255,255,.3)",textDecoration:"none",transition:"all .28s",letterSpacing:".04em",textTransform:"uppercase",clipPath:"polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)"}}>
+              style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:"transparent",color:WH,padding:"1rem 2rem",borderRadius:6,fontSize:".9rem",fontWeight:700,border:"2px solid rgba(255,255,255,.3)",textDecoration:"none",transition:"all .28s",letterSpacing:".04em",textTransform:"uppercase"}}>
               🚨 Emergency
             </a>
           </div>
 
-          {/* Horizontal stat strip */}
-          <div style={{display:"flex",gap:0,animation:"fadeUp .85s ease .78s both",maxWidth:580}} className="stat-strip">
+          <div className="stat-strip" style={{display:"flex",gap:0,animation:"fadeUp .85s ease .78s both",maxWidth:580}}>
             {[{n:"8+",l:"Years"},{n:"28+",l:"Doctors"},{n:"32k+",l:"Patients"},{n:"150",l:"Beds"}].map((s,i)=>(
               <div key={i} style={{flex:1,padding:"1.2rem 1rem",borderLeft:i===0?"none":`1px solid rgba(255,255,255,.1)`,textAlign:"center"}}>
                 <p style={{fontFamily:"'Anton',sans-serif",fontSize:"2.2rem",color:WH,lineHeight:1}}>{s.n}</p>
@@ -337,14 +276,13 @@ export default function LakdikapulPage(){
           </div>
         </div>
 
-        {/* Scrolldown cue */}
         <div style={{position:"absolute",bottom:"2rem",left:"50%",transform:"translateX(-50%)",zIndex:2,display:"flex",flexDirection:"column",alignItems:"center",gap:6,opacity:.5,animation:"fadeUp 1s ease 1.2s both"}}>
           <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".58rem",fontWeight:700,letterSpacing:".2em",textTransform:"uppercase",color:WH}}>Scroll</span>
           <div style={{width:1,height:32,background:`linear-gradient(${WH},transparent)`}}/>
         </div>
       </section>
 
-      {/* ── MARQUEE ── */}
+      {/* MARQUEE */}
       <div style={{background:PINK,padding:".75rem 0",overflow:"hidden",whiteSpace:"nowrap"}}>
         <div style={{display:"inline-flex",gap:"3rem",animation:"marquee 30s linear infinite"}}>
           {Array(3).fill(["Cardiac Cath Lab","Robotic Surgery","Level III NICU","3T MRI · PET-CT","24/7 Emergency","NABH Accredited","IVF & Fertility","NABL Laboratory","Stroke Unit","Tumour Board","Bariatric Surgery","Physiotherapy"]).flat().map((t,i)=>(
@@ -355,16 +293,12 @@ export default function LakdikapulPage(){
         </div>
       </div>
 
-      {/* ── ABOUT — large number design ── */}
-      <section style={{background:WH,padding:"8rem 2rem",position:"relative",overflow:"hidden"}}>
-        {/* BIG decorative "10" */}
+      {/* ABOUT */}
+      <section style={{background:WH,padding:"8rem 1.25rem",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",right:"-2%",top:"50%",transform:"translateY(-50%)",fontFamily:"'Anton',sans-serif",fontSize:"clamp(12rem,28vw,36rem)",fontWeight:400,color:`${NAV}05`,lineHeight:1,userSelect:"none",pointerEvents:"none"}}>10</div>
-
         <div style={{maxWidth:1300,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"center"}} className="two-col">
-
           <Reveal c={
             <div>
-              {/* Section number */}
               <p style={{fontFamily:"'Anton',sans-serif",fontSize:"4.5rem",color:`${PINK}18`,lineHeight:1,marginBottom:"-1.2rem"}}>01</p>
               <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:"1rem"}}>
                 <div style={{width:4,height:42,background:`linear-gradient(${NAV},${PINK})`,borderRadius:2}}/>
@@ -381,7 +315,6 @@ export default function LakdikapulPage(){
               <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".95rem",color:MID,lineHeight:1.85,marginBottom:"2.5rem"}}>
                 28+ board-certified specialists, robotic surgery, 3T MRI, NABL laboratory and a dedicated cardiac unit — everything a Central Hyderabad family needs, under one roof.
               </p>
-              {/* Inline facts */}
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:1,background:BDR,borderRadius:12,overflow:"hidden",marginBottom:"2.5rem"}}>
                 {[{n:"28+",l:"Super Specialists"},{n:"150",l:"Hospital Beds"},{n:"32k+",l:"Patients/Year"},{n:"8+",l:"Years of Care"}].map(f=>(
                   <div key={f.l} style={{background:CRM,padding:"1.2rem",textAlign:"center"}}>
@@ -391,26 +324,22 @@ export default function LakdikapulPage(){
                 ))}
               </div>
               <button onClick={()=>setBookOpen(true)}
-                style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:NAV,color:WH,padding:".95rem 2.4rem",borderRadius:0,fontSize:".88rem",fontWeight:800,border:"none",cursor:"pointer",transition:"all .25s",textTransform:"uppercase",letterSpacing:".06em",clipPath:"polygon(0 0,calc(100% - 12px) 0,100% 100%,12px 100%)"}}>
+                style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:NAV,color:WH,padding:".95rem 2.4rem",borderRadius:6,fontSize:".88rem",fontWeight:800,border:"none",cursor:"pointer",transition:"all .25s",textTransform:"uppercase",letterSpacing:".06em"}}>
                 Book Consultation →
               </button>
             </div>
           } x={-28}/>
-
           <Reveal d={150} c={
             <div style={{position:"relative"}}>
-              {/* Stacked photos */}
               <div style={{position:"relative",zIndex:2}}>
                 <div style={{borderRadius:"0 40px 0 0",overflow:"hidden",boxShadow:`0 32px 80px ${NAV}22`}}>
                   <img src={IMG.ab1} alt="" style={{width:"100%",height:460,objectFit:"cover",display:"block"}}/>
                   <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,transparent 55%,${NAVDKR}BB 100%)`}}/>
                 </div>
-                {/* Second offset photo */}
                 <div style={{position:"absolute",bottom:-32,left:-32,width:200,height:170,borderRadius:"0 0 0 20px",overflow:"hidden",border:`4px solid ${WH}`,boxShadow:"0 12px 40px rgba(0,0,0,.14)",zIndex:3}}>
                   <img src={IMG.ab2} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
                 </div>
               </div>
-              {/* Pink year stamp — overlapping corner */}
               <div style={{position:"absolute",top:-24,right:-24,background:PINK,padding:"1.4rem 1.8rem",zIndex:4,boxShadow:`0 8px 28px ${PINK}55`}}>
                 <p style={{fontFamily:"'Anton',sans-serif",fontSize:"2.4rem",color:WH,lineHeight:.9}}>2019</p>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".58rem",fontWeight:700,color:"rgba(255,255,255,.7)",letterSpacing:".14em",textTransform:"uppercase",marginTop:3}}>Established</p>
@@ -420,10 +349,9 @@ export default function LakdikapulPage(){
         </div>
       </section>
 
-      {/* ── DEPT QUICK LOOK — large text cards ── */}
-      <section style={{background:NAVDKR,padding:"8rem 2rem",position:"relative",overflow:"hidden"}}>
+      {/* DEPT QUICK LOOK */}
+      <section style={{background:NAVDKR,padding:"8rem 1.25rem",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,backgroundImage:`linear-gradient(${PINK}05 1px,transparent 1px),linear-gradient(90deg,${PINK}05 1px,transparent 1px)`,backgroundSize:"64px 64px",pointerEvents:"none"}}/>
-
         <div style={{maxWidth:1300,margin:"0 auto"}}>
           <Reveal c={
             <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:"4rem",flexWrap:"wrap",gap:"2rem"}}>
@@ -440,21 +368,18 @@ export default function LakdikapulPage(){
                 </div>
               </div>
               <button onClick={()=>setPage("departments")}
-                style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:6,background:"transparent",color:GLOW,border:`1.5px solid ${GLOW}55`,borderRadius:0,padding:".7rem 1.6rem",fontSize:".82rem",fontWeight:800,cursor:"pointer",transition:"all .25s",letterSpacing:".06em",textTransform:"uppercase",clipPath:"polygon(0 0,calc(100% - 10px) 0,100% 100%,10px 100%)"}}>
+                style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:6,background:"transparent",color:GLOW,border:`1.5px solid ${GLOW}55`,borderRadius:6,padding:".7rem 1.6rem",fontSize:".82rem",fontWeight:800,cursor:"pointer",transition:"all .25s",letterSpacing:".06em",textTransform:"uppercase"}}>
                 All Departments →
               </button>
             </div>
           }/>
-
-          {/* 4-col number list */}
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1px",background:"rgba(255,255,255,.06)"}} className="dept-g">
+          <div className="dept-g" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"1px",background:"rgba(255,255,255,.06)"}}>
             {DEPTS.map((d,i)=>(
               <Reveal key={d.n} d={i*40} c={
                 <div onClick={()=>{setPage("departments");}}
                   style={{background:"transparent",padding:"2rem 1.5rem",cursor:"pointer",transition:"background .28s",position:"relative",overflow:"hidden",borderTop:`2px solid ${d.col}`,display:"flex",flexDirection:"column",gap:"1rem"}}
                   onMouseEnter={e=>{(e.currentTarget as HTMLDivElement).style.background="rgba(255,255,255,.04)";}}
                   onMouseLeave={e=>{(e.currentTarget as HTMLDivElement).style.background="transparent";}}>
-                  {/* Big number */}
                   <span style={{fontFamily:"'Anton',sans-serif",fontSize:"3.5rem",color:"rgba(255,255,255,.08)",lineHeight:1,position:"absolute",top:"1rem",right:"1rem"}}>{String(i+1).padStart(2,"0")}</span>
                   <span style={{fontSize:"1.8rem"}}>{d.ic}</span>
                   <div>
@@ -469,10 +394,9 @@ export default function LakdikapulPage(){
         </div>
       </section>
 
-      {/* ── TESTIMONIALS — overlapping cards ── */}
-      <section style={{background:CRM,padding:"8rem 2rem",position:"relative",overflow:"hidden"}}>
+      {/* TESTIMONIALS */}
+      <section style={{background:CRM,padding:"8rem 1.25rem",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:"-10%",right:"-5%",width:400,height:400,borderRadius:"50%",background:`radial-gradient(circle,${PINK}08 0%,transparent 65%)`,pointerEvents:"none"}}/>
-
         <div style={{maxWidth:1300,margin:"0 auto"}}>
           <Reveal c={
             <div style={{marginBottom:"4rem"}}>
@@ -488,15 +412,13 @@ export default function LakdikapulPage(){
               </div>
             </div>
           }/>
-
           <div style={{position:"relative",minHeight:340}}>
             {TESTI.map((t,i)=>(
               <div key={i} style={{position:i===tIdx?"relative":"absolute",inset:0,opacity:i===tIdx?1:0,transform:i===tIdx?"none":"translateY(18px)",transition:"all .7s ease",pointerEvents:i===tIdx?"auto":"none"}}>
                 <div style={{background:WH,border:`1px solid ${BDR}`,borderRadius:0,padding:"3.5rem",borderLeft:`6px solid ${PINK}`,boxShadow:`0 24px 60px ${NAV}10`}}>
-                  {/* Big quote mark */}
                   <div style={{fontFamily:"'Anton',sans-serif",fontSize:"6rem",color:`${PINK}12`,lineHeight:1,marginBottom:"1rem"}}>"</div>
                   <p style={{fontFamily:"'Lora',serif",fontStyle:"italic",fontSize:"clamp(1.1rem,2vw,1.45rem)",color:INK,lineHeight:1.8,marginBottom:"2.5rem"}}>"{t.q}"</p>
-                  <div style={{display:"flex",alignItems:"center",gap:"1rem"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:"1rem",flexWrap:"wrap"}}>
                     <div style={{width:48,height:48,borderRadius:"50%",background:`linear-gradient(135deg,${PINK},${NAV})`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                       <span style={{fontFamily:"'Anton',sans-serif",color:WH,fontSize:"1.2rem"}}>{t.name[0]}</span>
                     </div>
@@ -518,8 +440,8 @@ export default function LakdikapulPage(){
         </div>
       </section>
 
-      {/* ── FACILITIES — split screen rows ── */}
-      <section style={{background:WH,padding:"8rem 2rem"}}>
+      {/* FACILITIES */}
+      <section style={{background:WH,padding:"8rem 1.25rem"}}>
         <div style={{maxWidth:1300,margin:"0 auto"}}>
           <Reveal c={
             <div style={{marginBottom:"4rem"}}>
@@ -536,14 +458,13 @@ export default function LakdikapulPage(){
             </div>
           }/>
 
-          {/* Alternating split rows */}
           {[
             {name:"24/7 Emergency & Trauma Centre",tag:"Emergency",img:IMG.ambu,desc:"Fully-equipped trauma bay, crash carts, ventilators and a rapid response team on standby every hour of every day. GPS ambulance fleet with sub-10-minute response."},
             {name:"Advanced Imaging Suite",tag:"Radiology",img:IMG.f1,desc:"3-Tesla MRI, 256-slice CT, PET-CT and digital mammography — all under one roof, available 24 hours. Reports delivered in under 4 hours."},
             {name:"NABL Certified Laboratory",tag:"Pathology",img:IMG.f2,desc:"1,200+ tests, molecular diagnostics, flow cytometry, liquid biopsy and a 24/7 automated blood bank with all 12 blood components in stock."},
           ].map((f,i)=>(
             <Reveal key={f.name} d={i*60} c={
-              <div style={{display:"grid",gridTemplateColumns:i%2===0?"1.2fr 1fr":"1fr 1.2fr",gap:0,marginBottom:1,overflow:"hidden"}} className="fac-row">
+              <div className="fac-split-row" style={{display:"grid",gridTemplateColumns:i%2===0?"1.2fr 1fr":"1fr 1.2fr",gap:0,marginBottom:1,overflow:"hidden"}}>
                 <div style={{order:i%2===0?1:2,overflow:"hidden",position:"relative",minHeight:300}}>
                   <img src={f.img} alt={f.name} style={{width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:300,transition:"transform .6s"}}
                     onMouseEnter={e=>(e.currentTarget as HTMLImageElement).style.transform="scale(1.04)"}
@@ -552,7 +473,7 @@ export default function LakdikapulPage(){
                     <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".62rem",fontWeight:800,letterSpacing:".14em",textTransform:"uppercase",color:WH}}>{f.tag}</span>
                   </div>
                 </div>
-                <div style={{order:i%2===0?2:1,padding:"3.5rem",background:i%2===0?NAV:NAVDK,display:"flex",flexDirection:"column",justifyContent:"center"}}>
+                <div style={{order:i%2===0?2:1,padding:"3.5rem 2rem",background:i%2===0?NAV:NAVDK,display:"flex",flexDirection:"column",justifyContent:"center"}}>
                   <h3 style={{fontFamily:"'Anton',sans-serif",fontSize:"1.6rem",color:WH,letterSpacing:".03em",textTransform:"uppercase",lineHeight:1.1,marginBottom:"1.2rem"}}>{f.name}</h3>
                   <p style={{fontFamily:"'Lora',serif",fontStyle:"italic",fontSize:".98rem",color:"rgba(255,255,255,.7)",lineHeight:1.8}}>{f.desc}</p>
                 </div>
@@ -560,14 +481,13 @@ export default function LakdikapulPage(){
             }/>
           ))}
 
-          {/* Emergency CTA */}
           <Reveal d={200} c={
-            <div style={{background:PINK,padding:"2.5rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:"2rem",marginTop:1}}>
+            <div style={{background:PINK,padding:"2.5rem 1.25rem",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:"2rem",marginTop:1}}>
               <div>
                 <p style={{fontFamily:"'Anton',sans-serif",fontSize:"1.8rem",color:WH,letterSpacing:".04em",textTransform:"uppercase",lineHeight:1.1}}>24/7 Emergency & Ambulance</p>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".88rem",color:"rgba(255,255,255,.78)",marginTop:".3rem"}}>GPS fleet · Trained paramedics · Under 10-minute response across Central Hyderabad</p>
               </div>
-              <a href="tel:040-6600-7700" style={{display:"inline-flex",alignItems:"center",gap:8,background:WH,color:PINK,padding:"1rem 2.2rem",fontFamily:"'DM Sans',sans-serif",fontWeight:900,fontSize:".9rem",textDecoration:"none",flexShrink:0,letterSpacing:".06em",textTransform:"uppercase",clipPath:"polygon(0 0,calc(100% - 10px) 0,100% 100%,10px 100%)"}}>
+              <a href="tel:040-6600-7700" style={{display:"inline-flex",alignItems:"center",gap:8,background:WH,color:PINK,padding:"1rem 2.2rem",fontFamily:"'DM Sans',sans-serif",fontWeight:900,fontSize:".9rem",textDecoration:"none",flexShrink:0,letterSpacing:".06em",textTransform:"uppercase",borderRadius:6,width:"100%",maxWidth:280,justifyContent:"center"}}>
                 📞 040-6600-7700
               </a>
             </div>
@@ -575,8 +495,8 @@ export default function LakdikapulPage(){
         </div>
       </section>
 
-      {/* ── CONTACT & BRANCHES ── */}
-      <section style={{background:CRM,padding:"8rem 2rem"}}>
+      {/* CONTACT */}
+      <section style={{background:CRM,padding:"8rem 1.25rem"}}>
         <div style={{maxWidth:1300,margin:"0 auto"}}>
           <Reveal c={
             <h2 style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(2rem,4vw,3.8rem)",color:INK,letterSpacing:".02em",textTransform:"uppercase",textAlign:"center",marginBottom:"4rem",lineHeight:.95}}>
@@ -609,7 +529,7 @@ export default function LakdikapulPage(){
             <Reveal x={24} d={100} c={
               <div>
                 <h3 style={{fontFamily:"'Anton',sans-serif",fontSize:"2rem",color:INK,letterSpacing:".04em",textTransform:"uppercase",marginBottom:"2rem",lineHeight:.95}}>SRIKARA<br/><span style={{color:PINK}}>NETWORK</span></h3>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:1,background:BDR,overflow:"hidden",marginBottom:"1.5rem"}}>
+                <div className="branch-net" style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:1,background:BDR,overflow:"hidden",marginBottom:"1.5rem"}}>
                   {BRANCHES.map(b=>(
                     <div key={b} style={{background:CRM,padding:".88rem 1rem",display:"flex",alignItems:"center",justifyContent:"space-between",transition:"background .2s",cursor:"pointer"}}
                       onMouseEnter={e=>(e.currentTarget as HTMLDivElement).style.background=WH}
@@ -630,14 +550,11 @@ export default function LakdikapulPage(){
     </div>
   );
 
-  /* ══════════════════════════════════════════
-     DEPARTMENTS — ACCORDION
-  ══════════════════════════════════════════ */
+  /* ── DEPARTMENTS ── */
   const Departments=()=>(
     <div>
-      <div style={{background:`linear-gradient(135deg,${NAVDKR},${NAV})`,padding:"5rem 2rem 4rem",position:"relative",overflow:"hidden"}}>
+      <div style={{background:`linear-gradient(135deg,${NAVDKR},${NAV})`,padding:"5rem 1.25rem 4rem",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,backgroundImage:`linear-gradient(${PINK}06 1px,transparent 1px),linear-gradient(90deg,${PINK}06 1px,transparent 1px)`,backgroundSize:"56px 56px",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",right:"-5%",bottom:"-20%",width:320,height:320,borderRadius:"50%",background:`radial-gradient(circle,${PINK}16 0%,transparent 65%)`,pointerEvents:"none"}}/>
         <div style={{maxWidth:1300,margin:"0 auto",position:"relative",zIndex:1}}>
           <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".65rem",fontWeight:800,letterSpacing:".22em",textTransform:"uppercase",color:`${GLOW}CC`,marginBottom:".8rem"}}>Medical Specialities</p>
           <h1 style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(2.5rem,5vw,5rem)",color:WH,letterSpacing:".02em",textTransform:"uppercase",lineHeight:.88}}>
@@ -647,19 +564,17 @@ export default function LakdikapulPage(){
         </div>
       </div>
 
-      <div style={{background:CRM,padding:"3rem 2rem"}}>
+      <div style={{background:CRM,padding:"3rem 1.25rem"}}>
         <div style={{maxWidth:1300,margin:"0 auto",display:"flex",flexDirection:"column",gap:1,background:BDR}}>
           {DEPTS.map((d,i)=>(
             <div key={d.n} style={{background:WH,overflow:"hidden"}}>
-              {/* Accordion header */}
               <button onClick={()=>setOpenDept(openDept===i?null:i)}
-                style={{width:"100%",display:"grid",gridTemplateColumns:"64px 1fr auto",alignItems:"center",gap:"1.5rem",padding:"1.8rem 2rem",background:"none",border:"none",cursor:"pointer",textAlign:"left",transition:"background .25s",borderLeft:`4px solid ${openDept===i?d.col:"transparent"}`}}
+                style={{width:"100%",display:"grid",gridTemplateColumns:"64px 1fr auto",alignItems:"center",gap:"1.5rem",padding:"1.8rem 1.25rem",background:"none",border:"none",cursor:"pointer",textAlign:"left",transition:"background .25s",borderLeft:`4px solid ${openDept===i?d.col:"transparent"}`}}
                 onMouseEnter={e=>(e.currentTarget as HTMLButtonElement).style.background=CRM}
                 onMouseLeave={e=>(e.currentTarget as HTMLButtonElement).style.background="none"}>
-                {/* Number */}
                 <span style={{fontFamily:"'Anton',sans-serif",fontSize:"2.2rem",color:openDept===i?d.col:`${INK}20`,lineHeight:1,transition:"color .25s"}}>{String(i+1).padStart(2,"0")}</span>
                 <div>
-                  <div style={{display:"flex",alignItems:"center",gap:"0.7rem"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:".7rem",flexWrap:"wrap"}}>
                     <span style={{fontSize:"1.2rem"}}>{d.ic}</span>
                     <span style={{fontFamily:"'Anton',sans-serif",fontSize:"1.2rem",color:openDept===i?INK:MID,letterSpacing:".04em",textTransform:"uppercase",transition:"color .25s"}}>{d.n}</span>
                     <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".65rem",fontWeight:700,color:SOFT,letterSpacing:".08em",textTransform:"uppercase",marginLeft:4}}>· {d.sub}</span>
@@ -667,16 +582,14 @@ export default function LakdikapulPage(){
                 </div>
                 <span style={{fontSize:"1.3rem",color:openDept===i?d.col:SOFT,transition:"all .3s",transform:openDept===i?"rotate(45deg)":"none",display:"inline-block"}}>+</span>
               </button>
-
-              {/* Accordion panel */}
-              <div style={{maxHeight:openDept===i?600:0,overflow:"hidden",transition:"max-height .5s ease"}}>
+              <div style={{maxHeight:openDept===i?800:0,overflow:"hidden",transition:"max-height .5s ease"}}>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0,borderTop:`1px solid ${BDR}`}} className="two-col">
                   <div style={{overflow:"hidden",position:"relative",minHeight:280}}>
                     <img src={d.img} alt={d.n} style={{width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:280}}/>
                     <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,transparent 40%,${NAVDKR}CC 100%)`}}/>
                     <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:d.col}}/>
                   </div>
-                  <div style={{padding:"3rem",background:CRM}}>
+                  <div style={{padding:"3rem 1.5rem",background:CRM}}>
                     <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".98rem",color:MID,lineHeight:1.85,marginBottom:"1.5rem"}}>{d.desc}</p>
                     <div style={{display:"flex",flexWrap:"wrap",gap:".5rem",marginBottom:"2rem"}}>
                       {d.pts.map(pt=>(
@@ -684,7 +597,7 @@ export default function LakdikapulPage(){
                       ))}
                     </div>
                     <button onClick={()=>setBookOpen(true)}
-                      style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:PINK,color:WH,padding:".88rem 2rem",borderRadius:0,fontSize:".88rem",fontWeight:800,border:"none",cursor:"pointer",letterSpacing:".05em",textTransform:"uppercase",clipPath:"polygon(0 0,calc(100% - 10px) 0,100% 100%,10px 100%)"}}>
+                      style={{fontFamily:"'DM Sans',sans-serif",display:"inline-flex",alignItems:"center",gap:8,background:PINK,color:WH,padding:".88rem 2rem",borderRadius:6,fontSize:".88rem",fontWeight:800,border:"none",cursor:"pointer",letterSpacing:".05em",textTransform:"uppercase"}}>
                       Book Consultation →
                     </button>
                   </div>
@@ -697,17 +610,14 @@ export default function LakdikapulPage(){
     </div>
   );
 
-  /* ══════════════════════════════════════════
-     DOCTORS — HORIZONTAL FILMSTRIP
-  ══════════════════════════════════════════ */
+  /* ── DOCTORS ── */
   const Doctors=()=>(
     <div>
-      <div style={{position:"relative",overflow:"hidden",minHeight:320,display:"flex",alignItems:"center",padding:"5rem 2rem",background:NAVDKR}}>
+      <div style={{position:"relative",overflow:"hidden",minHeight:320,display:"flex",alignItems:"center",padding:"5rem 1.25rem",background:NAVDKR}}>
         <div style={{position:"absolute",inset:0,zIndex:0}}>
           <img src={IMG.h2} alt="" style={{width:"100%",height:"100%",objectFit:"cover",opacity:.2}}/>
           <div style={{position:"absolute",inset:0,background:`linear-gradient(135deg,${NAVDKR}F5,${NAV}F0 55%,${NAVDKR}F5)`}}/>
         </div>
-        <div style={{position:"absolute",right:"-5%",top:"50%",transform:"translateY(-50%)",width:300,height:300,borderRadius:"50%",background:`radial-gradient(circle,${PINK}18 0%,transparent 65%)`,zIndex:1,pointerEvents:"none"}}/>
         <div style={{maxWidth:1300,margin:"0 auto",position:"relative",zIndex:2}}>
           <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".65rem",fontWeight:800,letterSpacing:".22em",textTransform:"uppercase",color:`${GLOW}CC`,marginBottom:".8rem"}}>Medical Team</p>
           <h1 style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(2.5rem,5vw,5rem)",color:WH,letterSpacing:".02em",textTransform:"uppercase",lineHeight:.88}}>
@@ -718,8 +628,7 @@ export default function LakdikapulPage(){
       </div>
 
       <div style={{background:NAVDK,padding:"4rem 0 5rem"}}>
-        {/* Filmstrip nav */}
-        <div style={{maxWidth:1300,margin:"0 auto",padding:"0 2rem",display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"2rem"}}>
+        <div style={{maxWidth:1300,margin:"0 auto",padding:"0 1.25rem",display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:"2rem"}}>
           <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".78rem",fontWeight:700,color:"rgba(255,255,255,.45)",letterSpacing:".1em",textTransform:"uppercase"}}>← Scroll →</p>
           <div style={{display:"flex",gap:".5rem"}}>
             {[-1,1].map(dir=>(
@@ -733,16 +642,12 @@ export default function LakdikapulPage(){
           </div>
         </div>
 
-        {/* Horizontal scroll filmstrip */}
-        <div ref={filmRef} style={{display:"flex",gap:"2px",overflowX:"auto",paddingLeft:"calc((100vw - 1300px) / 2)",paddingRight:"2rem",scrollSnapType:"x mandatory",scrollbarWidth:"none"}}
-          className="filmstrip">
+        <div ref={filmRef} style={{display:"flex",gap:"2px",overflowX:"auto",paddingLeft:"max(1.25rem, calc((100vw - 1300px) / 2))",paddingRight:"1.25rem",scrollSnapType:"x mandatory",scrollbarWidth:"none"}}>
           {DOCS.map((d,i)=>(
-            <div key={d.name} style={{flexShrink:0,width:340,scrollSnapAlign:"start",background:NAV,position:"relative",overflow:"hidden",cursor:"pointer",transition:"all .3s"}}
+            <div key={d.name} style={{flexShrink:0,width:300,scrollSnapAlign:"start",background:NAV,position:"relative",overflow:"hidden",cursor:"pointer",transition:"all .3s"}}
               onMouseEnter={e=>{const el=e.currentTarget as HTMLDivElement;el.style.transform="translateY(-6px)";}}
               onMouseLeave={e=>{const el=e.currentTarget as HTMLDivElement;el.style.transform="";}}>
-              {/* Top colour bar */}
               <div style={{height:4,background:`linear-gradient(90deg,${PINK},${NAV})`}}/>
-              {/* Photo */}
               <div style={{height:280,overflow:"hidden",position:"relative",background:"#1B2D5B"}}>
                 {d.img ? (
                   <img src={d.img} alt={d.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",display:"block",transition:"transform .5s"}}
@@ -754,10 +659,8 @@ export default function LakdikapulPage(){
                   </div>
                 )}
                 <div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,transparent 45%,${NAVDKR}CC 100%)`}}/>
-                {/* Dept tag */}
                 <span style={{position:"absolute",top:"1rem",left:"1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".6rem",fontWeight:800,letterSpacing:".1em",textTransform:"uppercase",background:PINK,color:WH,padding:".22rem .7rem"}}>{d.dept}</span>
               </div>
-              {/* Info */}
               <div style={{padding:"1.6rem"}}>
                 <h3 style={{fontFamily:"'Lora',serif",fontStyle:"italic",fontSize:"1.05rem",color:WH,marginBottom:".3rem",lineHeight:1.3}}>{d.name}</h3>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".75rem",fontWeight:800,color:GLOW,marginBottom:".4rem"}}>{d.role}</p>
@@ -776,15 +679,14 @@ export default function LakdikapulPage(){
         </div>
       </div>
 
-      {/* CTA */}
-      <div style={{background:`linear-gradient(135deg,${NAV},${NAVDKR})`,padding:"3.5rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
+      <div style={{background:`linear-gradient(135deg,${NAV},${NAVDKR})`,padding:"3.5rem 1.25rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at center,${PINK}14 0%,transparent 65%)`,pointerEvents:"none"}}/>
         <h3 style={{fontFamily:"'Anton',sans-serif",fontSize:"clamp(1.8rem,3.5vw,3rem)",color:WH,letterSpacing:".03em",textTransform:"uppercase",marginBottom:".6rem",position:"relative",zIndex:1,lineHeight:.95}}>
           BOOK WITH ANY SPECIALIST<br/><span style={{color:PINK}}>TODAY.</span>
         </h3>
         <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".9rem",color:"rgba(255,255,255,.6)",marginBottom:"2.5rem",position:"relative",zIndex:1}}>Confirmed within 30 minutes · Mon–Sat 8 AM – 8 PM · Walk-ins welcome</p>
         <button onClick={()=>setBookOpen(true)}
-          style={{fontFamily:"'DM Sans',sans-serif",background:PINK,color:WH,border:"none",padding:"1.1rem 3rem",fontSize:".92rem",fontWeight:900,cursor:"pointer",textTransform:"uppercase",letterSpacing:".08em",clipPath:"polygon(0 0,calc(100% - 14px) 0,100% 100%,14px 100%)",boxShadow:`0 4px 24px ${PINK}55`,position:"relative",zIndex:1}}>
+          style={{fontFamily:"'DM Sans',sans-serif",background:PINK,color:WH,border:"none",padding:"1.1rem 3rem",fontSize:".92rem",fontWeight:900,cursor:"pointer",textTransform:"uppercase",letterSpacing:".08em",borderRadius:6,boxShadow:`0 4px 24px ${PINK}55`,position:"relative",zIndex:1}}>
           Book an Appointment →
         </button>
       </div>
@@ -810,11 +712,59 @@ export default function LakdikapulPage(){
         .dk{display:flex;align-items:center;gap:.5rem;}
         .mk{display:none!important;}
 
+        /* ══════════════════════════════════════════
+           MOBILE RESPONSIVE
+           ══════════════════════════════════════════ */
         @media(max-width:960px){
-          .dk{display:none!important;} .mk{display:flex!important;}
-          .two-col,.fac-row{display:block!important;}
+          .dk{display:none!important;}
+          .mk{display:flex!important;}
+          .two-col{display:block!important;}
+          .fac-split-row{display:block!important;}
           .dept-g{grid-template-columns:1fr 1fr!important;}
           .stat-strip{flex-wrap:wrap!important;}
+        }
+
+        @media(max-width:768px){
+          /* Top strip */
+          .top-strip-right{display:none!important;}
+
+          /* Hero */
+          .hero-photo-col{display:none!important;}
+          .hero-wm{display:none!important;}
+          .hero-cta-row{flex-direction:column!important;}
+          .hero-cta-row a,
+          .hero-cta-row button{width:100%!important;justify-content:center!important;border-radius:6px!important;}
+          .stat-strip{display:grid!important;grid-template-columns:1fr 1fr!important;max-width:100%!important;}
+          .stat-strip>div{border-left:none!important;border-top:1px solid rgba(255,255,255,.1)!important;}
+
+          /* About two-col */
+          .two-col{display:block!important;}
+          .two-col>div{width:100%!important;margin-bottom:2rem!important;}
+
+          /* Fac split */
+          .fac-split-row{display:block!important;}
+          .fac-split-row>div{min-height:auto!important;order:unset!important;}
+          .fac-split-row>div:first-child{height:220px!important;}
+
+          /* Dept grid */
+          .dept-g{grid-template-columns:1fr 1fr!important;}
+
+          /* Branch net */
+          .branch-net{grid-template-columns:1fr 1fr 1fr!important;}
+
+          /* Accordion */
+          .two-col.accordion-inner{display:block!important;}
+          .two-col.accordion-inner>div:first-child{display:none!important;}
+
+          /* Section padding */
+          section{padding-left:1.25rem!important;padding-right:1.25rem!important;}
+        }
+
+        @media(max-width:480px){
+          .dept-g{grid-template-columns:1fr!important;}
+          .branch-net{grid-template-columns:1fr 1fr!important;}
+          .stat-strip{grid-template-columns:1fr 1fr!important;}
+          h1[style*="font-size"]{font-size:clamp(2.8rem,10vw,4.5rem)!important;}
         }
       `}</style>
 
@@ -825,49 +775,48 @@ export default function LakdikapulPage(){
 
       <footer style={{background:NAVDKR}}>
         <div style={{height:4,background:`linear-gradient(90deg,${NAV},${PINK},${NAV})`}}/>
-        <div style={{maxWidth:1300,margin:"0 auto",padding:"1.8rem 2rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
+        <div style={{maxWidth:1300,margin:"0 auto",padding:"1.8rem 1.25rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
           <Logo h={34}/>
           <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".68rem",color:"rgba(255,255,255,.28)"}}>© {new Date().getFullYear()} Srikara Hospitals – Lakdikapul · Part of Srikara Hospital Group</span>
         </div>
       </footer>
 
       <button onClick={()=>setBookOpen(true)}
-        style={{position:"fixed",bottom:"1.8rem",right:"1.8rem",zIndex:400,fontFamily:"'DM Sans',sans-serif",background:PINK,color:WH,border:"none",padding:".92rem 1.7rem",fontSize:".82rem",fontWeight:800,cursor:"pointer",boxShadow:`0 8px 28px ${PINK}55`,transition:"all .3s",textTransform:"uppercase",letterSpacing:".06em",clipPath:"polygon(0 0,calc(100% - 10px) 0,100% 100%,10px 100%)"}}>
+        style={{position:"fixed",bottom:"1.8rem",right:"1.8rem",zIndex:400,fontFamily:"'DM Sans',sans-serif",background:PINK,color:WH,border:"none",padding:".92rem 1.7rem",fontSize:".82rem",fontWeight:800,cursor:"pointer",boxShadow:`0 8px 28px ${PINK}55`,transition:"all .3s",textTransform:"uppercase",letterSpacing:".06em",borderRadius:6}}>
         📅 Book Now
       </button>
 
       {bookOpen&&(
         <div onClick={e=>{if(e.target===e.currentTarget)setBookOpen(false);}}
           style={{position:"fixed",inset:0,zIndex:900,background:"rgba(13,26,53,.72)",backdropFilter:"blur(14px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"1rem"}}>
-          <div style={{width:"100%",maxWidth:640,maxHeight:"92vh",overflowY:"auto",background:WH,boxShadow:"0 40px 100px rgba(0,0,0,.3)",animation:"fadeUp .3s ease"}}>
+          <div style={{width:"100%",maxWidth:640,maxHeight:"92vh",overflowY:"auto",background:WH,boxShadow:"0 40px 100px rgba(0,0,0,.3)",animation:"fadeUp .3s ease",borderRadius:8}}>
             <div style={{height:4,background:`linear-gradient(90deg,${NAV},${PINK},${NAV})`}}/>
-            <div style={{background:`linear-gradient(135deg,${NAVDKR},${NAV})`,padding:"2rem 2rem 1.6rem",display:"flex",justifyContent:"space-between",alignItems:"flex-start",position:"relative",overflow:"hidden"}}>
-              <div style={{position:"absolute",right:"-5%",top:"50%",transform:"translateY(-50%)",width:200,height:200,borderRadius:"50%",background:`radial-gradient(circle,${PINK}20 0%,transparent 65%)`,pointerEvents:"none"}}/>
+            <div style={{background:`linear-gradient(135deg,${NAVDKR},${NAV})`,padding:"2rem 1.5rem 1.6rem",display:"flex",justifyContent:"space-between",alignItems:"flex-start",position:"relative",overflow:"hidden"}}>
               <div style={{position:"relative",zIndex:1}}>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".62rem",fontWeight:800,letterSpacing:".18em",textTransform:"uppercase",color:`${GLOW}BB`,marginBottom:".4rem"}}>Srikara Hospitals · Lakdikapul</p>
                 <h3 style={{fontFamily:"'Anton',sans-serif",fontSize:"1.8rem",color:WH,letterSpacing:".04em",textTransform:"uppercase",lineHeight:1}}>BOOK APPOINTMENT</h3>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".8rem",color:"rgba(255,255,255,.55)",marginTop:".35rem"}}>Confirmed within 30 minutes · Mon–Sat 8 AM – 8 PM</p>
               </div>
-              <button onClick={()=>setBookOpen(false)} style={{background:"rgba(255,255,255,.12)",border:"none",width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",color:WH,fontSize:"1rem",position:"relative",zIndex:1}}>✕</button>
+              <button onClick={()=>setBookOpen(false)} style={{background:"rgba(255,255,255,.12)",border:"none",width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",color:WH,fontSize:"1rem",position:"relative",zIndex:1,borderRadius:4}}>✕</button>
             </div>
-            <form onSubmit={submit} style={{padding:"2rem"}}>
+            <form onSubmit={submit} style={{padding:"1.5rem"}}>
               <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".65rem",fontWeight:800,letterSpacing:".18em",textTransform:"uppercase",color:PINK,marginBottom:".9rem"}}>Your Details</p>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"1rem"}}>
+              <div className="appt-form-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"1rem"}}>
                 {[{l:"Full Name *",k:"name",t:"text",ph:"Your full name"},{l:"Mobile Number *",k:"phone",t:"tel",ph:"+91 98765 43210"}].map(f=>(
                   <div key={f.k}>
                     <label style={{fontFamily:"'DM Sans',sans-serif",display:"block",fontSize:".7rem",fontWeight:700,color:MID,marginBottom:".4rem"}}>{f.l}</label>
                     <input type={f.t} placeholder={f.ph} value={form[f.k as keyof typeof form]} onChange={e=>setForm(p=>({...p,[f.k]:e.target.value}))} required
-                      style={{width:"100%",border:`1.5px solid ${BDR}`,borderRadius:0,padding:".78rem 1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".92rem",color:INK,background:CRM,outline:"none",transition:"border-color .2s"}}
+                      style={{width:"100%",border:`1.5px solid ${BDR}`,borderRadius:6,padding:".78rem 1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".92rem",color:INK,background:CRM,outline:"none"}}
                       onFocus={e=>(e.currentTarget as HTMLInputElement).style.borderColor=PINK}
                       onBlur={e=>(e.currentTarget as HTMLInputElement).style.borderColor=BDR}/>
                   </div>
                 ))}
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"1.4rem"}}>
+              <div className="appt-form-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",marginBottom:"1.4rem"}}>
                 <div>
                   <label style={{fontFamily:"'DM Sans',sans-serif",display:"block",fontSize:".7rem",fontWeight:700,color:MID,marginBottom:".4rem"}}>Department *</label>
                   <select value={form.dept} onChange={e=>setForm(p=>({...p,dept:e.target.value}))} required
-                    style={{width:"100%",border:`1.5px solid ${BDR}`,borderRadius:0,padding:".78rem 1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".92rem",color:form.dept?INK:SOFT,background:CRM,outline:"none"}}>
+                    style={{width:"100%",border:`1.5px solid ${BDR}`,borderRadius:6,padding:".78rem 1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".92rem",color:form.dept?INK:SOFT,background:CRM,outline:"none"}}>
                     <option value="">Select department</option>
                     {DEPTS.map(d=><option key={d.n}>{d.n}</option>)}
                     <option>General Medicine</option><option>Dermatology</option><option>ENT</option>
@@ -876,28 +825,28 @@ export default function LakdikapulPage(){
                 <div>
                   <label style={{fontFamily:"'DM Sans',sans-serif",display:"block",fontSize:".7rem",fontWeight:700,color:MID,marginBottom:".4rem"}}>Preferred Date *</label>
                   <input type="date" value={form.date} onChange={e=>setForm(p=>({...p,date:e.target.value}))} min={new Date().toISOString().split("T")[0]} required
-                    style={{width:"100%",border:`1.5px solid ${BDR}`,borderRadius:0,padding:".78rem 1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".92rem",color:INK,background:CRM,outline:"none"}}/>
+                    style={{width:"100%",border:`1.5px solid ${BDR}`,borderRadius:6,padding:".78rem 1rem",fontFamily:"'DM Sans',sans-serif",fontSize:".92rem",color:INK,background:CRM,outline:"none"}}/>
                 </div>
               </div>
-              <div style={{background:CRM,border:`1px solid ${BDR}`,padding:"1.2rem",marginBottom:"1.4rem"}}>
+              <div style={{background:CRM,border:`1px solid ${BDR}`,padding:"1.2rem",marginBottom:"1.4rem",borderRadius:6}}>
                 <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:".65rem",fontWeight:800,letterSpacing:".18em",textTransform:"uppercase",color:PINK,marginBottom:".8rem"}}>Time Slot</p>
                 <div style={{display:"flex",flexWrap:"wrap",gap:".5rem"}}>
                   {SLOTS.map(sl=>(
                     <button key={sl} type="button" onClick={()=>setForm(p=>({...p,slot:p.slot===sl?"":sl}))}
-                      style={{fontFamily:"'DM Sans',sans-serif",fontSize:".78rem",fontWeight:700,border:`1.5px solid ${form.slot===sl?PINK:BDR}`,borderRadius:0,padding:".42rem .9rem",cursor:"pointer",background:form.slot===sl?PINK:WH,color:form.slot===sl?WH:MID,transition:"all .2s"}}>
+                      style={{fontFamily:"'DM Sans',sans-serif",fontSize:".78rem",fontWeight:700,border:`1.5px solid ${form.slot===sl?PINK:BDR}`,borderRadius:100,padding:".42rem .9rem",cursor:"pointer",background:form.slot===sl?PINK:WH,color:form.slot===sl?WH:MID,transition:"all .2s"}}>
                       {sl}
                     </button>
                   ))}
                 </div>
                 {form.slot&&(
-                  <div style={{marginTop:".8rem",display:"flex",alignItems:"center",gap:7,padding:".5rem .9rem",background:"#ECFDF5",border:"1px solid #A7F3D0"}}>
+                  <div style={{marginTop:".8rem",display:"flex",alignItems:"center",gap:7,padding:".5rem .9rem",background:"#ECFDF5",border:"1px solid #A7F3D0",borderRadius:4}}>
                     <span>✅</span>
                     <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:".8rem",fontWeight:800,color:"#059669"}}>Selected: {form.slot}</span>
                   </div>
                 )}
               </div>
               <button type="submit"
-                style={{width:"100%",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:"'DM Sans',sans-serif",background:sent?"#059669":PINK,color:WH,border:"none",padding:"1rem",fontSize:".9rem",fontWeight:900,cursor:"pointer",transition:"background .3s",textTransform:"uppercase",letterSpacing:".06em",clipPath:"polygon(0 0,calc(100% - 10px) 0,100% 100%,10px 100%)"}}>
+                style={{width:"100%",display:"flex",justifyContent:"center",alignItems:"center",fontFamily:"'DM Sans',sans-serif",background:sent?"#059669":PINK,color:WH,border:"none",padding:"1rem",fontSize:".9rem",fontWeight:900,cursor:"pointer",transition:"background .3s",textTransform:"uppercase",letterSpacing:".06em",borderRadius:6}}>
                 {sent?"✓ Confirmed! We will call you shortly.":"Confirm Appointment →"}
               </button>
               <p style={{fontFamily:"'DM Sans',sans-serif",textAlign:"center",fontSize:".72rem",color:MID,marginTop:".9rem"}}>
